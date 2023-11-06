@@ -1,0 +1,27 @@
+.gallery-head{
+    margin-top: 13.8vh;
+}
+.gallery-head h4 {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 5.4vh;
+  line-height: 6.1vh;
+  color: #b89562;
+  text-align: center;
+}
+.gallery-head p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2.4vh;
+  line-height: 2.7vh;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #848484;
+}
+.short-gallery-portion{
+    margin-top: 10vh;
+}

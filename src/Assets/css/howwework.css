@@ -1,0 +1,49 @@
+.how-work-des {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.about-work .work .how-work-head p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 5.4vh;
+  line-height: 6.1vh;
+  color: #b89562;
+  margin-left: 22vh;
+}
+.about-work .work .how-work-des p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.4vh;
+  line-height: 2.7vh;
+  width: 64.2vh;
+  height: 44.2vh;
+  color: #848484;
+}
+.about-work .work .how-work-img {
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 800px) {
+    .how-work-des{
+        flex-direction: column;
+
+
+    }
+    .about-work .work .how-work-des p{
+        margin-top: 10vh;
+    }
+    .about-work .work .how-work-des .how-work-img{
+        margin-top: 8vh;
+    }
+    .how-work-head{
+        text-align: center;
+        margin: 0;
+    }
+    
+}

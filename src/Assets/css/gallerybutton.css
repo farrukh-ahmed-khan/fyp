@@ -1,0 +1,20 @@
+.gallery-button {
+  box-sizing: border-box;
+  width: 325px;
+  height: 69px;
+  border: 2px solid #b89562;
+  border-radius: 35px;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+.gallery-button p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 69px;
+  text-align: center;
+  color: #b89562;
+  
+}

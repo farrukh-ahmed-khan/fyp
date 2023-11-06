@@ -1,0 +1,30 @@
+.makeup-decoration {
+  margin-top: 10.7vh;
+}
+.makeup-decoration .makeup-decor-heading {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 45px;
+  color: #436372;
+  margin-left: 12vh;
+  padding: 2vh;
+}
+.makeup-decoration .makeup-decor-images {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+}
+@media (max-width: 800px) {
+  .makeup-decoration .makeup-decor-images {
+    flex-direction: column;
+  }
+  .makeup-decoration .makeup-decor-images div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1vh;
+  }
+}

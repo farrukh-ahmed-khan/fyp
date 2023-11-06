@@ -1,0 +1,44 @@
+.home-page {
+  background-color: #f8f5f2;
+}
+head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.head h4 {
+  margin-top: 4vh;
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 6vh;
+  line-height: 6.8vh;
+  text-align: center;
+  color: #b89562;
+}
+.card-section {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 5.2vh;
+}
+
+.home-page .arrow {
+  margin: 74px 0 74px 0;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5.2vh;
+}
+
+@media (max-width: 800px) {
+  .card-section {
+    flex-direction: column;
+  }
+  .card-section .card {
+    margin-top: 2vh;
+  }
+  .how-work-des {
+    flex-direction: column;
+  }
+}

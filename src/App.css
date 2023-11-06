@@ -1,0 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'EB Garamond', serif;
+    background-color: #f8f5f2;
+    overflow-x: hidden;
+}

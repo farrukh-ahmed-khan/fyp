@@ -1,0 +1,26 @@
+.gallery-portion .gallery-heading p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 6vh;
+  line-height: 6.8vh;
+  text-align: center;
+  color: #b89562;
+  padding-top: 18.5vh;
+  padding-bottom: 7.4vh;
+}
+.gallery-portion .gallery-images {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+@media (max-width: 800px) {
+  .gallery-portion .gallery-images {
+    flex-direction: column;
+  }
+  .gallery-portion .gallery-images div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

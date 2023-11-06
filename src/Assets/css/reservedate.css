@@ -1,0 +1,49 @@
+.reserve-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reserve-date .left-reserve-date .reserve-date-heading,
+.reserve-date .left-reserve-date .reserve-date-para,
+.reserve-date .left-reserve-date .reserve-date-btn {
+  padding-right: 5vh;
+}
+.reserve-date .left-reserve-date .reserve-date-heading p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 68px;
+  color: #b89562;
+}
+.reserve-date .left-reserve-date .reserve-date-para {
+  width: 642px;
+}
+.reserve-date .left-reserve-date .reserve-date-para p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 27px;
+  color: #848484;
+  text-align: justify;
+}
+.reserve-date .left-reserve-date .reserve-date-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+.reserve-date .left-reserve-date .reserve-date-btn button {
+  width: 305px;
+  height: 77px;
+  background: #242d2c;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.18);
+  border-radius: 7px;
+}
+.reserve-date .left-reserve-date .reserve-date-btn button p {
+  font-family: 'Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 77px;
+  color: #ffffff;
+}
