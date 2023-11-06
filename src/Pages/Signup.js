@@ -1,8 +1,8 @@
-import React from 'react';
-import '../Assets/css/form.css';
-import sides from '../Assets/images/NicePng_rope-png_45489 (1).png';
-import down from '../Assets/images/NicePng_rope-png_45489.png';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "../Assets/css/form.css";
+import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
+import down from "../Assets/images/NicePng_rope-png_45489.png";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   return (
@@ -13,12 +13,14 @@ const Signup = () => {
             <div className="form-heading">
               <p>Signup</p>
             </div>
-            <div className="names-inp">
+            <div className="email">
               <input
                 type="text"
                 placeholder="First name"
                 className="first-name"
               />
+            </div>
+            <div className="email">
               <input
                 type="text"
                 placeholder="last name"
@@ -26,7 +28,7 @@ const Signup = () => {
               />
             </div>
             <div className="email">
-              <input type="text" placeholder="Email" />
+              <input type="email" placeholder="Email" />
             </div>
             <div className="password">
               <input type="text" placeholder="Password" />
@@ -36,7 +38,9 @@ const Signup = () => {
             </div>
             <div className="form-submit-button">
               <button>
-                <p>Submit</p>
+                <Link to="/home">
+                  <p>Submit </p>
+                </Link>
               </button>
             </div>
             <div className="form-para">

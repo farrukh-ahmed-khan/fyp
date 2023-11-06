@@ -1,2 +1,172 @@
+.sign-log-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 30px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  position: relative;
+}
+.page-content {
+  margin-top: 100px;
+}
+.search-filter-wrapper .head {
+  margin-bottom: 50px;
+}
+.search-filter-wrapper .head h2 {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: relative;
+}
+.search-filter-wrapper .head h2::before {
+  position: absolute;
+  content: "";
+  width: 5px;
+  height: 100%;
+  background: #b89562;
+  border-radius: 10px;
+  bottom: -5px;
+  left: -1%;
+  transform: translateX(-50%);
+}
+.range-inp-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.search-filter-wrapper .search-btn .btn {
+  border-radius: 5px;
+  border: 1px solid #848484;
+  background: #b89562;
+  color: #fff;
+  padding: 13px 40px;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.range-inp-wrapper p {
+  margin-bottom: 0px;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.banq-cards-wrapper {
+  padding: 20px 20px 10px 20px;
 
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap');
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+.search-filter-wrapper .inp-wrapper {
+  margin-bottom: 10px;
+}
+.search-filter-wrapper .inp-wrapper h4 {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.banq-card-btn .det-btn {
+  border-radius: 5px;
+  border: 1px solid #848484;
+  background: #b89562;
+  color: #fff;
+  padding: 13px 20px;
+  border: none;
+}
+.hall-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.banq-card-content .hall-heading h4 {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.banq-card-content .rating {
+  width: 37px;
+  height: 37px;
+  border-radius: 15px 15px 15px 0px;
+  background: #165bc3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banq-card-content .rating p {
+  color: #fff;
+
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 0px;
+}
+
+.banq-card-content .icon-wrapper {
+  margin-bottom: 15px;
+}
+.banq-card-content .icon-wrapper span {
+  margin-left: 5px;
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.banq-card-content .hall-price p {
+  margin-left: 5px;
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.banq-card-content .hall-price p span{
+    margin-right: 10px;
+}
+.banq-card-content .guest-cap p span{
+    margin-right: 10px;
+}
+.banq-card-content .guest-cap p{
+    margin-left: 5px;
+    color: #000;
+    text-align: center;
+    font-family: "Poppins";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.short-desc p {
+  color: #525252;
+  font-family: "Poppins";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25px; /* 166.667% */
+}
+
+.banq-card-btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
