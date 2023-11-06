@@ -38,7 +38,7 @@ const Signup = () => {
             </div>
             <div className="form-submit-button">
               <button>
-                <Link to="/home">
+                <Link to="/Home">
                   <p>Submit </p>
                 </Link>
               </button>

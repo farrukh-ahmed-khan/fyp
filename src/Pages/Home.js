@@ -17,7 +17,7 @@ const Home = () => {
       <div className="image-slider">
         <Carosel />
       </div>
-      <div className="head">
+      <div className="head mt-5">
         <h4>Our Services</h4>
       </div>
       <div className="card-section">
