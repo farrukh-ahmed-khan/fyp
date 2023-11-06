@@ -10,7 +10,7 @@ import '../../Assets/css/footer.css';
 
 const Footer = () => {
   return (
-    <Container fluid className="footer">
+    <Container fluid className="footer mt-5">
       <Row style={{ backgroundColor: '#EFECCE' }}>
         <Col className="logo_col">
           <div className="logo">

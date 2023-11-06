@@ -9,6 +9,7 @@ import Footer from '../Components/CommonComponent/Footer';
 import ReservedTheDate from '../Components/CommonComponent/ReservedTheDate';
 import HomeCard from '../Components/HomeCard';
 import HomeGallery from '../Components/HomeGallery';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -22,7 +23,9 @@ const Home = () => {
       </div>
       <div className="card-section">
         <HomeCard type="photography"/>
-        <HomeCard type="decoration"/>
+        <Link to="/venue-booking">
+        <HomeCard type="Weeding Venue"/>
+        </Link>
         <HomeCard type="makeup"/>
       </div>
       <div className="portion-gallery">
@@ -37,7 +40,7 @@ const Home = () => {
       <div className="work-about">
         <HowWeWork/>
       </div>
-        <ReservedTheDate/>
+        {/* <ReservedTheDate/> */}
       <div className='foot'>
         <Footer/>
       </div>

@@ -13,3 +13,7 @@ body{
 img{
     max-width: 100%;
 }
+a {
+    color: transparent !important;
+    text-decoration: underline !important;
+}
