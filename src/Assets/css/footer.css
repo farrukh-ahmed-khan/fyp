@@ -1,6 +1,6 @@
 .footer {
   height: 42.4vh;
-  background: #efecce;
+  background: #525252 !important;
 }
 .logo_col {
   box-sizing: border-box;
@@ -13,8 +13,8 @@
   justify-content: center;
 }
 .logo_col .logo img {
-  width: 23.2vh;
-  height: 6.8vh;
+  width: 23.2vh !important;
+  height: 6.8vh !important;
   margin: 5.3vh 2.8vh 8.4vh 5.3vh;
 }
 .social p {

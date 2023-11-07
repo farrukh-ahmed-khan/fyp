@@ -1,28 +1,28 @@
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { LinkContainer } from 'react-router-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from '../../Assets/images/logo.png';
-import search from '../../Assets/images/search_icon.png';
-import img from '../../Assets/images/img_icon.png';
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { LinkContainer } from "react-router-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import logo from "../../Assets/images/logo.png";
+import search from "../../Assets/images/search_icon.png";
+import img from "../../Assets/images/img_icon.png";
 
-import '../../Assets/css/nav.css';
+import "../../Assets/css/nav.css";
 
 const Navbr = () => {
   return (
     <>
       <Navbar expand="lg" className="nav">
         <Container fluid>
-          <Navbar.Brand href="#">
+          <Navbar.Brand href="#" className="logo">
             <img src={logo}></img>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
+              style={{ maxHeight: "100px" }}
               navbarScroll
             >
               <LinkContainer to="/home">
@@ -52,7 +52,7 @@ const Navbr = () => {
                 Contact
               </Nav.Link>
             </Nav>
-            <Form className="d-flex ">
+            <Form className="d-flex icons">
               <div className="first p-2">
                 <img src={search}></img>
               </div>

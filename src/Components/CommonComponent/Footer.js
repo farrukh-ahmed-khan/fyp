@@ -1,17 +1,17 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import logo from '../../Assets/images/logo.png';
-import fb from '../../Assets/images/fb.png';
-import insta from '../../Assets/images/insta.png';
-import twitter from '../../Assets/images/twitter.png';
-import '../../Assets/css/footer.css';
+import React from "react";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import logo from "../../Assets/images/logo.png";
+import fb from "../../Assets/images/fb.png";
+import insta from "../../Assets/images/insta.png";
+import twitter from "../../Assets/images/twitter.png";
+import "../../Assets/css/footer.css";
 
 const Footer = () => {
   return (
     <Container fluid className="footer mt-5">
-      <Row style={{ backgroundColor: '#EFECCE' }}>
+      <Row style={{ backgroundColor: "#525252" }}>
         <Col className="logo_col">
           <div className="logo">
             <img src={logo} />
@@ -19,12 +19,12 @@ const Footer = () => {
           <div className="social">
             <p
               style={{
-                fontFamily: 'garamond',
-                fontStyle: 'normal',
-                fontWeight: '700',
-                fontSize: '32px',
-                lineHeight: '36px',
-                textAlign: 'center',
+                fontFamily: "garamond",
+                fontStyle: "normal",
+                fontWeight: "700",
+                fontSize: "32px",
+                lineHeight: "36px",
+                textAlign: "center",
               }}
             >
               Social Media
