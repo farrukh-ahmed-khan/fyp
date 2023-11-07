@@ -1,58 +1,85 @@
-.footer {
-  height: 42.4vh;
-  background: #525252 !important;
+
+footer{
+  background-color:#525252;
+  padding: 30px 0;
 }
-.logo_col {
-  box-sizing: border-box;
-  background: #f8f5f2;
-  border: 2px solid #d6d2ae;
-  height: 42.4vh;
-}
-.logo {
-  display: flex;
-  justify-content: center;
-}
-.logo_col .logo img {
-  width: 23.2vh !important;
-  height: 6.8vh !important;
-  margin: 5.3vh 2.8vh 8.4vh 5.3vh;
-}
-.social p {
-  font-family: 'Garamond';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 3.2vh;
-  line-height: 3.6vh;
+figure {
   text-align: center;
-  color: #242d2c;
 }
-.social_logo {
+footer .p1 p{
+  color: #EFECCE;
+text-align: center;
+font-family: "poppins";
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.flogo{
+  text-align:right;
+}
+.copyright.text-center {
+   font-size: 14px;
+   padding-top: 30px;
+   padding-bottom: 30px;
+   color:#EFECCE;
+   background: #525252;
+}
+.copyright.text-center p {
+  text-transform: capitalize;
+}
+.footerLinks a{
+  color: #EFECCE;
+
+font-family: "poppins";
+font-size: 18px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-decoration: none;
+text-transform: capitalize;
+}
+.contactDetail li{
+  color: #fff;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+.socialIcon li {
+  display: inline-block;
+}
+.socialIcon li span {
+  padding: 12px 15px;
+  background-color: #fff;
+  border: 1px solid #fff;
+  color: #000;
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin: 0 5px 0 0;
+}
+ul.socialIcon{
+  padding-left: 0px;
   display: flex;
   justify-content: center;
 }
-.social_logo div {
-  padding: 1vh;
+.ftr-md1 h5{
+
+  color: #EFECCE;
+font-family: "poppins";
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+
 }
-.menu,
-.services,
-.contact {
-  display: flex;
-  justify-content: center;
-  margin-top: 3.5%;
+ul.footerLinks{
+  padding-left: 0px;
 }
-.footer h4 {
-  font-family: 'Garamond';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 3.2vh;
-  line-height: 3.6vh;
-  color: #242d2c;
+
+ul.footerLinks li{
+  margin-bottom: 18px;
 }
-.footer p {
-  font-family: 'Garamond';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.8vh;
-  line-height: 2vh;
-  color: #242d2c;
+.ftr-md1{
+  margin-top: 40px;
 }

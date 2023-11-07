@@ -32,9 +32,9 @@ function App() {
       {/* <HomeCard /> */}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Signup />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Home" element={<Home />} />
+          <Route path="/Signup" element={<Signup />} />
           <Route path="/Gallery" element={<Gallery />} />
           <Route path="/Service" element={<Service />} />
           <Route path="/venue-booking" element={<VenueBooking />} />

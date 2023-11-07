@@ -4,7 +4,7 @@
 *{
     margin: 0;
     padding: 0;
-    background-color: #f8f5f2;
+    
 }
 body{
     font-family: 'EB Garamond', serif;
@@ -15,6 +15,9 @@ img{
     max-width: 100%;
 }
 a {
-    color: transparent !important;
-    text-decoration: underline !important;
+    text-decoration: none !important;
+}
+ol, ul {
+    padding-left: 0px;
+    list-style: none;
 }

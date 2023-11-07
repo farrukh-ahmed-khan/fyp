@@ -7,69 +7,141 @@ import fb from "../../Assets/images/fb.png";
 import insta from "../../Assets/images/insta.png";
 import twitter from "../../Assets/images/twitter.png";
 import "../../Assets/css/footer.css";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faGooglePlus,
+  faInstagram,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
-    <Container fluid className="footer mt-5">
-      <Row style={{ backgroundColor: "#525252" }}>
-        <Col className="logo_col">
-          <div className="logo">
-            <img src={logo} />
-          </div>
-          <div className="social">
-            <p
-              style={{
-                fontFamily: "garamond",
-                fontStyle: "normal",
-                fontWeight: "700",
-                fontSize: "32px",
-                lineHeight: "36px",
-                textAlign: "center",
-              }}
-            >
-              Social Media
-            </p>
-          </div>
-          <div className="social_logo">
-            <div>
-              <img src={fb} />
+    <>
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="ftr-lt">
+                <figure>
+                  <img src={logo} alt="logo" />
+                </figure>
+                <div class="p1">
+                  <p>
+                  Social Media
+                  </p>
+                </div>
+                <ul class="socialIcon">
+                  <li>
+                    <span>
+                      <FontAwesomeIcon icon={faFacebook} />
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <FontAwesomeIcon icon={faGooglePlus} />
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <FontAwesomeIcon icon={faTwitter} />
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <FontAwesomeIcon icon={faInstagram} />
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <img src={insta} />
+            <div class="col-md-3">
+              <div class="ftr-md1">
+                <div class="m4-h">
+                  <h5>Menus</h5>
+                </div>
+                <ul class="footerLinks">
+                  <li>
+                    <Link class="active" href="./">
+                      home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">About</Link>
+                  </li>
+                  <li>
+                    <Link href="#">Services</Link>
+                  </li>
+                  <li>
+                    <Link href="#">Testimonials</Link>
+                  </li>
+                  <li>
+                    <Link href="#">Contact</Link>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <img src={twitter} />
+            <div class="col-md-3">
+              <div class="ftr-md1">
+                <div class="m4-h">
+                  <h5>Services</h5>
+                </div>
+                <ul class="footerLinks">
+                  <li>
+                    <Link class="active" href="./">
+                    Photoshoot
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                    Makeup
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                    Venue Finding
+                      </Link>
+                  </li>
+                  <li>
+                    <Link href="#">Test 3</Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              <div class="ftr-md1">
+                <div class="m4-h">
+                  <h5>contact info</h5>
+                </div>
+                <ul class="footerLinks">
+                  <li>
+                    <Link class="active" to="tel:8552247575">
+                    +123 1213 21345
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="mailto:Wedplaner1@gmail.com">
+                    Wedplaner1@gmail.com
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </Col>
-        <Col className="menu">
-          <div>
-            <h4>Menus</h4>
-            <p>Home</p>
-            <p>About</p>
-            <p>Services</p>
-            <p>Testimonials</p>
-            <p>Contact</p>
+        </div>
+      </footer>
+      <div class="copyright text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <p>Copyright © 2020 site name All rights reserved.</p>
+            </div>
           </div>
-        </Col>
-        <Col className="services">
-          <div>
-            <h4>Services</h4>
-            <p>Photoshoot</p>
-            <p>Fooding</p>
-            <p>Devorator</p>
-            <p>Venue Finding</p>
-          </div>
-        </Col>
-        <Col className="contact">
-          <div>
-            <h4>Contact Us</h4>
-            <p>+123 1213 21345</p>
-            <p>Wedplaner1@gmail.com</p>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </>
   );
 };
 
