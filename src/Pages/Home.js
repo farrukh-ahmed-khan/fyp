@@ -19,7 +19,7 @@ const Home = () => {
         <Carosel />
       </div>
       <div className="head mt-5">
-        <h4>Our Services</h4>
+        <h4>Our Servicess</h4>
       </div>
       <div className="card-section">
         <HomeCard type="photography"/>
