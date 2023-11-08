@@ -1,45 +1,43 @@
-
-footer{
-  background-color:#525252;
+footer {
+  background-color: #525252;
   padding: 30px 0;
 }
 figure {
   text-align: center;
 }
-footer .p1 p{
-  color: #EFECCE;
-text-align: center;
-font-family: "poppins";
-font-size: 32px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+footer .p1 p {
+  color: #efecce;
+  text-align: center;
+  font-family: "garamond";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
-.flogo{
-  text-align:right;
+.flogo {
+  text-align: right;
 }
 .copyright.text-center {
-   font-size: 14px;
-   padding-top: 30px;
-   padding-bottom: 30px;
-   color:#EFECCE;
-   background: #525252;
+  font-size: 14px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: #efecce;
+  background: #525252;
 }
 .copyright.text-center p {
   text-transform: capitalize;
 }
-.footerLinks a{
-  color: #EFECCE;
-
-font-family: "poppins";
-font-size: 18px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-text-decoration: none;
-text-transform: capitalize;
+.footerLinks a {
+  color: #efecce;
+  font-family: "garamond";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none;
+  text-transform: capitalize;
 }
-.contactDetail li{
+.contactDetail li {
   color: #fff;
   text-transform: capitalize;
   font-size: 14px;
@@ -58,28 +56,31 @@ text-transform: capitalize;
   text-align: center;
   margin: 0 5px 0 0;
 }
-ul.socialIcon{
+
+ul.socialIcon {
   padding-left: 0px;
   display: flex;
   justify-content: center;
 }
-.ftr-md1 h5{
-
-  color: #EFECCE;
-font-family: "poppins";
-font-size: 32px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-
+.ftr-md1 h5 {
+  color: #efecce;
+  font-family: "garamond";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
-ul.footerLinks{
+ul.footerLinks {
   padding-left: 0px;
 }
 
-ul.footerLinks li{
+ul.footerLinks li {
   margin-bottom: 18px;
 }
-.ftr-md1{
+.ftr-md1 {
   margin-top: 40px;
+}
+.copyright-footer {
+  font-family: garamond;
+  font-size: 20px;
 }

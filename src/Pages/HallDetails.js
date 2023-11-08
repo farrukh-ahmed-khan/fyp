@@ -3,7 +3,6 @@ import "../Assets/css/halldetails.css";
 import Carosel from "../Components/CommonComponent/Carosel";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function HallDetails() {
   return (

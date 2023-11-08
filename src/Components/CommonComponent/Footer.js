@@ -1,17 +1,10 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import logo from "../../Assets/images/logo.png";
-import fb from "../../Assets/images/fb.png";
-import insta from "../../Assets/images/insta.png";
-import twitter from "../../Assets/images/twitter.png";
 import "../../Assets/css/footer.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
-  faGooglePlus,
   faInstagram,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
@@ -28,9 +21,7 @@ const Footer = () => {
                   <img src={logo} alt="logo" />
                 </figure>
                 <div class="p1">
-                  <p>
-                  Social Media
-                  </p>
+                  <p>Social Media</p>
                 </div>
                 <ul class="socialIcon">
                   <li>
@@ -38,11 +29,7 @@ const Footer = () => {
                       <FontAwesomeIcon icon={faFacebook} />
                     </span>
                   </li>
-                  <li>
-                    <span>
-                      <FontAwesomeIcon icon={faGooglePlus} />
-                    </span>
-                  </li>
+
                   <li>
                     <span>
                       <FontAwesomeIcon icon={faTwitter} />
@@ -90,18 +77,14 @@ const Footer = () => {
                 <ul class="footerLinks">
                   <li>
                     <Link class="active" href="./">
-                    Photoshoot
+                      Photoshoot
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
-                    Makeup
-                    </Link>
+                    <Link href="#">Makeup</Link>
                   </li>
                   <li>
-                    <Link href="#">
-                    Venue Finding
-                      </Link>
+                    <Link href="#">Venue Finding</Link>
                   </li>
                   <li>
                     <Link href="#">Test 3</Link>
@@ -109,21 +92,21 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div class="col-md-3">
               <div class="ftr-md1">
                 <div class="m4-h">
-                  <h5>contact info</h5>
+                  <h5>Contact Us</h5>
                 </div>
                 <ul class="footerLinks">
                   <li>
                     <Link class="active" to="tel:8552247575">
-                    +123 1213 21345
+                      +123 1213 21345
                     </Link>
                   </li>
                   <li>
                     <Link to="mailto:Wedplaner1@gmail.com">
-                    Wedplaner1@gmail.com
+                      Wedplaner1@gmail.com
                     </Link>
                   </li>
                 </ul>
@@ -136,7 +119,9 @@ const Footer = () => {
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <p>Copyright © 2020 site name All rights reserved.</p>
+              <p className="copyright-footer">
+                Copyright © 2020 site name All rights reserved.
+              </p>
             </div>
           </div>
         </div>
