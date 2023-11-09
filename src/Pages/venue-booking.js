@@ -7,6 +7,7 @@ import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
 
 const HallData = [
   {
@@ -22,6 +23,23 @@ const HallData = [
     guests: "100",
     shotDesc:
       "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
+    services: [
+      "Bride Dressing Area",
+      "Dance Floor",
+      "Groom's Dressing Area",
+      "Public Parking",
+      "Tables & Chairs Provided",
+      "Kitchen's for serve only",
+    ],
+    requirements: [
+      "A permit is required for any open flame (candles, cooking, sterno, etc.)",
+      "A permit is required for events with 200+ people",
+      "Meal must be served by licensed caterer",
+      "Amplified music OK indoors only",
+      "Approved outside caterer allowed",
+      "General liability insurance required",
+      "Music must end by 11:00PM",
+    ],
   },
   {
     hallName: "Jhumar Banquet",
@@ -82,6 +100,10 @@ const HallData = [
   },
 ];
 const VenueBooking = () => {
+  const navigate = useNavigate();
+  const handleDetailsClick = (hallDetails) => {
+    navigate("/HallDetails", { state: { hallDetails } });
+  };
   const [City, setCity] = useState("");
   const [Area, setArea] = useState("");
   const [Price, setPrice] = useState("");
@@ -101,17 +123,16 @@ const VenueBooking = () => {
     console.log("searching");
     const newFilteredData = HallData.filter((item) => {
       return (
-        (City === '' || item.city.toLowerCase() === City.toLowerCase()) &&
-        (Area === '' || item.area.toLowerCase() === Area.toLowerCase()) &&
-        (Price === '' || item.price <= parseInt(Price)) &&
-        (MaxPrice === '' || item.maxPrice >= parseInt(MaxPrice)) &&
-        (Guests === '' || item.guests >= parseInt(Guests))
+        (City === "" || item.city.toLowerCase() === City.toLowerCase()) &&
+        (Area === "" || item.area.toLowerCase() === Area.toLowerCase()) &&
+        (Price === "" || item.price <= parseInt(Price)) &&
+        (MaxPrice === "" || item.maxPrice >= parseInt(MaxPrice)) &&
+        (Guests === "" || item.guests >= parseInt(Guests))
       );
     });
-  
+
     setFilteredData(newFilteredData);
   };
-  
 
   return (
     <div className="home-page">
@@ -279,7 +300,12 @@ const VenueBooking = () => {
                             </div>
                           </div>
                           <div className="banq-card-btn">
-                            <button className="det-btn">View Details</button>
+                            <button
+                              className="det-btn"
+                              onClick={() => handleDetailsClick(item)}
+                            >
+                              View Details
+                            </button>
                           </div>
                         </div>
                       </div>

@@ -3,8 +3,13 @@ import "../Assets/css/halldetails.css";
 import Carosel from "../Components/CommonComponent/Carosel";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
+import { useLocation } from "react-router-dom";
 
 function HallDetails() {
+  const location = useLocation() ;
+  const hallDetails = location.state.hallDetails;
+
+  console.log(hallDetails);
   return (
     <>
       <Navbr />
