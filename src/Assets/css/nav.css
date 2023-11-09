@@ -1,6 +1,5 @@
-
 .link {
-  font-family: 'Poppins' !important;
+  font-family: "Poppins" !important;
   font-style: normal !important;
   font-weight: 500 !important;
   font-size: 16px !important;
@@ -20,20 +19,21 @@
   background-color: #fff !important;
 }
 
-.navbar-collapse{
+.navbar-collapse {
   background-color: #fff !important;
 }
 
-.navbar-nav a{
-  background-color:  #fff !important;
+.navbar-nav a {
+  background-color: #fff !important;
 }
 
-.icons .first, .icons .second{
+.icons .first,
+.icons .second {
   background-color: #fff !important;
 }
 
 .link:focus {
-  font-family: 'Poppins' !important;
+  font-family: "Poppins" !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 16px !important;
@@ -45,4 +45,16 @@
 .logo img {
   width: 75px !important;
   background-color: #fff !important;
+}
+.nav-btn {
+  background-color: #fff !important;
+  color: #890025;
+
+  font-family: "Poppins";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: 1px solid #890025;
+  padding: 10px 20px;
 }

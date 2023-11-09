@@ -22,7 +22,7 @@ const Navbr = () => {
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
+              style={{ maxHeight: "100px", alignItems: "center" }}
               navbarScroll
             >
               <LinkContainer to="/home">
@@ -51,14 +51,26 @@ const Navbr = () => {
               <Nav.Link href="#action2" className="link">
                 Contact
               </Nav.Link>
+
+              
+              <Nav.Link href="#action2" className="link">
+                Contact
+              </Nav.Link>
+              
             </Nav>
-            <Form className="d-flex icons">
-              <div className="first p-2">
+            <Form className="d-flex icons align-items-center">
+              {/* <div className="first p-2">
                 <img src={search}></img>
               </div>
               <div className="second p-2">
                 <img src={img}></img>
-              </div>
+              </div> */}
+              <Nav.Link href="#action2" className="link">
+                <button className="nav-btn">Join as vendor</button>
+              </Nav.Link>
+              <Nav.Link href="#action2" className="link">
+                <button className="nav-btn" >Book a venue</button>
+              </Nav.Link>
             </Form>
           </Navbar.Collapse>
         </Container>
