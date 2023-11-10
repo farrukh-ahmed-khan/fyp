@@ -16,6 +16,7 @@ import ReservedTheDate from "./Components/CommonComponent/ReservedTheDate";
 import HomeCard from "./Components/HomeCard";
 import VenueBooking from "./Pages/venue-booking";
 import HallDetails from "./Pages/HallDetails";
+import VendorForm from "./Pages/VendorForm";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/Service" element={<Service />} />
           <Route path="/venue-booking" element={<VenueBooking />} />
           <Route path="/HallDetails" element={<HallDetails />} />
+          <Route path="/VendorForm" element={<VendorForm />} />
         </Routes>
       </BrowserRouter>
     </>
