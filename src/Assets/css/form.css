@@ -31,7 +31,7 @@
 
 .sign-log-form .form-heading p {
   text-align: center;
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
@@ -74,7 +74,7 @@
   padding: 3vh;
 }
 .sign-log-form input:placeholder-shown {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -92,7 +92,7 @@
   border-radius: 7px;
 }
 .sign-log-form .form-submit-button button p {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -101,7 +101,7 @@
   color: #ffffff;
 }
 .sign-log-form .form-submit-button p {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -116,7 +116,7 @@
   margin-right: 7vh;
 }
 .sign-log-form .form-para {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;

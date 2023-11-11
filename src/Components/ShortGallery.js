@@ -39,34 +39,38 @@ const ShortGallery = () => {
           <p>Videography</p>
         </div>
         <div className="videos">
-          <div>
-            <video width="296" height="337" controls>
-              {/* <source src="movie.mp4" type="video/mp4">
+            <div className="row">
+              <div className='col-lg-3'>
+                <video width="296" height="337" controls>
+                  {/* <source src="movie.mp4" type="video/mp4">
                 <source src="movie.ogg" type="video/ogg"> */}
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div>
-            <video width="296" height="337" controls>
-              {/* <source src="movie.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div className='col-lg-3'>
+                <video width="296" height="337" controls>
+                  {/* <source src="movie.mp4" type="video/mp4">
                 <source src="movie.ogg" type="video/ogg"> */}
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div>
-            <video width="296" height="337" controls>
-              {/* <source src="movie.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div className='col-lg-3'>
+                <video width="296" height="337" controls>
+                  {/* <source src="movie.mp4" type="video/mp4">
                 <source src="movie.ogg" type="video/ogg"> */}
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div>
-            <video width="296" height="337" controls>
-              {/* <source src="movie.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div className='col-lg-3'>
+                <video width="296" height="337" controls>
+                  {/* <source src="movie.mp4" type="video/mp4">
                 <source src="movie.ogg" type="video/ogg"> */}
-              Your browser does not support the video tag.
-            </video>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
           </div>
+
+
         </div>
       </div>
     </>

@@ -8,7 +8,7 @@ figure {
 footer .p1 p {
   color: #efecce;
   text-align: center;
-  font-family: "garamond";
+  font-family: "poppins";
   font-size: 32px;
   font-style: normal;
   font-weight: 700;
@@ -29,10 +29,10 @@ footer .p1 p {
 }
 .footerLinks a {
   color: #efecce;
-  font-family: "garamond";
+  font-family: "poppins";
   font-size: 20px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 300;
   line-height: normal;
   text-decoration: none;
   text-transform: capitalize;
@@ -64,7 +64,7 @@ ul.socialIcon {
 }
 .ftr-md1 h5 {
   color: #efecce;
-  font-family: "garamond";
+  font-family: "poppins";
   font-size: 32px;
   font-style: normal;
   font-weight: 700;
@@ -81,6 +81,6 @@ ul.footerLinks li {
   margin-top: 40px;
 }
 .copyright-footer {
-  font-family: garamond;
+  font-family: poppins;
   font-size: 20px;
 }

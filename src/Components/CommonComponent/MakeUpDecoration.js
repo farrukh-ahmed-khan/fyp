@@ -21,23 +21,39 @@ const MakeUpDecoration = () => {
   return (
     <div className="makeup-decoration">
       <div className="makeup-portion">
-        <div className="makeup-decor-heading">Makeup</div>
-        <div className="makeup-decor-images">
-          {makeupdata.map((images) => {
+        <div className="makeup-decor-heading" style={{marginRight:"8rem", marginLeft:"8rem"}}>Makeup</div>
+        
+
+          <div className="row mx-5 " style={{marginRight:"8rem", marginLeft:"8rem"}}>
+            {makeupdata.map((images) => {
+              {
+                return (
+                  <div className="col-lg-4">
+                    <div className="makeup-decor-images">
+
+
+
+                      <div>{images.img}</div>;
+
+
+                    </div>
+                  </div>
+
+                )
+              }
+            })}
+          </div>
+        
+
+      </div>
+      <div className="decoration-portion" style={{ marginTop: '4.6vh' }}>
+        <div className="makeup-decor-heading" style={{marginRight:"8rem", marginLeft:"8rem"}}>Decoration</div>
+        <div className="makeup-decor-images" style={{marginRight:"8rem", marginLeft:"8rem"}}>
+          {decorate.map((images) => {
             {
               return <div>{images.img}</div>;
             }
           })}
-        </div>
-      </div>
-      <div className="decoration-portion" style={{ marginTop: '4.6vh' }}>
-        <div className="makeup-decor-heading">Decoration</div>
-        <div className="makeup-decor-images">
-        {decorate.map((images) => {
-          {
-            return <div>{images.img}</div>;
-          }
-        })}
         </div>
       </div>
     </div>

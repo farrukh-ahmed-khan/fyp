@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Assets/css/form.css";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import "../Assets/css/vendorForm.css";
+import { Form, Button, Row, Col, Navbar } from "react-bootstrap";
+import Navbr from "../Components/CommonComponent/Nav";
+import Footer from "../Components/CommonComponent/Footer";
 
 const HallVendorForm = () => {
   const [vendorData, setVendorData] = useState({
@@ -26,102 +29,150 @@ const HallVendorForm = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1>Hall Vendor Form</h1>
-      <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="formName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your name"
-                name="name"
-                value={vendorData.name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter your email"
-                name="email"
-                value={vendorData.email}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-        </Row>
+    <>
+    <Navbr/>
+      <div class="hero-section">
+        <h1>Join as Vendor</h1>
+      </div>
+      <div className="container my-5 d-flex justify-content-center align-item-center">
+        <div className="banner-form">
 
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="formPhoneNumber">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="tel"
-                placeholder="Enter your phone number"
-                name="phoneNumber"
-                value={vendorData.phoneNumber}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="formMinPrice">
-              <Form.Label>Minimum Price</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter minimum price"
-                name="minPrice"
-                value={vendorData.minPrice}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-        </Row>
+        <Form onSubmit={handleSubmit}>
+        <h1 className="heading">Fill The Form</h1>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="form-control"
+                    placeholder="Enter your name"
+                    onChange={handleChange}
+                    required
+                  />  
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="form-control"
+                    placeholder="Enter your email"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="phoneNumber">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    className="form-control"
+                    placeholder="Enter your phone number"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="minPrice">Minimum Price</label>
+                  <input
+                    type="number"
+                    name="minPrice"
+                    id="minPrice"
+                    className="form-control"
+                    placeholder="Enter your minimum price"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="maxPrice">Maximum Price</label>
+                  <input
+                    type="number"
+                    name="maxPrice"
+                    id="maxPrice"
+                    className="form-control"
+                    placeholder="Enter your maximum price"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="address">Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    className="form-control"
+                    placeholder="Enter your address"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+            
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="capacity">Capacity</label>
+                  <input
+                    type="number"
+                    name="capacity"
+                    id="capacity"
+                    className="form-control"
+                    placeholder="Enter your capacity"
+                    onChange={handleChange}
+                    required
+                    />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="type">Image</label>
+                  <input
+                    type="file"
+                    name="type"
+                    id="type"
+                    className="form-control"
+                    onChange={handleChange}
+                    required
+                    />
+                </div>
+              </div>
+              <div className="col-md-12">
+                <div className="form-group">
+                  <label htmlFor="additionalDetails">Additional Details</label>
+                  <textarea name="" id="" placeholder="Enter Short Description"></textarea>
+                </div>
+              </div>
+            </div>
+            <div className="btn-wrapper">
+          <Button variant="" type="submit">
+            Submit
+          </Button>
+            </div>
+        </Form>
+        </div>
 
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="formMaxPrice">
-              <Form.Label>Maximum Price</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter maximum price"
-                name="maxPrice"
-                value={vendorData.maxPrice}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-        </Row>
+        {/* <Link to="/">Go back to home</Link> */}
+      </div>
 
-        <Form.Group controlId="formAdditionalDetails">
-          <Form.Label>Additional Details</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Enter additional details"
-            name="additionalDetails"
-            value={vendorData.additionalDetails}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
-
-      <Link to="/">Go back to home</Link>
-    </div>
+      <Footer/>
+    </>
   );
 };
 

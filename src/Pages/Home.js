@@ -25,7 +25,7 @@ const Home = () => {
         <div className="card-section">
           <HomeCard type="photography" />
           <Link to="/venue-booking">
-            <HomeCard type="Weeding Venue" />
+            <HomeCard type="Wedding Venue" />
           </Link>
           <HomeCard type="makeup" />
         </div>

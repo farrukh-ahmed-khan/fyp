@@ -1,0 +1,77 @@
+
+body{
+    background-color: #e9e3dc;
+}
+.hero-section {
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6)
+      ),
+      url("https://www.yellowstonenationalparklodges.com/content/uploads/2017/04/Lake-Yellowstone-Hotel-Dining-Room-1-1024x652.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 70vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    clip-path: ellipse(100% 60% at 50% 40%);
+  }
+  
+  .hero-section h1 {
+    font-size: 55px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .heading {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  .banner-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    position: relative;
+    width: 85%;
+}
+.form-group{
+    margin-bottom: 1rem;
+}
+.banner-form button{
+    background: #ff4c3b;
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-wrapper{
+    text-align: center;
+}
+.banner-form input,
+.banner-form textarea{
+    border: 1px solid rgb(184, 149, 98);
+}
+.banner-form textarea{
+    background: #fff;
+    margin-top: 17px;
+    width: 100%;
+    height: 149px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    outline: none;
+    font-size: 15px;
+    padding: 15px 14px;
+}
+
+label {
+    font-size: 18px;
+    font-weight: 500;
+}

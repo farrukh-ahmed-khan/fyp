@@ -8,7 +8,7 @@ head {
 }
 .head h4 {
   margin-top: 4vh;
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 6vh;
@@ -22,6 +22,7 @@ head {
   flex-direction: row;
   align-items: center;
   margin-top: 5.2vh;
+  padding: 20px;
 }
 
 .home-page .arrow {
@@ -29,6 +30,29 @@ head {
   display: flex;
   justify-content: flex-end;
   padding-right: 5.2vh;
+}
+
+.hero-section {
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0.6)
+    ),
+    url("https://www.yellowstonenationalparklodges.com/content/uploads/2017/04/Lake-Yellowstone-Hotel-Dining-Room-1-1024x652.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 70vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  clip-path: ellipse(100% 60% at 50% 40%);
+}
+
+.hero-section h1 {
+  font-size: 55px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 @media (max-width: 800px) {

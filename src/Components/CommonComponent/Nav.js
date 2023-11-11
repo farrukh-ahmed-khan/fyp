@@ -7,13 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../../Assets/images/logo.png";
 import search from "../../Assets/images/search_icon.png";
 import img from "../../Assets/images/img_icon.png";
-
 import "../../Assets/css/nav.css";
 
 const Navbr = () => {
   return (
     <>
-      <Navbar expand="lg" className="nav">
+      <Navbar expand="lg" className="nav px-4">
         <Container fluid>
           <Navbar.Brand href="#" className="logo">
             <img src={logo}></img>
@@ -25,53 +24,51 @@ const Navbr = () => {
               style={{ maxHeight: "100px", alignItems: "center" }}
               navbarScroll
             >
-              <LinkContainer to="/home">
-                <Nav.Link href="#action1" className="link">
+              <LinkContainer to="/">
+                <Nav.Link href="/" className="link">
                   Home
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/About">
-                <Nav.Link href="#action2" className="link">
+                <Nav.Link href="/about" className="link">
                   About
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/Gallery">
-                <Nav.Link href="#action2" className="link">
+                <Nav.Link href="#" className="link">
                   Gallery
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/Service">
-                <Nav.Link href="#action2" className="link">
+                <Nav.Link href="/service" className="link">
                   Services
                 </Nav.Link>
               </LinkContainer>
-              <Nav.Link href="#action2" className="link">
+              <Nav.Link href="/venue-booking" className="link">
                 Reserved the date
               </Nav.Link>
               <Nav.Link href="#action2" className="link">
                 Contact
               </Nav.Link>
 
-              
               <Nav.Link href="#action2" className="link">
                 Contact
               </Nav.Link>
-              
             </Nav>
             <Form className="d-flex icons align-items-center">
-              {/* <div className="first p-2">
-                <img src={search}></img>
-              </div>
-              <div className="second p-2">
-                <img src={img}></img>
-              </div> */}
               <Nav.Link href="#action2" className="link">
                 <button className="nav-btn">Join as vendor</button>
               </Nav.Link>
               <Nav.Link href="#action2" className="link">
-                <button className="nav-btn" >Book a venue</button>
+                <button className="nav-btn">Book a venue</button>
               </Nav.Link>
-            </Form>
+            </Form>{" "}
+            <div className="first p-2">
+              <img src={search}></img>
+            </div>
+            <div className="second p-2">
+              <img src={img}></img>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -6,7 +6,7 @@ import Footer from "../Components/CommonComponent/Footer";
 import { useLocation } from "react-router-dom";
 
 function HallDetails() {
-  const location = useLocation() ;
+  const location = useLocation();
   const hallDetails = location.state.hallDetails;
 
   console.log(hallDetails);

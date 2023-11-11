@@ -9,7 +9,7 @@
   padding-right: 5vh;
 }
 .reserve-date .left-reserve-date .reserve-date-heading p {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 60px;
@@ -20,7 +20,7 @@
   width: 642px;
 }
 .reserve-date .left-reserve-date .reserve-date-para p {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -40,7 +40,7 @@
   border-radius: 7px;
 }
 .reserve-date .left-reserve-date .reserve-date-btn button p {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 32px;

@@ -38,6 +38,7 @@
   grid-template-columns: repeat(2,1fr);
   grid-gap: 2rem;
   margin-bottom: 2rem;
+  align-items: center;
 }
 
 .service-card h3 {
@@ -56,3 +57,18 @@
   height: 70vh;
 }
 
+.css-2m9kme-MuiFormControl-root{
+  margin: 0px !important;
+  width: 255px !important;
+  background-color: #fff !important;
+}
+.inp-wrapper{
+  height: 100%;
+
+}
+.inp-wrapper .form-control{
+  height: 56px;
+}
+.mb-50{
+  margin-bottom: 50px;
+}

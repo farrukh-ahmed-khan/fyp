@@ -27,7 +27,7 @@
   justify-content: center;
 }
 .card .card-description .service-portion p {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 3vh;
@@ -41,7 +41,7 @@
   text-align: center;
 }
 .card .card-description .service-description p {
-  font-family: 'Garamond';
+  font-family: 'poppins';
   font-style: normal;
   font-weight: 400;
   font-size: 2.2vh;
