@@ -1,18 +1,17 @@
-import { React, useState } from "react";
-import "../Assets/css/form.css";
-import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
-import down from "../Assets/images/NicePng_rope-png_45489.png";
-import { Link, useNavigate } from "react-router-dom";
-import validate from "../Validation/SignupValidation";
-import axios from "axios";
+import { React, useState } from 'react';
+import '../Assets/css/form.css';
+import sides from '../Assets/images/NicePng_rope-png_45489 (1).png';
+import down from '../Assets/images/NicePng_rope-png_45489.png';
+import { Link, useNavigate } from 'react-router-dom';
+import validate from '../Validation/SignupValidation';
+import axios from 'axios';
 
 const Signup = () => {
-  
   const [values, setValues] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    password: "",
+    fname: '',
+    lname: '',
+    email: '',
+    password: '',
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -26,20 +25,14 @@ const Signup = () => {
     setErrors(validate(values));
 
     if (
-      errors.fname === "" &&
-      errors.lname === "" &&
-      errors.email === "" &&
-      errors.password === ""
+      !errors.fname &&
+    !errors.lname &&
+    !errors.email &&
+    !errors.password
     ) {
-      // axios
-      //   .post("http://localhost:8081/signup", values)
-      //   .then((res) => {
-      //     navigate("/login");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-      axios.post("http://localhost:8081/signup", values)
+      console.log(values);
+      navigate('/login');
+      axios.post('http://localhost:8081/signup', values);
     }
   };
 
@@ -47,11 +40,11 @@ const Signup = () => {
     <div className="forms">
       <div className="container">
         <div className="row ">
-          <form onSubmit={handleSubmit}>
-            <div className="sign-log-form">
-              <div className="form-heading">
-                <p>Signup</p>
-              </div>
+          <div className="sign-log-form">
+            <div className="form-heading">
+              <p>Signup</p>
+            </div>
+            <form onSubmit={handleSubmit}>
               <div className="email">
                 <input
                   type="text"
@@ -121,8 +114,8 @@ const Signup = () => {
                   Already have an Account <Link to="/login">Login</Link>
                 </p>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
       <div className="upper-image">
