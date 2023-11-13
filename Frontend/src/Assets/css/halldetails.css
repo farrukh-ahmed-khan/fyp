@@ -1,0 +1,79 @@
+*{
+    font-family: 'Poppins', sans-serif;
+}
+/* .container {
+    width: 90%;   
+    margin:auto;
+    margin-top: 50px;      
+} */
+
+.heading h1 {
+    text-align: center;
+    color: rgb(184, 149, 98);
+    font-weight: bold;
+    font-size: 45px;
+}
+
+.heading p {
+    text-align: center;
+    font-size: 18px;
+}
+ul {
+    list-style: none;
+}
+.overview-section h3, .services-section h3, .requirement-section h3, .location-section h3, .capacity h3 {
+    font-size: 26px;
+    font-weight: 600;
+    color: rgb(184, 149, 98);
+}
+
+.overview-section p {
+    margin-top: 20px;
+}
+
+.overview-section span {
+    font-weight: 600;
+    color: rgb(184, 149, 98);
+}
+
+.capacity h3 span {
+    color: #000;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.buttons button {
+    margin-top: 20px;
+    border: 1px solid rgb(184, 149, 98);
+    border-radius: 50px;
+    background-color: rgb(184, 149, 98);
+    color: #fff;
+    padding: 10px 20px;
+    font-weight: 400;
+}
+
+.capacity h3 {
+    font-weight: 500;
+}
+
+.buttons .btn2 {
+    margin-left: 20px;
+}
+
+.location-section h3 {
+    margin-top: 30px;
+}
+.services-section .services{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.services-section .services p {
+    border: 1px solid rgb(184, 149, 98);
+    border-radius: 50px;
+    background-color: transparent;
+    color: rgb(184, 149, 98);
+    padding: 10px 20px;
+    font-weight: 400;
+}
