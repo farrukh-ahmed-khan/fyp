@@ -30,8 +30,7 @@ const Signup = () => {
       errors.lname === "" &&
       errors.email === "" &&
       errors.password === ""
-      ) {
-      console.log(values);
+    ) {
       // axios
       //   .post("http://localhost:8081/signup", values)
       //   .then((res) => {
