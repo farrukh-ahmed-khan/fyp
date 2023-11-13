@@ -3,7 +3,7 @@ import "../Assets/css/form.css";
 import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
 import down from "../Assets/images/NicePng_rope-png_45489.png";
 import { Link } from "react-router-dom";
-import validate from "../LoginValidation";
+import validate from "../Validation/LoginValidation";
 
 const Login = () => {
   const [values, setValues] = useState({
