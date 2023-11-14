@@ -15,13 +15,20 @@ const Navbr = () => {
       <Navbar expand="lg" className="nav px-4">
         <Container fluid>
           <Navbar.Brand href="#" className="logo">
-            <img src={logo}></img>
+            {/* <img src={logo}></img> */}
+            <p>
+              The <span>Wedding</span> Spot
+            </p>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px", alignItems: "center" }}
+              style={{
+                maxHeight: "100px",
+                alignItems: "center",
+                marginLeft: "30px",
+              }}
               navbarScroll
             >
               <LinkContainer to="/">
@@ -50,10 +57,6 @@ const Navbr = () => {
               <Nav.Link href="#action2" className="link">
                 Contact
               </Nav.Link>
-
-              <Nav.Link href="#action2" className="link">
-                Contact
-              </Nav.Link>
             </Nav>
             <Form className="d-flex icons align-items-center">
               <Nav.Link href="#action2" className="link">
@@ -63,12 +66,12 @@ const Navbr = () => {
                 <button className="nav-btn">Book a venue</button>
               </Nav.Link>
             </Form>{" "}
-            <div className="first p-2">
+            {/* <div className="first p-2">
               <img src={search}></img>
             </div>
             <div className="second p-2">
               <img src={img}></img>
-            </div>
+            </div> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

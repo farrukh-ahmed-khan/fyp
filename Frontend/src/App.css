@@ -8,7 +8,7 @@
 }
 body{
     font-family: 'poppins', serif;
-    background-color: #dfcebd;
+    background-color: #fff !important;
     overflow-x: hidden;
 }
 img{

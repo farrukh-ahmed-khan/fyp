@@ -17,7 +17,7 @@ function HallDetails() {
         <Carosel />
       </div>
       <div className="container">
-        <div className="heading">
+        <div className="heading my-5">
           <h1>AL-Mehfil Banquet</h1>
           <p>Karachi | North Naizmabad | 021-3663-0000</p>
         </div>
@@ -90,6 +90,7 @@ function HallDetails() {
             allowFullScreen=""
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            className="mb-5 mt-2"
           />
         </div>
       </div>

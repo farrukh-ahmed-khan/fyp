@@ -1,23 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Agbalumo&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Qwitcher+Grypen:wght@700&display=swap");
+
 .link {
   font-family: "Poppins" !important;
   font-style: normal !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   font-size: 16px !important;
   line-height: 24px !important;
-  /* identical to box height */
-  color: #848484 !important;
+  color: #000000 !important;
   text-decoration: none !important;
 }
 
+.link:focus {
+  font-family: "Poppins" !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: #b89562 !important;
+}
+
+.link:hover {
+  color: #5c3d9e !important;
+}
+
 .nav {
-  height: 12vh !important;
+  height: 10vh !important;
   background-color: #ffffff !important;
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.2) !important;
 }
-
-/* .container-fluid {
-  background-color: #fff !important;
-} */
 
 .navbar-collapse {
   background-color: #fff !important;
@@ -32,29 +42,38 @@
   background-color: #fff !important;
 }
 
-.link:focus {
-  font-family: "Poppins" !important;
-  font-style: normal !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
+.logo p {
+  font-family: "qwitcher grypen" !important;
   line-height: 24px !important;
-  /* identical to box height */
-  color: #b89562 !important;
+  margin-top: 16px;
+  font-size: 25px;
+  color: #000;
+}
+
+.logo span {
+  font-family: "qwitcher grypen" !important;
+  color: #5c3d9e;
 }
 
 .logo img {
   width: 75px !important;
   background-color: #fff !important;
 }
+
 .nav-btn {
   background-color: #fff !important;
-  color: #890025;
-
+  color: #5c3d9e;
   font-family: "Poppins";
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  border: 1px solid #890025;
+  border: 1px solid #5c3d9e;
   padding: 10px 20px;
+  border-radius: 30px;
+}
+.nav-btn:hover{
+  background-color: #5c3d9e !important;
+  color: #fff;
+  border: 1px solid #5c3d9e;
 }

@@ -10,21 +10,17 @@ const HomeCard = ({ type }) => {
   switch (type) {
     case "photography":
       data = {
-        img: (
-          <img src={card_img1} style={{ height: "8.5vh", width: "8.5vh" }} />
-        ),
-        title: "Photography/Videography",
+        img: <img src={card_img1} style={{ height: "75px", width: "70px" }} />,
+        title: "Photography",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua.",
       };
 
       break;
-    case "Weeding Venue":
+    case "wedding":
       data = {
-        img: (
-          <img src={card_img2} style={{ height: "8.5vh", width: "8.5vh" }} />
-        ),
-        title: "Weeding Venue",
+        img: <img src={card_img2} style={{ height: "80px", width: "70px" }} />,
+        title: "Decoration",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua.",
       };
@@ -32,9 +28,7 @@ const HomeCard = ({ type }) => {
       break;
     case "makeup":
       data = {
-        img: (
-          <img src={card_img3} style={{ height: "8.6vh", width: "5.9vh" }} />
-        ),
+        img: <img src={card_img3} style={{ height: "80px", width: "70px" }} />,
         title: "Makeup",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -53,6 +47,9 @@ const HomeCard = ({ type }) => {
         </div>
         <div className="service-description">
           <p>{data.description}</p>
+        </div>
+        <div className="btn-section">
+          <button className="btn">Explore More</button>
         </div>
       </div>
     </div>

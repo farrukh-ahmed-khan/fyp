@@ -15,10 +15,11 @@ const Footer = () => {
       <footer>
         <div class="container">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 ">
               <div class="ftr-lt">
                 <figure>
                   <img src={logo} alt="logo" />
+                  {/* <p className="logo">The Wedding Spot</p> */}
                 </figure>
                 <div class="p1">
                   <p>Social Media</p>
