@@ -1,17 +1,17 @@
-import { React, useState } from 'react';
-import '../Assets/css/form.css';
-import sides from '../Assets/images/NicePng_rope-png_45489 (1).png';
-import down from '../Assets/images/NicePng_rope-png_45489.png';
-import { Link, useNavigate } from 'react-router-dom';
-import validate from '../Validation/SignupValidation';
-import axios from 'axios';
+import { React, useState } from "react";
+import "../Assets/css/form.css";
+import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
+import down from "../Assets/images/NicePng_rope-png_45489.png";
+import { Link, useNavigate } from "react-router-dom";
+import validate from "../Validation/SignupValidation";
+import axios from "axios";
 
 const Signup = () => {
   const [values, setValues] = useState({
-    fname: '',
-    lname: '',
-    email: '',
-    password: '',
+    fname: "",
+    lname: "",
+    email: "",
+    password: "",
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -22,17 +22,25 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(validate(values));
+    // setErrors(validate(values));
+    const err = validate(values);
+    setErrors(err);
 
     if (
-      !errors.fname &&
-    !errors.lname &&
-    !errors.email &&
-    !errors.password
+      !err.fname &&
+      !err.lname &&
+      !err.email &&
+      !err.password &&
+      !err.confirmPassword
     ) {
-      console.log(values);
-      navigate('/login');
-      axios.post('http://localhost:8081/signup', values);
+      console.log("values", values);
+      axios
+        .post("http://localhost:8081/signup", values)
+        .then((res) => {
+          console.log(res.data);
+          navigate("/login");
+        })
+        .catch((err) => console.log(err));
     }
   };
 

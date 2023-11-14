@@ -1,28 +1,47 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import "../Assets/css/form.css";
 import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
 import down from "../Assets/images/NicePng_rope-png_45489.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/LoginValidation";
+import axios from "axios";
 
 const Login = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
   });
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
+  const handleInput = (e) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-    const handleInput = (e) => {
-      setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // setErrors(validate(values));
+    const err = validate(values);
+    setErrors(err);
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      setErrors(validate(values));
-    };
-
+    if (
+      !err.email &&
+      !err.password
+      // !err.confirmPassword
+    ) {
+      console.log("values", values);
+      axios
+        .post("http://localhost:8081/login", values)
+        .then((res) => {
+          if(res.data === "Login Successful"){
+            navigate("/");
+          }else{
+            alert("no record existed");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   return (
     <div className="forms">
@@ -34,22 +53,42 @@ const Login = () => {
             </div>
             <form onSubmit={handleSubmit}>
               <div className="email">
-                <input type="text" name="email" placeholder="Email" onChange={handleInput}/>
-                {errors.email && <span className="error text-danger">{errors.email}</span>}
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleInput}
+                />
+                {errors.email && (
+                  <span className="error text-danger">{errors.email}</span>
+                )}
               </div>
               <div className="password">
-                <input type="text" name="password" placeholder="Password" onChange={handleInput}/>
-                {errors.password && <span className="error text-danger">{errors.password}</span>}
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleInput}
+                />
+                {errors.password && (
+                  <span className="error text-danger">{errors.password}</span>
+                )}
               </div>
-              <div className="confirm-password">
-                <input type="text" name="confirm password" placeholder="Confirm Password" />
-                {errors.confirmPassword && <span className="error text-danger">{errors.confirmPassword}</span>}
-              </div>
+              {/* <div className="confirm-password">
+                <input
+                  type="password"
+                  name="confirm password"
+                  placeholder="Confirm Password"
+                />
+                {errors.confirmPassword && (
+                  <span className="error text-danger">
+                    {errors.confirmPassword}
+                  </span>
+                )}
+              </div> */}
               <div className="form-submit-button">
                 <button type="submit">
-                  
-                    <p>Submit</p>
-              
+                  <p>Submit</p>
                 </button>
               </div>
               <div className="form-para">

@@ -1,6 +1,4 @@
 function validate(values){
-
-    alert('');
     let errors = {};
     const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -14,11 +12,11 @@ function validate(values){
     } else if (!passwordPattern.test(values.password)) {
         errors.password = "Password is invalid";
     }
-    if (!values.confirmPassword) {
-        errors.confirmPassword = "Confirm Password is required";
-    } else if (values.password !== values.confirmPassword) {
-        errors.confirmPassword = "Confirm Password is invalid";
-    }
+    // if (!values.confirmPassword) {
+    //     errors.confirmPassword = "Confirm Password is required";
+    // } else if (values.password !== values.confirmPassword) {
+    //     errors.confirmPassword = "Confirm Password is invalid";
+    // }
 
     return errors;
 }

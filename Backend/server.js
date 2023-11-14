@@ -11,8 +11,8 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: '',
-    database: 'signup'
+    password: "",
+    database: "signup"
 });
 
 
@@ -30,6 +30,22 @@ app.post('/signup', (req, res) => {
             res.json("Error")
         }
         return res.json(data);
+    });
+});
+
+
+app.post('/login', (req, res) => {
+    const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
+    
+    db.query(sql, [req.body.email, req.body.password], (err, data) => {
+        if (err) {
+            res.json("Error")
+        }
+        if(data.length > 0){
+            return res.json("Login Successful");
+        }else{
+            return res.json("Invalid Email or Password");
+        }
     });
 });
 
