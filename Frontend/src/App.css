@@ -1,23 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=EB+poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    
+* {
+  margin: 0;
+  padding: 0;
 }
-body{
-    font-family: 'poppins', serif;
-    background-color: #fff !important;
-    overflow-x: hidden;
+body {
+  font-family: "poppins", serif;
+  background-color: #fff !important;
+  overflow-x: hidden;
 }
-img{
-    max-width: 100%;
+img {
+  max-width: 100%;
 }
 a {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
-ol, ul {
-    padding-left: 0px;
-    list-style: none;
+ol,
+ul {
+  padding-left: 0px;
+  list-style: none;
+}
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+
+  50% {
+    transform: translatey(-20px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+.side-panel-img-wrapper.float {
+    position: relative;
+    left: 33%;
+    z-index: 33;
 }

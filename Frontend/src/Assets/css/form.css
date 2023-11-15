@@ -1,19 +1,19 @@
-.forms{
+.forms {
   height: 100vh;
   overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
 }
-.upper-image img{
+.upper-image img {
   width: 41.1vh;
   height: 49.3vh;
 }
-.upper-image{
+.upper-image {
   position: absolute;
   top: 0;
 }
-.lower-image img{
+.lower-image img {
   width: 41.1vh;
   height: 49.3vh;
 }
@@ -26,20 +26,18 @@
   border: none;
   border-bottom: 1px solid #d9d9d9;
   outline: none;
-  padding-left: 10px;
-
+  padding: 10px;
 }
 
 .sign-log-form .form-heading p {
-  text-align: center;
-  font-family: 'poppins';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 45px;
-  text-align: center;
-  color: #b89562;
-  padding: 2vh;
+  color: #5C3D9E;
+font-family: "Poppins";
+font-size: 30px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-align: center;
+text-transform: uppercase;
 }
 .sign-log-form .names-inp {
   display: flex;
@@ -81,7 +79,7 @@
   align-items: center;
 }
 .sign-log-form input:placeholder-shown {
-  font-family: 'poppins';
+  font-family: "poppins";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -93,37 +91,28 @@
   margin: 2vh 5vh 2vh 0;
 }
 .sign-log-form .form-submit-button button {
-  width: 55.6vh;
-  height: 5.9vh;
-  background: #242d2c;
-  border-radius: 7px;
-}
-.sign-log-form .form-submit-button button p {
-  font-family: 'poppins';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 5.9vh;
-  text-align: center;
-  color: #ffffff;
-}
-.sign-log-form .form-submit-button p {
-  font-family: 'poppins';
-  font-style: normal;
-  font-weight: 400;
+  border-radius: 15px;
+  background: #5c3d9e;
+  color: #fff;
+  font-family: "Poppins";
   font-size: 24px;
-  line-height: 24px;
-  text-align: center;
-
-  color: #848484;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  width: 330px;
+  height: 55px;
+  flex-shrink: 0;
+  border: none;
+  outline: none;
 }
+
 .sign-log-form .form-para {
   display: flex;
   justify-content: center;
   margin-right: 7vh;
 }
 .sign-log-form .form-para {
-  font-family: 'poppins';
+  font-family: "poppins";
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -145,4 +134,56 @@
     justify-content: end;
     padding-left: 0vh;
   }
+}
+.sign-log-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 50px 0px 0px 50px;
+  /* box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+}
+.forms {
+  background: #5c3d9e;
+}
+.forms .container-fluid,
+.forms .row,
+.forms .container-fluid .row .col-lg-4 .col-lg-8 {
+  height: 100%;
+}
+.side-panel-form {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.side-panel-form h4 {
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  text-align: center;
+}
+.side-panel-form h4 span {
+  color: #ffa2ff;
+  font-family: "Poppins";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+}
+.logo-wrapper{
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
