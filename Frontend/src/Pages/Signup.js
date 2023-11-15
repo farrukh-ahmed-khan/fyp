@@ -50,7 +50,7 @@ const Signup = () => {
     <div className="forms">
       <div className="container-fluid">
         <div className="row ">
-          <div className="col-lg-4" style={{ height: "100%" }}>
+          <div className="col-lg-4 col-md-12" style={{ height: "100%" }}>
             <div className="logo-wrapper">
               <img src={logo} />
             </div>
@@ -65,7 +65,7 @@ const Signup = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-8" style={{ height: "100%" }}>
+          <div className="col-lg-8 col-md-12" style={{ height: "100%" }}>
             <div className="sign-log-form">
               <div className="form-heading">
                 <p>Signup</p>
@@ -132,7 +132,7 @@ const Signup = () => {
                 </div>
                 <div className="form-submit-button">
                   <button type="submit">
-                    <p>Submit </p>
+                    Submit 
                   </button>
                 </div>
                 <div className="form-para">

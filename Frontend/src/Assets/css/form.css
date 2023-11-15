@@ -30,34 +30,31 @@
 }
 
 .sign-log-form .form-heading p {
-  color: #5C3D9E;
-font-family: "Poppins";
-font-size: 30px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-text-align: center;
-text-transform: uppercase;
+  color: #5c3d9e;
+  font-family: "Poppins";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+  text-transform: uppercase;
 }
 .sign-log-form .names-inp {
   display: flex;
   justify-content: center;
   padding: 3vh;
 }
-.sign-log-form .names-inp .first-name {
-  margin-right: 2vh;
-}
+
 
 .sign-log-form .password input,
 .sign-log-form .email input,
 .sign-log-form .confirm-password input {
-  width: 85.6vh;
+  width: 80%;
 }
 
 .sign-log-form .email {
   display: flex;
   justify-content: space-around;
-  margin-right: 5vh;
   padding: 3vh;
   flex-direction: column;
   align-items: center;
@@ -65,7 +62,6 @@ text-transform: uppercase;
 .sign-log-form .password {
   display: flex;
   justify-content: space-around;
-  margin-right: 5vh;
   padding: 3vh;
   flex-direction: column;
   align-items: center;
@@ -73,7 +69,6 @@ text-transform: uppercase;
 .sign-log-form .confirm-password {
   display: flex;
   justify-content: space-around;
-  margin-right: 5vh;
   padding: 3vh;
   flex-direction: column;
   align-items: center;
@@ -88,7 +83,7 @@ text-transform: uppercase;
 .sign-log-form .form-submit-button {
   display: flex;
   justify-content: center;
-  margin: 2vh 5vh 2vh 0;
+  margin-bottom: 10px;
 }
 .sign-log-form .form-submit-button button {
   border-radius: 15px;
@@ -99,7 +94,7 @@ text-transform: uppercase;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  width: 330px;
+  width: 300px;
   height: 55px;
   flex-shrink: 0;
   border: none;
@@ -109,9 +104,8 @@ text-transform: uppercase;
 .sign-log-form .form-para {
   display: flex;
   justify-content: center;
-  margin-right: 7vh;
 }
-.sign-log-form .form-para {
+.sign-log-form .form-para p {
   font-family: "poppins";
   font-style: normal;
   font-weight: 400;
@@ -182,8 +176,38 @@ text-transform: uppercase;
   line-height: normal;
   text-transform: uppercase;
 }
-.logo-wrapper{
+.logo-wrapper {
   position: absolute;
   top: 10px;
   left: 10px;
+}
+.forms form{
+  width: 100%;
+}
+@media (max-width: 1000px) {
+  .forms {
+    height: 100%;
+  }
+  .side-panel-img-wrapper.float {
+    position: inherit;
+    z-index: 33;
+  }
+  .sign-log-form{
+    padding: 10px;
+  }
+  .sign-log-form .email,
+  .sign-log-form .password,
+  .sign-log-form .confirm-password {
+    padding: 1vh;
+    padding-bottom: 3vh;
+  }
+  .sign-log-form{
+    border-radius: 0px;
+  }
+  .side-panel-form{
+    margin-top: 100px;
+  }
+  .sign-log-form .form-para p{
+    font-size: 18px;
+  }
 }
