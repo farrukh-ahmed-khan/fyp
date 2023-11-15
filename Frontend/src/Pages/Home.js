@@ -43,16 +43,16 @@ const Home = () => {
             <div className="col-lg-6" data-aos="fade-left">
               <div className="row">
                 <div className="col-lg-6">
-                  <img src={image1} />
+                  <img src={image1} className="float"/>
                 </div>
                 <div className="col-lg-6">
-                  <img src={image2} className="even" />
+                  <img src={image2} className="even float" />
                 </div>
                 <div className="col-lg-6 mt-3">
-                  <img src={image3} className="even" />
+                  <img src={image3} className="even float" />
                 </div>
                 <div className="col-lg-6 mt-3">
-                  <img src={image4} className="my-5 mx-5 " />
+                  <img src={image4} className="my-5 mx-5 float" />
                 </div>
               </div>
             </div>
