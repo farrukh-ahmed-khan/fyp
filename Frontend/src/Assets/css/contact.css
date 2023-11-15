@@ -1,0 +1,121 @@
+.contact-us h1 {
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 40px;
+  text-decoration: underline;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: rgb(30, 70, 30);
+}
+.form {
+  margin-top: 25px;
+}
+#heading {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 40px;
+  padding: 10px;
+  text-decoration: underline;
+}
+.name-field, .phone-field {
+  width: 50%;
+  padding: 15px;
+  margin: 10px;
+  font-size: 15px;
+}
+.email-field {
+  width: 50%;
+  padding: 15px;
+  font-size: 15px;
+}
+textarea {
+  width: 50%;
+  padding: 15px;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.submit-btn {
+  width: 51%;
+  padding: 15px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #5c3d9e;
+  color: snow;
+}
+
+.submit-btn:hover {
+  background-color: #37245f;
+  transition: 0.5s all ease-out 0s;
+}
+::-webkit-input-placeholder {
+  color: rgb(119, 119, 119);
+}
+
+.social {
+  margin: 10px;
+  display: inline-block;
+}
+
+.social h2 {
+  color: #5c3d9e;
+  font-weight: 600;
+  /* margin-top: 10px ; */
+  font-size: 45px;
+}
+.social ul {
+  display: flex;
+}
+.social ul li {
+  list-style: none;
+  text-align: center;
+}
+.social ul li a {
+  text-decoration: none;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  padding: 15px 10px 15px 10px;
+  width: 100px;
+  /* margin: 30px; */
+  margin: 10px 10px;
+  display: block;
+  box-shadow: 2px 5px 4px gray;
+}
+.social p {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.contact-heading {
+  font-size: 45px;
+  color: #5c3d9e;
+  font-weight: 600;
+  margin-top: 45px;
+}
+
+.banner-section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+    url("https://dg1xqmhtoint1.cloudfront.net/img/pgdm/blog/businessman-hand-holding-creative-light-bulb-with-marketing-network-icons-planning-strategy-pdgm.webp?mtime=20220506115838&focal=none") !important;
+  /* background-image: linear-gradient(#6633CC, #3b2669) !important; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 70vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  clip-path: ellipse(100% 60% at 50% 40%);
+}
+
+.banner-section h1 {
+  font-size: 55px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}

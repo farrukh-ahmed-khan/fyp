@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import "../Assets/css/form.css";
-import logo from "../Assets/images/The-Wedding-Spot1.png"
+import logo from "../Assets/images/The-Wedding-Spot1.png";
 import sidePanel from "../Assets/images/side-panel-img.png";
 import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
 import down from "../Assets/images/NicePng_rope-png_45489.png";
@@ -131,13 +131,11 @@ const Signup = () => {
                   )}
                 </div>
                 <div className="form-submit-button">
-                  <button type="submit">
-                    Submit 
-                  </button>
+                  <button type="submit">Signup</button>
                 </div>
                 <div className="form-para">
                   <p>
-                    Already have an Account <Link to="/login">Login</Link>
+                    Already have an Account? <Link to="/login">Login</Link>
                   </p>
                 </div>
               </form>

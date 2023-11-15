@@ -54,7 +54,7 @@ const Navbr = () => {
               <Nav.Link href="/venue-booking" className="link">
                 Reserved the date
               </Nav.Link>
-              <Nav.Link href="#action2" className="link">
+              <Nav.Link href="/Contact" className="link">
                 Contact
               </Nav.Link>
             </Nav>

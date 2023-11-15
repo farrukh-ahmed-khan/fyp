@@ -19,7 +19,7 @@
   content: "";
   width: 5px;
   height: 100%;
-  background: #b89562;
+  background: #aa62b8;
   border-radius: 10px;
   bottom: -5px;
   left: -1%;
@@ -34,7 +34,7 @@
 .search-filter-wrapper .search-btn .btn {
   border-radius: 5px;
   border: 1px solid #848484;
-  background: #b89562;
+  background: #5C3D9E;
   color: #fff;
   padding: 13px 40px;
   text-align: center;
@@ -43,6 +43,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin-bottom: 10px;
 }
 .range-inp-wrapper p {
   margin-bottom: 0px;
@@ -72,7 +73,7 @@
 .banq-card-btn .det-btn {
   border-radius: 5px;
   border: 1px solid #848484;
-  background: #b89562;
+  background: #5C3D9E;
   color: #fff;
   padding: 13px 20px;
   border: none;
@@ -94,7 +95,7 @@
   width: 37px;
   height: 37px;
   border-radius: 15px 15px 15px 0px;
-  background: #165bc3;
+  background: rgb(240, 85, 219);
   display: flex;
   align-items: center;
   justify-content: center;

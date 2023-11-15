@@ -271,7 +271,7 @@ const VenueBooking = () => {
                                       <FontAwesomeIcon
                                         icon={faLocationDot}
                                         style={{
-                                          color: "#E4A951",
+                                          color: "#5C3D9E",
                                           fontSize: "20px",
                                         }}
                                       />
@@ -283,7 +283,7 @@ const VenueBooking = () => {
                                       <FontAwesomeIcon
                                         icon={faPhone}
                                         style={{
-                                          color: "#E4A951",
+                                          color: "#5C3D9E",
                                           fontSize: "20px",
                                         }}
                                       />

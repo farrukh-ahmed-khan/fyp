@@ -1,148 +1,112 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbr from "../Components/CommonComponent/Nav";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import ListItemText from "@mui/material/ListItemText";
-import Select from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
-import photographyimage from "../Assets/images/card-image1.png";
-import decorationimage from "../Assets/images/card-image2.png";
-import makeupimage from "../Assets/images/card-image3.png";
-import image1 from "../Assets/images/about-us.png";
-import image2 from "../Assets/images/makeup-docor/makeup2.png";
-import image3 from "../Assets/images/makeup-docor/decor2.png";
 import "../Assets/css/service.css";
 import Footer from "../Components/CommonComponent/Footer";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const services = ["Photography/Videography", "Decoration", "Makeup"];
+import img from "../Assets/images/Home_images/makeup-section-img.png";
+import PhotographyServiceCard from "../Components/photographyServiceCard";
+import PhotographyCardActive from "../Components/PhotographyCardActive";
+import MakeupServiceCard from "../Components/MakeupServiceCard";
+import MakeupActiveCard from "../Components/MakeupActiveCard";
+import DecorationServiceCard from "../Components/DecorationServiceCard";
+import DecorationActiveCard from "../Components/DecorationActiveCard";
 
 const Service = () => {
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
   return (
     <>
+    {/* Navbar */}
       <div>
         <Navbr />
       </div>
-      <div className="service-head">
-        <h4>Services</h4>
-        <p>You can select One or Multiple services with your Location.</p>
+
+      {/* Hero Section */}
+      <div class="hero-section">
+        <h1>Welcome To Our Services</h1>
       </div>
+
+      {/* Service Wrapper */}
       <div className="container">
-        <div className="filter-wrapper">
-          <div className="row mb-50">
-            <div className="col-lg-3">
-              <div className="filter">
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <InputLabel id="demo-multiple-checkbox-label">
-                    Services
-                  </InputLabel>
-                  <Select
-                    labelId="demo-multiple-checkbox-label"
-                    id="demo-multiple-checkbox"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput label="Tag" />}
-                    renderValue={(selected) => selected.join(", ")}
-                    MenuProps={MenuProps}
-                  >
-                    {services.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        <Checkbox checked={personName.indexOf(name) > -1} />
-                        <ListItemText primary={name} />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
+        <div className="service-wrapper">
+          <div className="row">
+            <div className="col-lg-12">
+              <h3>
+                <span>| </span>SERVICES
+              </h3>
+              <p>
+                Welcome to the wedding spot, where we don't just provide spaces
+                but create an entire experience. Elevate your event with our
+                comprehensive services. Our talented photographers skillfully
+                capture every fleeting moment, ensuring memories that last a
+                lifetime. Transform into your most radiant self with our expert
+                makeup artists, who bring out your natural beauty. Let our
+                decorators weave magic, turning your chosen venue into a
+                personalized masterpiece. Together, these services harmonize to
+                craft an unforgettable celebration, where every detail is a
+                testament to your unique style and joyous moments are
+                immortalized with grace.
+              </p>
             </div>
-            <div className="col-lg-3">
-              <div className="inp-wrapper">
-
-                <input type="text" name="" id="" placeholder="Enter Your City" 
-                className="form-control"
-                />
-              </div>
-
-            </div>
-            <div className="col-lg-3">
-              <div className="inp-wrapper form-group">
-
-                <input type="date" name="" id="" placeholder="Enter Your start date" 
-                className="form-control"
-                />
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="inp-wrapper">
-
-                <input type="date" name="" id="" placeholder="Enter Your end date" 
-                className="form-control"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="service-card">
-          <div>
-            <img src={photographyimage} />
-            <h3>Photography/Videography</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, labore in quisquam amet saepe ut omnis quas. Ullam sunt odit eum, iste animi est! Ad mollitia asperiores perspiciatis placeat recusandae.</p>
-          </div>
-          <div>
-            <img className="service-img" src={image1} />
-          </div>
-        </div>
-        <div className="service-card">
-
-          <div>
-            <img className="service-img" src={image2} />
-          </div>
-          <div>
-            <img src={makeupimage} />
-            <h3>Photography/Videography</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, labore in quisquam amet saepe ut omnis quas. Ullam sunt odit eum, iste animi est! Ad mollitia asperiores perspiciatis placeat recusandae.</p>
-          </div>
-        </div>
-
-        <div className="service-card">
-          <div>
-            <img src={decorationimage} />
-            <h3>Photography/Videography</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, labore in quisquam amet saepe ut omnis quas. Ullam sunt odit eum, iste animi est! Ad mollitia asperiores perspiciatis placeat recusandae.</p>
-          </div>
-          <div>
-            <img className="service-img" src={image3} />
+            {/* <div className="col-lg-6">
+              <img src={img} alt="" />
+            </div> */}
           </div>
         </div>
       </div>
-      <Footer />
+
+      {/* Photography Section */}
+
+      <div className="photography-section my-5">
+        <div className="container">
+          <h3 className="mt-3 mb-5">
+            <span>| </span>PHOTOGRAPHY
+          </h3>
+          <div className="row">
+            <div className="cards">
+              <PhotographyServiceCard type="silver" />
+              <PhotographyCardActive type="platinum"/>           
+              <PhotographyServiceCard type="gold" />            
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* Makeup Section */}
+      <div className="photography-section my-5">
+        <div className="container">
+          <h3 className="mt-3 mb-5">
+            <span>| </span>MAKEUP
+          </h3>
+          <div className="row">
+            <div className="cards">
+              <MakeupServiceCard type="silver" />
+              <MakeupActiveCard type="platinum"/>           
+              <MakeupServiceCard type="gold" />            
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Decoration Section */}
+
+      <div className="photography-section my-5">
+        <div className="container">
+          <h3 className="mt-3 mb-5">
+            <span>| </span>DECORATION
+          </h3>
+          <div className="row">
+            <div className="cards">
+              <DecorationServiceCard type="silver" />
+              <DecorationActiveCard type="platinum"/>           
+              <DecorationServiceCard type="gold" />            
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div>
+        <Footer />
+      </div>
     </>
   );
 };

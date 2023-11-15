@@ -9,20 +9,11 @@ import Service from "./Pages/Service";
 import VenueBooking from "./Pages/venue-booking";
 import HallDetails from "./Pages/HallDetails";
 import VendorForm from "./Pages/VendorForm";
+import Contact from "./Pages/Contact";
 
 function App() {
   return (
     <>
-      {/* <ReservedTheDate/> */}
-      {/* <Service/> */}
-      {/* <Calender/> */}
-      {/* <Gallery/> */}
-      {/* <GalleryButton/> */}
-      {/* <MakeUpDecoration/> */}
-      {/* <Footer /> */}
-      {/* <HowWeWork/> */}
-      {/* <ShortGallery/> */}
-      {/* <HomeCard /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -33,6 +24,7 @@ function App() {
           <Route path="/venue-booking" element={<VenueBooking />} />
           <Route path="/HallDetails" element={<HallDetails />} />
           <Route path="/VendorForm" element={<VendorForm />} />
+          <Route path="/Contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
     </>

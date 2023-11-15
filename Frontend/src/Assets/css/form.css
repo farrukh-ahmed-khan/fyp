@@ -32,7 +32,7 @@
 .sign-log-form .form-heading p {
   color: #5c3d9e;
   font-family: "Poppins";
-  font-size: 30px;
+  font-size: 35px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -46,10 +46,11 @@
 }
 
 
+
 .sign-log-form .password input,
 .sign-log-form .email input,
 .sign-log-form .confirm-password input {
-  width: 80%;
+  width: 65%;
 }
 
 .sign-log-form .email {
@@ -76,9 +77,9 @@
 .sign-log-form input:placeholder-shown {
   font-family: "poppins";
   font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
   line-height: 27px;
+  font-weight: 400;
+  font-size: 18px;
 }
 .sign-log-form .form-submit-button {
   display: flex;
@@ -86,30 +87,37 @@
   margin-bottom: 10px;
 }
 .sign-log-form .form-submit-button button {
-  border-radius: 15px;
+  border-radius: 10px;
   background: #5c3d9e;
   color: #fff;
   font-family: "Poppins";
-  font-size: 24px;
+  font-size: 20px;
+  letter-spacing: 1px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: normal;
-  width: 300px;
+  width: 62%;
   height: 55px;
   flex-shrink: 0;
   border: none;
   outline: none;
 }
 
+.sign-log-form .form-submit-button button:hover{
+  background-color: #3b2669;
+}
+
 .sign-log-form .form-para {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 35px;
 }
 .sign-log-form .form-para p {
   font-family: "poppins";
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 16px;
   line-height: 24px;
   color: #848484;
 }
@@ -128,6 +136,7 @@
     justify-content: end;
     padding-left: 0vh;
   }
+ 
 }
 .sign-log-form {
   background: #fff;
@@ -141,9 +150,11 @@
   align-items: center;
   justify-content: center;
   padding-top: 80px;
+  width: 102%;
 }
 .forms {
-  background: #5c3d9e;
+  /* background: #5c3d9e; */
+  background-image: radial-gradient(#624a96, #3b2669);
 }
 .forms .container-fluid,
 .forms .row,
@@ -156,13 +167,14 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  margin-top: 50px;
 }
 .side-panel-form h4 {
   color: #fff;
-  font-family: "Poppins";
+  /* font-family: "Poppins"; */
   font-size: 30px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: normal;
   text-transform: uppercase;
   text-align: center;
@@ -188,6 +200,10 @@
   .forms {
     height: 100%;
   }
+  .side-panel-img-wrapper{
+    height: 40%;
+    width: 60%;
+  }
   .side-panel-img-wrapper.float {
     position: inherit;
     z-index: 33;
@@ -209,5 +225,19 @@
   }
   .sign-log-form .form-para p{
     font-size: 18px;
+  }.sign-log-form {
+    background: #fff;
+    padding: 30px;
+    /* border-radius: 50px 0px 0px 50px !important; */
+    /* box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+    width: 105% !important;
+    margin-left: -15px;
   }
 }
