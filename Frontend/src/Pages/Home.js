@@ -43,7 +43,7 @@ const Home = () => {
             <div className="col-lg-6" data-aos="fade-left">
               <div className="row">
                 <div className="col-lg-6">
-                  <img src={image1} className="float"/>
+                  <img src={image1} className="float" />
                 </div>
                 <div className="col-lg-6">
                   <img src={image2} className="even float" />
@@ -61,7 +61,9 @@ const Home = () => {
 
         <div className="container">
           <div className="services-section">
-            <h1 className="text-center" data-aos="zoom-in">Our Services</h1>
+            <h1 className="text-center" data-aos="zoom-in">
+              Our Services
+            </h1>
             <div className="card-section" data-aos="fade-right">
               <HomeCard type="photography" />
               <HomeCard type="wedding" />
@@ -72,7 +74,9 @@ const Home = () => {
 
         <div className="container">
           <div className="luxury-wedding-section">
-            <h1 className="text-center my-4" data-aos="zoom-in">Our Luxury Weddings</h1>
+            <h1 className="text-center my-4" data-aos="zoom-in">
+              Our Luxury Weddings
+            </h1>
             <div className="row my-5">
               <div className="col-lg-6 main-content">
                 <div className="row">
@@ -183,7 +187,9 @@ const Home = () => {
 
         <div className="container">
           <div className="makeup-section">
-            <h1 className="text-center" data-aos="zoom-in">Makeup</h1>
+            <h1 className="text-center" data-aos="zoom-in">
+              Makeup
+            </h1>
 
             <div className="row">
               <div className="col-lg-6 ">
@@ -220,12 +226,14 @@ const Home = () => {
 
         <div className="container">
           <div className="decoration-section">
-            <h1 className="text-center" data-aos="zoom-in">Decoration</h1>
+            <h1 className="text-center" data-aos="zoom-in">
+              Decoration
+            </h1>
             <div className="row">
               <div className="col-lg-6">
                 <img src={decoration_img} alt="" />
               </div>
-              <div className="col-lg-6">              
+              <div className="col-lg-6">
                 <div className="decoration-sub-section">
                   <h3>
                     Book Your <span style={{ color: "#5c3d9e" }}>Service</span>,{" "}
@@ -254,7 +262,9 @@ const Home = () => {
         </div>
 
         <div>
-          <h1 className="text-center my-4 why-us-heading" data-aos="zoom-in">Why Us?</h1>
+          <h1 className="text-center my-4 why-us-heading" data-aos="zoom-in">
+            Why Us?
+          </h1>
           <div className="container-fluid why-us-fluid" data-aos="fade-left">
             <div className="why-us-section">
               <div className="card-section">

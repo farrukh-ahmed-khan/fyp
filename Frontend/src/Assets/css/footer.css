@@ -1,5 +1,6 @@
 footer {
-  background-color: #6633CC;
+  /* background-color: #6633CC; */
+  background: linear-gradient(140deg, #5c3d9e 0%, #7350bd 100%);
   padding: 30px 0;
 }
 figure {
@@ -29,7 +30,8 @@ footer .p1 p {
   padding-top: 30px;
   padding-bottom: 30px;
   color: #efecce;
-  background: #6633CC;
+  /* background: #6633CC; */
+  background: linear-gradient(140deg, #5c3d9e 0%, #7350bd 100%);
 }
 .copyright.text-center p {
   text-transform: capitalize;

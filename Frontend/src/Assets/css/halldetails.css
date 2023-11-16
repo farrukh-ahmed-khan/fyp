@@ -9,7 +9,7 @@
 
 .heading h1 {
     text-align: center;
-    color: rgb(184, 149, 98);
+    color: #5C3D9E;
     font-weight: bold;
     font-size: 45px;
 }
@@ -24,7 +24,7 @@ ul {
 .overview-section h3, .services-section h3, .requirement-section h3, .location-section h3, .capacity h3 {
     font-size: 26px;
     font-weight: 600;
-    color: rgb(184, 149, 98);
+    color: #5C3D9E;
 }
 
 .overview-section p {
@@ -33,7 +33,7 @@ ul {
 
 .overview-section span {
     font-weight: 600;
-    color: rgb(184, 149, 98);
+    color: #5C3D9E;
 }
 
 .capacity h3 span {
@@ -44,9 +44,9 @@ ul {
 
 .buttons button {
     margin-top: 20px;
-    border: 1px solid rgb(184, 149, 98);
+    border: 1px solid #5C3D9E;
     border-radius: 50px;
-    background-color: rgb(184, 149, 98);
+    background-color: #5C3D9E;
     color: #fff;
     padding: 10px 20px;
     font-weight: 400;
@@ -70,10 +70,16 @@ ul {
     margin-top: 20px;
 }
 .services-section .services p {
-    border: 1px solid rgb(184, 149, 98);
+    border: 1px solid #5C3D9E;
     border-radius: 50px;
     background-color: transparent;
-    color: rgb(184, 149, 98);
+    color: #5C3D9E;
     padding: 10px 20px;
     font-weight: 400;
+}
+
+.services-section .services p:hover {
+    background-color: #5C3D9E;
+    color: #fff;
+    cursor: pointer;
 }

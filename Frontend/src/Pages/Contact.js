@@ -1,5 +1,9 @@
 import { React } from "react";
 import "../Assets/css/contact.css";
+import fbIcon from "../Assets/images/facebook-icon.png";
+import instaIcon from "../Assets/images/instagram-icon.png";
+import twitterIcon from "../Assets/images/whatsapp-icon.png";
+import whatsappIcon from "../Assets/images/twitter-icon.png";
 import Navbar from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 
@@ -16,9 +20,19 @@ const Contact = () => {
         <center>
           <div className="form">
             <form>
-              <input  className="name-field" type="text" placeholder="Enter Your Name" required="" />
+              <input
+                className="name-field"
+                type="text"
+                placeholder="Enter Your Name"
+                required=""
+              />
               <br />
-              <input  className="email-field" type="email" placeholder="Enter Your Email" required="" />
+              <input
+                className="email-field"
+                type="email"
+                placeholder="Enter Your Email"
+                required=""
+              />
               <br />
               <input
                 type="text"
@@ -49,24 +63,28 @@ const Contact = () => {
           <p>Contact us Via...</p>
           <ul className="list">
             <li>
-              <a href="" style={{ backgroundColor: "#274274" }}>
+              {/* <a href="" style={{ backgroundColor: "#274274" }}>
                 <i className="fab fa-facebook fa-lg" />
-              </a>
+              </a> */}
+              <img src={fbIcon} />
             </li>
             <li>
-              <a href="" style={{ backgroundColor: "#5ea1d4" }}>
+              {/* <a href="" style={{ backgroundColor: "#5ea1d4" }}>
                 <i className="fab fa-twitter fa-lg" />
-              </a>
+              </a> */}
+              <img src={instaIcon} />
             </li>
             <li>
-              <a href="" style={{ backgroundColor: "#0a411f" }}>
+              {/* <a href="" style={{ backgroundColor: "#0a411f" }}>
                 <i className="fab fa-whatsapp fa-lg" />
-              </a>
+              </a> */}
+              <img src={twitterIcon} />
             </li>
             <li>
-              <a href="" style={{ backgroundColor: "#cf3b56" }}>
+              {/* <a href="" style={{ backgroundColor: "#cf3b56" }}>
                 <i className="fab fa-instagram fa-lg" />
-              </a>
+              </a> */}
+              <img src={whatsappIcon} />
             </li>
           </ul>
         </div>

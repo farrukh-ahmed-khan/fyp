@@ -1,0 +1,36 @@
+.about-section h1{
+  font-weight: 600;
+  color: #5c3d9e;
+}
+
+.about-section p {
+  color: #646464;
+  font-size: 15px;
+}
+
+.about-section .aboutImg {
+  height: 260px;
+
+}
+
+.story-card, .mission-card {
+  box-shadow: 0px 0px 25px #d6d5d5;
+  padding: 20px 30px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.story-card h3, .mission-card h3{
+  font-weight: 600;
+  color: #5c3d9e;
+}
+
+.story-card p, .mission-card p{
+  color: #646464;
+  font-size: 15px;
+}
+
+.story-card:hover, .mission-card:hover{
+  transform: translateY(-10px);
+
+}

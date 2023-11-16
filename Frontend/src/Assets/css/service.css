@@ -3,13 +3,18 @@
 }
 
 .service-wrapper h3,
-.photography-section h3 {
+.photography-section h3,
+.makeup-section h3,
+.decoration-section h3 {
   font-size: 30px;
   font-weight: 700;
   color: #5c3d9e;
 }
 
-.service-wrapper span {
+.service-wrapper span,
+.photography-section span,
+.makeup-section span,
+.decoration-section span {
   color: #805bcf;
 }
 
@@ -24,7 +29,7 @@
   height: 100%;
 }
 
-.hero-section {
+.service-hero-section {
   /* background-image: linear-gradient(
       rgba(0, 0, 0, 0.6),
       rgba(0, 0, 0, 0.6)
@@ -42,7 +47,7 @@
   clip-path: ellipse(100% 60% at 50% 40%);
 }
 
-.hero-section h1 {
+.service-hero-section h1 {
   font-size: 55px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -62,7 +67,7 @@
 }
 
 .cards .card.active {
-  background: linear-gradient(140deg, #36245e 0%, #7350bd 100%);
+  background: linear-gradient(140deg, #5c3d9e 0%, #7350bd 100%);
   color: #fff;
   display: flex;
   align-items: center;
@@ -108,7 +113,7 @@
 
   cursor: pointer;
   border-radius: 4px;
-  background: linear-gradient(140deg, #36245e 0%, #7350bd 100%);
+  background: linear-gradient(140deg, #5c3d9e 0%, #7350bd 100%);
   color: #fff;
   outline: none;
   border: 0;

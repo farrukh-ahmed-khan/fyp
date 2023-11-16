@@ -41,11 +41,11 @@ const Navbr = () => {
                   About
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/Gallery">
+              {/* <LinkContainer to="/Gallery">
                 <Nav.Link href="#" className="link">
                   Gallery
                 </Nav.Link>
-              </LinkContainer>
+              </LinkContainer> */}
               <LinkContainer to="/Service">
                 <Nav.Link href="/service" className="link">
                   Services

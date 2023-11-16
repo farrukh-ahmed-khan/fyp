@@ -19,7 +19,7 @@ const Service = () => {
       </div>
 
       {/* Hero Section */}
-      <div class="hero-section">
+      <div class="service-hero-section">
         <h1>Welcome To Our Services</h1>
       </div>
 
@@ -71,7 +71,7 @@ const Service = () => {
 
 
       {/* Makeup Section */}
-      <div className="photography-section my-5">
+      <div className="makeup-section my-5">
         <div className="container">
           <h3 className="mt-3 mb-5">
             <span>| </span>MAKEUP
@@ -88,7 +88,7 @@ const Service = () => {
 
       {/* Decoration Section */}
 
-      <div className="photography-section my-5">
+      <div className="decoration-section my-5">
         <div className="container">
           <h3 className="mt-3 mb-5">
             <span>| </span>DECORATION

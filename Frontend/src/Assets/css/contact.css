@@ -87,6 +87,16 @@ textarea {
   display: block;
   box-shadow: 2px 5px 4px gray;
 }
+
+.social ul li img {
+width: 85px;
+height: 85px;
+transition: all 0.5s ease;
+cursor: pointer;
+}
+.social ul li img:hover {
+  transform: translateY(-10px);
+}
 .social p {
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;

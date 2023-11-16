@@ -10,6 +10,7 @@ import VenueBooking from "./Pages/venue-booking";
 import HallDetails from "./Pages/HallDetails";
 import VendorForm from "./Pages/VendorForm";
 import Contact from "./Pages/Contact";
+import About from "./Pages/About";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/HallDetails" element={<HallDetails />} />
           <Route path="/VendorForm" element={<VendorForm />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/About" element={<About />} />
         </Routes>
       </BrowserRouter>
     </>
