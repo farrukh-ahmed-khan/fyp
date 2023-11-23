@@ -1,6 +1,10 @@
 .home-page {
   background-color: #f8f5f2;
 }
+.home-container {
+  position: relative;
+  padding: 100px 0px;
+}
 head {
   display: flex;
   justify-content: center;

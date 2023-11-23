@@ -10,6 +10,7 @@ import make_img from "../Assets/images/Home_images/makeup-section-img.png";
 import decoration_img from "../Assets/images/Home_images/decoration_img.png";
 import photography from "../Assets/images/Home_images/photography.png";
 import howwework from "../Assets/images/Home_images/how-we-work.png";
+import bg from "../Assets/images/bg.png";
 import HomeCard from "../Components/HomeCard";
 import WhyUsCard from "../Components/WhyUsCard";
 const Home = () => {
@@ -18,8 +19,8 @@ const Home = () => {
       <div>
         <Navbr />
       </div>
-      <div>
-        <div className="container">
+      <div className="home-container" style={{ background: `url("${bg}")` }}>
+        <div className="container" >
           <div className="row main-section">
             <div className="col-lg-6" data-aos="fade-right">
               <p>EXPLORE THE VENUES</p>
