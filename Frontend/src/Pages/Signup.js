@@ -37,7 +37,7 @@ const Signup = () => {
     ) {
       console.log("values", values);
       axios
-        .post("http://localhost:8081/signup", values)
+        .post("http://localhost:8081/weddingspot", values)
         .then((res) => {
           console.log(res.data);
           navigate("/login");

@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // setErrors(validate(values));
-    const err = validate(values);
+    const err = validate(values);   
     setErrors(err);
 
     if (
@@ -29,7 +29,6 @@ const Login = () => {
       !err.password
       // !err.confirmPassword
     ) {
-      console.log("values", values);
       axios
         .post("http://localhost:8081/login", values)
         .then((res) => {

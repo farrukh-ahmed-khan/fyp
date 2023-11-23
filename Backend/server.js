@@ -12,12 +12,12 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "signup"
+    database: "weddingspot"
 });
 
 
 
-app.post('/signup', (req, res) => {
+app.post('/weddingspot', (req, res) => {
     const sql = "INSERT INTO login (`firstname`, `lastname`, `email`, `password`) VALUES (?)";
     const values = [
         req.body.fname,
@@ -33,6 +33,21 @@ app.post('/signup', (req, res) => {
     });
 });
 
+app.post('/contact', (req, res) => {
+    const sql = "INSERT INTO contact (`name`, `phone`, `email`, `message`) VALUES (?)";
+    const values = [
+        req.body.name,
+        req.body.phone,
+        req.body.email,
+        req.body.message
+    ];
+    db.query(sql, [values], (err, data) => {
+        if (err) {
+            res.json("Error")
+        }
+        return res.json(data);
+    });
+});
 
 app.post('/login', (req, res) => {
     const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";

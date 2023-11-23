@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import "../Assets/css/contact.css";
 import fbIcon from "../Assets/images/facebook-icon.png";
 import instaIcon from "../Assets/images/instagram-icon.png";
@@ -6,8 +6,36 @@ import twitterIcon from "../Assets/images/whatsapp-icon.png";
 import whatsappIcon from "../Assets/images/twitter-icon.png";
 import Navbar from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
-
+import axios from "axios";
 const Contact = () => {
+  const [values, setValues] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const handleInput = (e) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    const { name, phone, email, message } = values; 
+  
+    if (name && phone && email && message) {
+      console.log(values);
+      axios
+        .post("http://localhost:8081/contact", values)
+        .then((res) => {
+          if (res.data === "data sent Successful") {
+          } 
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+  
   return (
     <>
       <Navbar />
@@ -19,19 +47,23 @@ const Contact = () => {
       <div className="contact-us">
         <center>
           <div className="form">
-            <form>
+            <form onSubmit={handleSubmit}>
               <input
                 className="name-field"
                 type="text"
                 placeholder="Enter Your Name"
                 required=""
+                name="name"
+                onChange={handleInput}
               />
               <br />
               <input
                 className="email-field"
                 type="email"
                 placeholder="Enter Your Email"
+                name="email"
                 required=""
+                onChange={handleInput}
               />
               <br />
               <input
@@ -39,6 +71,8 @@ const Contact = () => {
                 placeholder="Enter Your Phone No"
                 required=""
                 className="phone-field"
+                name="phone"
+                onChange={handleInput}
               />
               <br />
               <textarea
@@ -46,6 +80,9 @@ const Contact = () => {
                 rows={8}
                 placeholder="Type Your Messege Here...."
                 defaultValue={""}
+                className="messege-field"
+                name="message"
+                onChange={handleInput}
               />
               <br />
               <input className="submit-btn" type="submit" defaultValue="SEND" />

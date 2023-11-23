@@ -30,19 +30,17 @@ const HallVendorForm = () => {
 
   return (
     <>
-    <Navbr/>
+      <Navbr />
       <div class="hero-section">
         <h1>Join as Vendor</h1>
       </div>
       <div className="container my-5 d-flex justify-content-center align-item-center">
         <div className="banner-form">
-
-        <Form onSubmit={handleSubmit}>
-        <h1 className="heading">Fill The Form</h1>
+          <Form onSubmit={handleSubmit}>
+            <h1 className="heading">Fill The Form</h1>
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
-                  
                   <label htmlFor="name">Name</label>
                   <input
                     type="text"
@@ -52,7 +50,7 @@ const HallVendorForm = () => {
                     placeholder="Enter your name"
                     onChange={handleChange}
                     required
-                  />  
+                  />
                 </div>
               </div>
               <div className="col-md-6">
@@ -125,7 +123,7 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
-            
+
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="capacity">Capacity</label>
@@ -137,7 +135,7 @@ const HallVendorForm = () => {
                     placeholder="Enter your capacity"
                     onChange={handleChange}
                     required
-                    />
+                  />
                 </div>
               </div>
               <div className="col-md-6">
@@ -150,28 +148,253 @@ const HallVendorForm = () => {
                     className="form-control"
                     onChange={handleChange}
                     required
-                    />
+                  />
                 </div>
               </div>
               <div className="col-md-12">
                 <div className="form-group">
                   <label htmlFor="additionalDetails">Additional Details</label>
-                  <textarea name="" id="" placeholder="Enter Short Description"></textarea>
+                  <textarea
+                    name=""
+                    id=""
+                    placeholder="Enter Short Description"
+                  ></textarea>
+                </div>
+              </div>
+              <div className="col-md-12">
+                <div className="form-group">
+                  <label htmlFor="additionalDetails">Overview</label>
+                  <textarea
+                    name=""
+                    id=""
+                    placeholder="Enter Short Description"
+                  ></textarea>
+                </div>
+              </div>
+              <div className="col-md-12">
+                <div className="form-group">
+                  <div className="service-wrapper">
+                    <h3>Services</h3>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Bride Dressing Area
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Dance Floor
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Groom's Dressing Area
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Tables & Chairs Provided
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Kitchen's for serve only
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-12">
+                <div className="form-group">
+                  <div className="service-wrapper">
+                    <h3>Requirements</h3>
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            A permit is required for any open flame
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            A permit is required for events with 200+ people
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Meal must be served by licensed caterer
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Amplified music OK indoors only
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Approved outside caterer allowed
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            General liability insurance required
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Music must end by 11:00PM
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
             <div className="btn-wrapper">
-          <Button variant="" type="submit">
-            Submit
-          </Button>
+              <Button variant="" type="submit">
+                Submit
+              </Button>
             </div>
-        </Form>
+          </Form>
         </div>
 
         {/* <Link to="/">Go back to home</Link> */}
       </div>
 
-      <Footer/>
+      <Footer />
     </>
   );
 };
