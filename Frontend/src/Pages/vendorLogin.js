@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // setErrors(validate(values));
-    const err = validate(values);   
+    const err = validate(values);
     setErrors(err);
 
     if (
@@ -64,7 +64,7 @@ const Login = () => {
           <div className="col-lg-8" style={{ height: "100%" }}>
             <div className="sign-log-form">
               <div className="form-heading">
-                <p>Login</p>
+                <p>Login as Vendor</p>
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="email">
@@ -106,7 +106,8 @@ const Login = () => {
                 </div>
                 <div className="form-para">
                   <p>
-                    Don't have an account? <Link to="/">SignUp</Link>
+                    Don't have an account?{" "}
+                    <Link to="/VendorSignup">SignUp</Link>
                   </p>
                 </div>
               </form>

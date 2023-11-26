@@ -59,9 +59,12 @@ const Navbr = () => {
               </Nav.Link>
             </Nav>
             <Form className="d-flex icons align-items-center">
-              <Nav.Link href="#action2" className="link">
-                <button className="nav-btn">Join as vendor</button>
-              </Nav.Link>
+              <LinkContainer to="/Vendorlogin">
+                <Nav.Link href="/Vendorlogin" className="link">
+                  <button className="nav-btn">Login as vendor</button>
+                </Nav.Link>
+              </LinkContainer>
+
               <Nav.Link href="#action2" className="link">
                 <button className="nav-btn">Book a venue</button>
               </Nav.Link>

@@ -30,7 +30,7 @@ const Signup = () => {
 
   const handleToggleconfPassword = () => {
     setShowconfPassword((prev) => !prev);
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -118,30 +118,34 @@ const Signup = () => {
                 </div>
                 <div className="password">
                   <input
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     name="password"
                     onChange={handleInput}
                   />
-                   <i
-          className={`eye-icon ${showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}`}
-          onClick={handleTogglePassword}
-        />
+                  <i
+                    className={`eye-icon ${
+                      showPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                    }`}
+                    onClick={handleTogglePassword}
+                  />
                   {errors.password && (
                     <span className="error text-danger">{errors.password}</span>
                   )}
                 </div>
                 <div className="confirm-password">
                   <input
-                    type={showconfPassword ? 'text' : 'password'}
+                    type={showconfPassword ? "text" : "password"}
                     placeholder="Confirm Password"
                     name="confirmPassword"
                     onChange={handleInput}
                   />
                   <i
-          className={`eye-icon ${showconfPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}`}
-          onClick={handleToggleconfPassword}
-        />
+                    className={`eye-icon ${
+                      showconfPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                    }`}
+                    onClick={handleToggleconfPassword}
+                  />
                   {errors.confirmPassword && (
                     <span className="error text-danger">
                       {errors.confirmPassword}
@@ -153,7 +157,8 @@ const Signup = () => {
                 </div>
                 <div className="form-para">
                   <p>
-                    Already have an Account? <Link to="/login">Login</Link>
+                    Already have an Account?{" "}
+                    <Link to="/Vendorlogin">Login</Link>
                   </p>
                 </div>
               </form>
