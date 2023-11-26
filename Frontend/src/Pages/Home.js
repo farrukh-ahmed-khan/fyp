@@ -22,7 +22,8 @@ const Home = () => {
       <div className="home-container" style={{ background: `url("${bg}")` }}>
         <div className="container" >
           <div className="row main-section">
-            <div className="col-lg-6" data-aos="fade-right">
+            <div className="col-lg-6" >
+              {/* data-aos="fade-right" */}
               <p>EXPLORE THE VENUES</p>
               <h1>
                 VENUE BOOKING <br /> MADE EASY
@@ -41,7 +42,8 @@ const Home = () => {
                 <button className="btn btn-primary">Book Now</button>
               </div> */}
             </div>
-            <div className="col-lg-6" data-aos="fade-left">
+            <div className="col-lg-6" >
+              {/* data-aos="fade-left" */}
               <div className="row">
                 <div className="col-lg-6">
                   <img src={image1} className="float" />

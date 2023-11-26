@@ -1,40 +1,45 @@
-import { React, useState } from "react";
-import "../Assets/css/contact.css";
-import fbIcon from "../Assets/images/facebook-icon.png";
-import instaIcon from "../Assets/images/instagram-icon.png";
-import twitterIcon from "../Assets/images/whatsapp-icon.png";
-import whatsappIcon from "../Assets/images/twitter-icon.png";
-import Navbar from "../Components/CommonComponent/Nav";
-import Footer from "../Components/CommonComponent/Footer";
-import axios from "axios";
+import { React, useState } from 'react';
+import '../Assets/css/contact.css';
+import fbIcon from '../Assets/images/facebook-icon.png';
+import instaIcon from '../Assets/images/instagram-icon.png';
+import twitterIcon from '../Assets/images/whatsapp-icon.png';
+import whatsappIcon from '../Assets/images/twitter-icon.png';
+import Navbar from '../Components/CommonComponent/Nav';
+import Footer from '../Components/CommonComponent/Footer';
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 const Contact = () => {
-  const [values, setValues] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    message: "",
-  });
-
-  const handleInput = (e) => {
-    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const [values, setValues] = useState({
+      name: '',
+      phone: '',
+      email: '',
+      message: '',
+    });
+const navigate = useNavigate();
   
-    const { name, phone, email, message } = values; 
+    const handleInput = (e) => {
+      setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
   
-    if (name && phone && email && message) {
-      console.log(values);
-      axios
-        .post("http://localhost:8081/contact", values)
-        .then((res) => {
-          if (res.data === "data sent Successful") {
-          } 
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+  
+      const { name, phone, email, message } = values;
+  
+      if (email && phone && name && message) {
+        axios
+          .post('http://localhost:8081/contact', values)
+          .then((res) => {
+            if (!res.data.error) {
+              navigate('/Thankyou');
+            } 
+          })
+          .catch((err) => {
+            console.error(err);
+            alert('Data not sent');
+          });
+      }
+    };
   
   return (
     <>
@@ -79,7 +84,7 @@ const Contact = () => {
                 cols={70}
                 rows={8}
                 placeholder="Type Your Messege Here...."
-                defaultValue={""}
+                defaultValue={''}
                 className="messege-field"
                 name="message"
                 onChange={handleInput}

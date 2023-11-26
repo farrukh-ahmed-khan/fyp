@@ -33,13 +33,14 @@ app.post('/weddingspot', (req, res) => {
     });
 });
 
-app.post('/contact', (req, res) => {
-    const sql = "INSERT INTO contact (`name`, `phone`, `email`, `message`) VALUES (?)";
+
+app.post('/vendors', (req, res) => {
+    const sql = "INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?)";
     const values = [
-        req.body.name,
-        req.body.phone,
+        req.body.fname,
+        req.body.lname,
         req.body.email,
-        req.body.message
+        req.body.password
     ];
     db.query(sql, [values], (err, data) => {
         if (err) {
@@ -48,6 +49,42 @@ app.post('/contact', (req, res) => {
         return res.json(data);
     });
 });
+
+app.post('/vendorlogin', (req, res) => {
+    const sql = "SELECT * FROM vendorlogin WHERE `email` = ? AND `password` = ?";
+    
+    db.query(sql, [req.body.email, req.body.password], (err, data) => {
+        if (err) {
+            res.json("Error")
+        }
+        if(data.length > 0){
+            return res.json("Login Successful");
+        }else{
+            return res.json("Invalid Email or Password");
+        }
+    });
+});
+
+
+app.post('/contact', (req, res) => {
+    const sql = "INSERT INTO contact (`name`, `phone`, `email`, `message`) VALUES (?)";
+    const values = [
+        req.body.name,
+        req.body.phone,
+        req.body.email,
+        req.body.message
+    ];
+
+    db.query(sql, [values], (err, data) => {
+        if (err) {
+            console.error(err);
+            res.json({ error: "Error inserting data into the database" });
+        } else {
+            res.json({ success: true });
+        }
+    });
+});
+
 
 app.post('/login', (req, res) => {
     const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";

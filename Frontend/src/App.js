@@ -11,6 +11,9 @@ import HallDetails from "./Pages/HallDetails";
 import VendorForm from "./Pages/VendorForm";
 import Contact from "./Pages/Contact";
 import About from "./Pages/About";
+import ThankYouPage from "./Pages/Thankyou";
+import Vendorlogin from "./Pages/vendorLogin";
+import VendorSignup from "./Pages/vendorSignup";
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
           <Route path="/VendorForm" element={<VendorForm />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
+          <Route path="/Thankyou" element={<ThankYouPage />} />
+          <Route path="/Vendorlogin" element={< Vendorlogin/>} />
+          <Route path="/VendorSignup" element={< VendorSignup/>} />
         </Routes>
       </BrowserRouter>
     </>

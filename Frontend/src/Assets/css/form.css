@@ -67,6 +67,19 @@
   flex-direction: column;
   align-items: center;
 }
+.password,
+.confirm-password{
+  position: relative;
+}
+.password i,
+.confirm-password i{
+  position: absolute;
+  right: 180px;
+  top: 20px;
+  margin-top: 15px;
+  margin-right: 15px;
+  cursor: pointer;
+}
 .sign-log-form .confirm-password {
   display: flex;
   justify-content: space-around;
