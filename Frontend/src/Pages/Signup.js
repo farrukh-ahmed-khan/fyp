@@ -17,9 +17,19 @@ const Signup = () => {
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showconfPassword, setShowconfPassword] = useState(false);
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const handleToggleconfPassword = () => {
+    setShowconfPassword((prev) => !prev);
   };
 
   const handleSubmit = (e) => {
@@ -108,10 +118,16 @@ const Signup = () => {
                 </div>
                 <div className="password">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     name="password"
                     onChange={handleInput}
+                  />
+                  <i
+                    className={`eye-icon ${
+                      showPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                    }`}
+                    onClick={handleTogglePassword}
                   />
                   {errors.password && (
                     <span className="error text-danger">{errors.password}</span>
@@ -119,10 +135,16 @@ const Signup = () => {
                 </div>
                 <div className="confirm-password">
                   <input
-                    type="password"
+                    type={showconfPassword ? "text" : "password"}
                     placeholder="Confirm Password"
                     name="confirmPassword"
                     onChange={handleInput}
+                  />
+                  <i
+                    className={`eye-icon ${
+                      showconfPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                    }`}
+                    onClick={handleToggleconfPassword}
                   />
                   {errors.confirmPassword && (
                     <span className="error text-danger">

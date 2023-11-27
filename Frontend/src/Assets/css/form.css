@@ -75,10 +75,11 @@
 .confirm-password i{
   position: absolute;
   right: 180px;
-  top: 20px;
+  top: 21px;
   margin-top: 15px;
   margin-right: 15px;
   cursor: pointer;
+  color: #747171;
 }
 .sign-log-form .confirm-password {
   display: flex;

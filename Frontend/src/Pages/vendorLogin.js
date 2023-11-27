@@ -13,9 +13,14 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = (e) => {
@@ -78,7 +83,7 @@ const Login = () => {
                     <span className="error text-danger">{errors.email}</span>
                   )}
                 </div>
-                <div className="password">
+                {/* <div className="password">
                   <input
                     type="password"
                     name="password"
@@ -88,19 +93,26 @@ const Login = () => {
                   {errors.password && (
                     <span className="error text-danger">{errors.password}</span>
                   )}
+                </div> */}
+
+                <div className="password">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    name="password"
+                    onChange={handleInput}
+                  />
+                  <i
+                    className={`eye-icon ${
+                      showPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                    }`}
+                    onClick={handleTogglePassword}
+                  />
+                  {errors.password && (
+                    <span className="error text-danger">{errors.password}</span>
+                  )}
                 </div>
-                {/* <div className="confirm-password">
-                <input
-                  type="password"
-                  name="confirm password"
-                  placeholder="Confirm Password"
-                />
-                {errors.confirmPassword && (
-                  <span className="error text-danger">
-                    {errors.confirmPassword}
-                  </span>
-                )}
-              </div> */}
+
                 <div className="form-submit-button">
                   <button type="submit">Login</button>
                 </div>
