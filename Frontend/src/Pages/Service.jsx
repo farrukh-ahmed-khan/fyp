@@ -2,7 +2,7 @@ import React from "react";
 import Navbr from "../Components/CommonComponent/Nav";
 import "../Assets/css/service.css";
 import Footer from "../Components/CommonComponent/Footer";
-import img from "../Assets/images/Home_images/makeup-section-img.png";
+import img from "../Assets/images/service.png";
 import PhotographyServiceCard from "../Components/photographyServiceCard";
 import PhotographyCardActive from "../Components/PhotographyCardActive";
 import MakeupServiceCard from "../Components/MakeupServiceCard";
@@ -18,16 +18,11 @@ const Service = () => {
         <Navbr />
       </div>
 
-      {/* Hero Section */}
-      <div class="service-hero-section">
-        <h1>Welcome To Our Services</h1>
-      </div>
-
       {/* Service Wrapper */}
       <div className="container">
         <div className="service-wrapper">
           <div className="row">
-            <div className="col-lg-12">
+            <div className="col-lg-6 mt-5">
               <h3>
                 <span>| </span>SERVICES
               </h3>
@@ -45,9 +40,9 @@ const Service = () => {
                 immortalized with grace.
               </p>
             </div>
-            {/* <div className="col-lg-6">
+            <div className="col-lg-6 ml-1">
               <img src={img} alt="" />
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
