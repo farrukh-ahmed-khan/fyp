@@ -64,10 +64,11 @@ const Navbr = () => {
                   <button className="nav-btn">Login as vendor</button>
                 </Nav.Link>
               </LinkContainer>
-
-              <Nav.Link href="#action2" className="link">
-                <button className="nav-btn">Book a venue</button>
-              </Nav.Link>
+              <LinkContainer to="/login">
+                <Nav.Link href="/login" className="link">
+                  <button className="nav-btn">Login as User</button>
+                </Nav.Link>
+              </LinkContainer>
             </Form>{" "}
             {/* <div className="first p-2">
               <img src={search}></img>

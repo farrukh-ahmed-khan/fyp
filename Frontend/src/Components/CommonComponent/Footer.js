@@ -51,21 +51,21 @@ const Footer = () => {
                 </div>
                 <ul class="footerLinks">
                   <li>
-                    <Link class="active" href="./">
+                    <Link class="active" to="/">
                       home
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">About</Link>
+                    <Link to="/About">About</Link>
                   </li>
                   <li>
-                    <Link href="#">Services</Link>
+                    <Link to="/Service">Services</Link>
                   </li>
                   <li>
-                    <Link href="#">Testimonials</Link>
+                    <Link to="/venue-booking">Hall Details</Link>
                   </li>
                   <li>
-                    <Link href="#">Contact</Link>
+                    <Link to="/Contact">Contact</Link>
                   </li>
                 </ul>
               </div>

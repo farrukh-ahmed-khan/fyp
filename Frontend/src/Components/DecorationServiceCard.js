@@ -21,9 +21,9 @@ const DecorationServiceCard = ({ type }) => {
         title: "Gold",
         point1: "Customized Elegance",
         point2: "Premium Elegance Elements",
-        point3: "Glamorous Elegance Highlights",
+        point3: "Glamorous Highlights",
         point4: "Special Occasion Elegance",
-        point5: "Comprehensive Elegance Experience",
+        point5: "Comprehensive Experience",
         btnTitle: "Book Now",
       };
 

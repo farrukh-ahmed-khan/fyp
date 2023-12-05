@@ -9,7 +9,7 @@ const MakeupServiceCard = ({ type }) => {
         title: "Silver",
         point1: "Subtle Radiance",
         point2: "Effortless Radiance Products",
-        point3: "Everyday Radiance Enhancement",
+        point3: "Everyday Enhancement",
         point4: "Casual Event Radiance",
         point5: "Budget-Friendly Radiance",
         btnTitle: "Book Now",

@@ -70,13 +70,13 @@ function HallDetails() {
           <h3>
             Venue Capacity: <span>Upto 400</span>
           </h3>
-          <h3>
+          {/* <h3>
             Services: <span>Ceremony / Reception</span>
-          </h3>
+          </h3> */}
         </div>
 
         <div className="buttons">
-          <button className="btn1">Price Venue</button>
+          <button className="btn1">Booking Charges</button>
           <button className="btn2">Add to Favorite</button>
         </div>
 
