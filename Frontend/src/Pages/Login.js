@@ -25,22 +25,20 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setErrors(validate(values));
     const err = validate(values);
     setErrors(err);
 
-    if (
-      !err.email &&
-      !err.password
-      // !err.confirmPassword
-    ) {
+    if (!err.email && !err.password) {
       axios
         .post("http://localhost:8081/login", values)
         .then((res) => {
           if (res.data === "Login Successful") {
+            // Save user information to local storage
+            localStorage.setItem("user", JSON.stringify(values));
+
             navigate("/");
           } else {
-            alert("no record existed");
+            alert("No record existed");
           }
         })
         .catch((err) => console.log(err));

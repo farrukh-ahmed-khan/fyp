@@ -1,15 +1,26 @@
+import { useState,useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from "../../Assets/images/logo.png";
-import search from "../../Assets/images/search_icon.png";
-import img from "../../Assets/images/img_icon.png";
 import "../../Assets/css/nav.css";
 
 const Navbr = () => {
+ const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+
+    if (localStorage.getItem("user")) {
+      setIsUserLoggedIn(true);
+    }
+  }, []); 
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsUserLoggedIn(false);
+  };
   return (
     <>
       <Navbar expand="lg" className="nav px-4">
@@ -59,16 +70,24 @@ const Navbr = () => {
               </Nav.Link>
             </Nav>
             <Form className="d-flex icons align-items-center">
-              <LinkContainer to="/Vendorlogin">
-                <Nav.Link href="/Vendorlogin" className="link">
-                  <button className="nav-btn">Login as vendor</button>
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/login">
-                <Nav.Link href="/login" className="link">
-                  <button className="nav-btn">Login as User</button>
-                </Nav.Link>
-              </LinkContainer>
+              {isUserLoggedIn ? (
+                <button className="nav-btn" onClick={handleLogout}>
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <LinkContainer to="/Vendorlogin">
+                    <Nav.Link href="/Vendorlogin" className="link">
+                      <button className="nav-btn">Login as vendor</button>
+                    </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/login">
+                    <Nav.Link href="/login" className="link">
+                      <button className="nav-btn">Login as User</button>
+                    </Nav.Link>
+                  </LinkContainer>
+                </>
+              )}
             </Form>{" "}
             {/* <div className="first p-2">
               <img src={search}></img>
