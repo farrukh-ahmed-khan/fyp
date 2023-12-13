@@ -125,7 +125,7 @@ const Signup = () => {
                   />
                   <i
                     className={`eye-icon ${
-                      showPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                      showPassword ? "fa fa-eye" : "fa fa-eye-slash"
                     }`}
                     onClick={handleTogglePassword}
                   />
@@ -142,7 +142,7 @@ const Signup = () => {
                   />
                   <i
                     className={`eye-icon ${
-                      showconfPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                      showconfPassword ? "fa fa-eye" : "fa fa-eye-slash"
                     }`}
                     onClick={handleToggleconfPassword}
                   />

@@ -104,7 +104,7 @@ const Login = () => {
                   />
                   <i
                     className={`eye-icon ${
-                      showPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                      showPassword ? "fa fa-eye" : "fa fa-eye-slash"
                     }`}
                     onClick={handleTogglePassword}
                   />
