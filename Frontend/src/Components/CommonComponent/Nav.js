@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
@@ -8,25 +8,34 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../../Assets/css/nav.css";
 
 const Navbr = () => {
- const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isVendorLoggedIn, setIsVendorLoggedIn] = useState(false);
 
   useEffect(() => {
+    const user = localStorage.getItem("user");
+    const vendor = localStorage.getItem("vendor");
 
-    if (localStorage.getItem("user")) {
+    if (user) {
       setIsUserLoggedIn(true);
+    }
+
+    if (vendor) {
+      setIsVendorLoggedIn(true);
     }
   }, []); 
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("vendor");
     setIsUserLoggedIn(false);
+    setIsVendorLoggedIn(false);
   };
+
   return (
     <>
       <Navbar expand="lg" className="nav px-4">
         <Container fluid>
           <Navbar.Brand href="#" className="logo">
-            {/* <img src={logo}></img> */}
             <p>
               The <span>Wedding</span> Spot
             </p>
@@ -52,25 +61,56 @@ const Navbr = () => {
                   About
                 </Nav.Link>
               </LinkContainer>
-              {/* <LinkContainer to="/Gallery">
-                <Nav.Link href="#" className="link">
-                  Gallery
+              {
+                isVendorLoggedIn ? 
+                <LinkContainer to="/VendorForm">
+                <Nav.Link href="/VendorForm" className="link">
+                  Add Venue
                 </Nav.Link>
-              </LinkContainer> */}
+              </LinkContainer>
+              :
               <LinkContainer to="/Service">
                 <Nav.Link href="/service" className="link">
                   Services
                 </Nav.Link>
               </LinkContainer>
+              }
+              <LinkContainer to="/Service">
+                <Nav.Link href="/service" className="link">
+                  Services
+                </Nav.Link>
+              </LinkContainer>
+              {isVendorLoggedIn ? 
+                <LinkContainer to="/vendor-dashboard">
+                  <Nav.Link href="/vendor-dashboard" className="link">
+                    Vendor Dashboard
+                  </Nav.Link>
+                </LinkContainer>
+              :
+                <LinkContainer to="/venue-booking">
+                  <Nav.Link href="/venue-booking" className="link">
+                    Reserved the date
+                  </Nav.Link>
+                </LinkContainer>
+            }
+              
+
+              {/* {isVendorLoggedIn: 
               <Nav.Link href="/venue-booking" className="link">
                 Reserved the date
+              </Nav.Link>?
+
+<Nav.Link href="/venue-booking" className="link">
+                Vendor Dashboard
               </Nav.Link>
+
+} */}
               <Nav.Link href="/Contact" className="link">
                 Contact
               </Nav.Link>
             </Nav>
             <Form className="d-flex icons align-items-center">
-              {isUserLoggedIn ? (
+              {isUserLoggedIn || isVendorLoggedIn ? (
                 <button className="nav-btn" onClick={handleLogout}>
                   Logout
                 </button>
@@ -88,13 +128,7 @@ const Navbr = () => {
                   </LinkContainer>
                 </>
               )}
-            </Form>{" "}
-            {/* <div className="first p-2">
-              <img src={search}></img>
-            </div>
-            <div className="second p-2">
-              <img src={img}></img>
-            </div> */}
+            </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -103,3 +137,4 @@ const Navbr = () => {
 };
 
 export default Navbr;
+  

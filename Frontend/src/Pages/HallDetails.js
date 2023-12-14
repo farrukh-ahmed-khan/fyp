@@ -3,13 +3,14 @@ import "../Assets/css/halldetails.css";
 import Carosel from "../Components/CommonComponent/Carosel";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function HallDetails() {
   const location = useLocation();
   const hallDetails = location.state.hallDetails;
 
   console.log(hallDetails);
+  
   return (
     <>
       <Navbr />
@@ -18,10 +19,10 @@ function HallDetails() {
       </div>
       <div className="container">
         <div className="heading my-5">
-          <h1>AL-Mehfil Banquet</h1>
-          <p>Karachi | North Naizmabad | 021-3663-0000</p>
+          <h1>{hallDetails.hallName}</h1>
+          <p>{hallDetails.city} | {hallDetails.area} | {hallDetails.phone}</p>
         </div>
-        <div className="overview-section">
+        {/* <div className="overview-section">
           <h3>Overview</h3>
           <p>
             <span>AL-Mehfil</span> is simply dummy text of the printing and
@@ -34,23 +35,29 @@ function HallDetails() {
             passages, and more recently with desktop publishing software like
             Aldus PageMaker including versions of Lorem Ipsum.
           </p>
-        </div>
+        </div> */}
         <div className="services-section">
           <h3>Amenties & Requirement</h3>
           <div className="services">
-            <p>Bride Dressing Area</p>
+            {hallDetails.services.map((service) => {
+              return <p>{service}</p>;
+            })}
+            {/* <p>Bride Dressing Area</p>
             <p>Dance Floor</p>
             <p>Groom's Dressing Area</p>
             <p>Public Parking</p>
             <p>Tables & Chairs Provided</p>
-            <p>Kitchen's for serve only</p>
+            <p>Kitchen's for serve only</p> */}
           </div>
         </div>
 
         <div className="requirement-section">
           <h3>Requirements</h3>
           <ul>
-            <li>
+          {hallDetails.requirements.map((req) => {
+              return <li>{req}</li>;
+            })}
+            {/* <li>
               - A permit is required for any open flame (candles, cooking,
               sterno, etc.)
             </li>
@@ -62,7 +69,7 @@ function HallDetails() {
             <li>- Music must end by 11:00PM</li>
             <li>- No rice, birdseed, confetti, etc.</li>
             <li>- Smoking in designated areas only</li>
-            <li>- Venue must approve all decorations</li>
+            <li>- Venue must approve all decorations</li> */}
           </ul>
         </div>
 
@@ -76,7 +83,9 @@ function HallDetails() {
         </div>
 
         <div className="buttons">
-          <button className="btn1">Booking Charges</button>
+          <Link to="/checkout">
+          <button className="btn1" >Book Now</button>
+          </Link>
           <button className="btn2">Add to Favorite</button>
         </div>
 

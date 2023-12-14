@@ -15,7 +15,7 @@ import ThankYouPage from "./Pages/Thankyou";
 import Vendorlogin from "./Pages/vendorLogin";
 import VendorSignup from "./Pages/vendorSignup";
 import Checkout from "./Pages/Checkout";
-// import Success from "./Pages/success";
+import Success from "./Pages/Success";
 import AdminPanel from "./AdminPanel/AdminPanel";
 
 function App() {
@@ -37,8 +37,8 @@ function App() {
           <Route path="/Vendorlogin" element={<Vendorlogin />} />
           <Route path="/VendorSignup" element={<VendorSignup />} />
           <Route path="/checkout" element={<Checkout />} />
-          {/* <Route path="/success" element={<Success />} /> */}
-          <Route path="AdminPanel" element={<AdminPanel />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/AdminPanel" element={<AdminPanel />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,15 +1,17 @@
 import React,{useState} from 'react'
+import Navbr from "../Components/CommonComponent/Nav";
+import Footer from "../Components/CommonComponent/Footer";     
 
 const Checkout = () => {
 
   const itemName = "Product 1";
-  const itemPrice = 100;
+  const itemPrice = 1000;
   const [quantity, setQuantity] = useState(1);
 
 
   const checkout = async() => {
     try{
-      const res = await fetch('http://localhost:8081', {
+      const res = await fetch('http://localhost:8081/checkout', {
         method: "POST",
         headers: {
         
@@ -24,13 +26,13 @@ const Checkout = () => {
               price: itemPrice,
               name: itemName
           
-            }
+            },
           ]
         })
         
-      })
+      });
       const data = await res.json();
-      window.location.href = data.url;
+      window.location = data.url;
       
     }
     catch(err){
@@ -38,6 +40,8 @@ const Checkout = () => {
     }
   }
   return (
+    <>
+    <Navbr />
     <section>
       <div className="container">
         <div className="row">
@@ -55,6 +59,9 @@ const Checkout = () => {
         </div>
       </div>
     </section>
+    <Footer />
+    </>
+    
   )
 }
 
