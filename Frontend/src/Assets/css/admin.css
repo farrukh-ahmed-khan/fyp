@@ -1,0 +1,144 @@
+.navbar {
+    height: 10vh !important;
+  }
+  
+  .logo p {
+    font-family: "qwitcher grypen" !important;
+    line-height: 24px !important;
+    margin-top: 16px;
+    font-size: 25px;
+    padding-left: 20px;
+    color: #000;
+  }
+  
+  .logo span {
+    font-family: "qwitcher grypen" !important;
+    color: #5c3d9e;
+  }
+  
+  .siderbar {
+    width: 18vw;
+    height: 100vh;
+  }
+  
+  .middle-section {
+    display: flex;
+  }
+  
+  .siderbar li {
+    list-style: none;
+    padding-top: 35px;
+    padding-bottom: 15px;
+  }
+  
+  .siderbar a {
+    color: #000;
+  }
+  
+  .siderbar img {
+    width: 20px;
+    margin-right: 10px;
+  }
+  
+  .details {
+    background-color: #f8f5f2;
+    width: 100vw;
+    /* height: 100vh; */
+  }
+  
+  .cards-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+  }
+  
+  .cards-section .venue-card {
+    width: 18vw;
+    height: 20vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .cards-section .venue-card:hover {
+    transform: translateY(-6px);
+  }
+  
+  .cards-section .venue-card h3 {
+    font-size: 20px;
+    font-weight: 500;
+    padding-top: 15px;
+  }
+  .cards-section .venue-card div {
+    background-color: #5c3d9e;
+    color: #fff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 15px;
+    padding: 2px !important;
+    text-align: center;
+  }
+  
+  .cards-section .venue-card div p {
+    margin-top: 10px;
+  }
+  .booking-table {
+    margin-top: 30px;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  .booking-table .B-details {
+    font-size: 21px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: #5c3d9e;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px 10px !important;
+  }
+  
+  .booking-table th {
+    font-weight: 600;
+    font-size: 17px;
+    padding: 15px !important;
+    background-color: #fff;
+  }
+  
+  .booking-table td {
+    font-size: 15px;
+    padding: 15px !important;
+    background-color: #fff;
+  }
+  
+  .upcoming-event-card {
+    height: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+  }
+  
+  .upcoming-event-card h4 {
+    font-size: 20px;
+    padding-left: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .upcoming-event-card span {
+    font-weight: 500;
+    padding-left: 10px;
+  }
+  
+  .upcoming-event-card p {
+    padding-left: 58px;
+    padding-top: 0px;
+  }

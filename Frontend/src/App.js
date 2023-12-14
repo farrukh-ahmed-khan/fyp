@@ -15,7 +15,8 @@ import ThankYouPage from "./Pages/Thankyou";
 import Vendorlogin from "./Pages/vendorLogin";
 import VendorSignup from "./Pages/vendorSignup";
 import Checkout from "./Pages/Checkout";
-import Success from "./Pages/success";
+// import Success from "./Pages/success";
+import AdminPanel from "./AdminPanel/AdminPanel";
 
 function App() {
   return (
@@ -33,10 +34,11 @@ function App() {
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
           <Route path="/Thankyou" element={<ThankYouPage />} />
-          <Route path="/Vendorlogin" element={< Vendorlogin/>} />
-          <Route path="/VendorSignup" element={< VendorSignup/>} />
+          <Route path="/Vendorlogin" element={<Vendorlogin />} />
+          <Route path="/VendorSignup" element={<VendorSignup />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/success" element={<Success />} />
+          {/* <Route path="/success" element={<Success />} /> */}
+          <Route path="AdminPanel" element={<AdminPanel />} />
         </Routes>
       </BrowserRouter>
     </>
