@@ -97,7 +97,7 @@ const Signup = () => {
                 <div className="email">
                   <input
                     type="text"
-                    placeholder="last name"
+                    placeholder="Last name"
                     className="first-name"
                     name="lname"
                     onChange={handleInput}
