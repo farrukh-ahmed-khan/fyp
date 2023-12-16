@@ -51,6 +51,7 @@ const Signup = () => {
         .then((res) => {
           console.log(res.data);
           navigate("/login");
+          console.log("Registration Successful");
         })
         .catch((err) => console.log(err));
     }

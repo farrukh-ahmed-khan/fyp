@@ -22,7 +22,7 @@ const Navbr = () => {
     if (vendor) {
       setIsVendorLoggedIn(true);
     }
-  }, []); 
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -61,39 +61,37 @@ const Navbr = () => {
                   About
                 </Nav.Link>
               </LinkContainer>
-              {
-                isVendorLoggedIn ? 
+              {isVendorLoggedIn ? (
                 <LinkContainer to="/VendorForm">
-                <Nav.Link href="/VendorForm" className="link">
-                  Add Venue
-                </Nav.Link>
-              </LinkContainer>
-              :
-              <LinkContainer to="/Service">
+                  <Nav.Link href="/VendorForm" className="link">
+                    Add Venue
+                  </Nav.Link>
+                </LinkContainer>
+              ) : (
+                <LinkContainer to="/Service">
+                  <Nav.Link href="/service" className="link">
+                    Services
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {/* <LinkContainer to="/Service">
                 <Nav.Link href="/service" className="link">
                   Services
                 </Nav.Link>
-              </LinkContainer>
-              }
-              <LinkContainer to="/Service">
-                <Nav.Link href="/service" className="link">
-                  Services
-                </Nav.Link>
-              </LinkContainer>
-              {isVendorLoggedIn ? 
+              </LinkContainer> */}
+              {isVendorLoggedIn ? (
                 <LinkContainer to="/vendor-dashboard">
                   <Nav.Link href="/vendor-dashboard" className="link">
                     Vendor Dashboard
                   </Nav.Link>
                 </LinkContainer>
-              :
+              ) : (
                 <LinkContainer to="/venue-booking">
                   <Nav.Link href="/venue-booking" className="link">
                     Reserved the date
                   </Nav.Link>
                 </LinkContainer>
-            }
-              
+              )}
 
               {/* {isVendorLoggedIn: 
               <Nav.Link href="/venue-booking" className="link">
@@ -137,4 +135,3 @@ const Navbr = () => {
 };
 
 export default Navbr;
-  

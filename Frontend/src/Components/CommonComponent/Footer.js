@@ -106,8 +106,8 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="mailto:Wedplaner1@gmail.com">
-                      Wedplaner1@gmail.com
+                    <Link to="mailto:Theweddingspot@gmail.com">
+                      Theweddingspot@gmail.com
                     </Link>
                   </li>
                 </ul>

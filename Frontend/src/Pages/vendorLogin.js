@@ -40,6 +40,7 @@ const Login = () => {
           if (res.data === "Login Successful") {
             navigate("/");
             localStorage.setItem("vendor", JSON.stringify(values));
+            alert("Login Successful");
           } else {
             alert("no record existed");
           }

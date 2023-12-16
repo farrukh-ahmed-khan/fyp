@@ -35,6 +35,7 @@ const Login = () => {
           if (res.data === "Login Successful") {
             // Save user information to local storage
             localStorage.setItem("user", JSON.stringify(values));
+            alert("Login Successful");
 
             navigate("/");
           } else {
