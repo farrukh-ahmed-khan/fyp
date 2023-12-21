@@ -7,25 +7,89 @@ import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 
 const HallVendorForm = () => {
+  // const [vendorData, setVendorData] = useState({
+  //   name: "",
+  //   email: "",
+  //   phoneNumber: "",
+  //   minPrice: "",
+  //   maxPrice: "",
+  //   additionalDetails: "",
+  // });
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setVendorData({ ...vendorData, [name]: value });
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form submitted:", vendorData);
+  // };
+
   const [vendorData, setVendorData] = useState({
     name: "",
     email: "",
     phoneNumber: "",
     minPrice: "",
     maxPrice: "",
+    address: "",
+    capacity: "",
     additionalDetails: "",
   });
+
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedRequirements, setSelectedRequirements] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setVendorData({ ...vendorData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleServiceChange = (e) => {
+    const serviceName = e.target.value;
+    setSelectedServices((prevServices) =>
+      e.target.checked ? [...prevServices, serviceName] : prevServices.filter((service) => service !== serviceName)
+    );
+  };
+
+  const handleRequirementChange = (e) => {
+    const requirementName = e.target.value;
+    setSelectedRequirements((prevRequirements) =>
+      e.target.checked
+        ? [...prevRequirements, requirementName]
+        : prevRequirements.filter((requirement) => requirement !== requirementName)
+    );
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log("Form submitted:", vendorData);
-    // You can add logic to send data to a backend or perform other actions
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...vendorData,
+        services: selectedServices,
+        requirements: selectedRequirements,
+      }),
+    };
+
+    try {
+      // const response = await fetch('/vendorform', requestOptions);
+      // const response = await fetch('http://localhost:your-server-port/vendorform', requestOptions);
+
+      const response = await fetch('http://localhost:8081/vendorform', requestOptions);
+
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Form submitted successfully! Vendor ID:', result.vendorId);
+      } else {
+        console.error('Error submitting form:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error.message);
+    }
   };
 
   return (
@@ -138,7 +202,7 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="type">Image</label>
                   <input
@@ -150,7 +214,7 @@ const HallVendorForm = () => {
                     required
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="col-md-12">
                 <div className="form-group">
                   <label htmlFor="additionalDetails">Additional Details</label>
@@ -181,8 +245,9 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Bride Dressing Area"
+                            id="brideDressingArea"
+                            onChange={handleServiceChange}
                           />
                           <label
                             className="form-check-label"
@@ -197,8 +262,9 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Dance Floor"
+                            id="dancefloor"
+                            onChange={handleServiceChange}
                           />
                           <label
                             className="form-check-label"
@@ -213,8 +279,9 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Groom Dressing Area"
+                            id="groomdressingarea"
+                            onChange={handleServiceChange}
                           />
                           <label
                             className="form-check-label"

@@ -1,15 +1,18 @@
 import React from "react";
 import "../Assets/css/halldetails.css";
+
 import Carosel from "../Components/CommonComponent/Carosel";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation ,useNavigate} from "react-router-dom";
 
 function HallDetails() {
   const location = useLocation();
+  const navigate = useNavigate();
   const hallDetails = location.state.hallDetails;
-
-  console.log(hallDetails);
+  const handleDetailsClick = (hallDetails) => {
+    navigate("/checkout", { state: { hallDetails } });
+  };
   
   return (
     <>
@@ -22,32 +25,14 @@ function HallDetails() {
           <h1>{hallDetails.hallName}</h1>
           <p>{hallDetails.city} | {hallDetails.area} | {hallDetails.phone}</p>
         </div>
-        {/* <div className="overview-section">
-          <h3>Overview</h3>
-          <p>
-            <span>AL-Mehfil</span> is simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry's standard
-            dummy text ever since the 1500s, when an unknown printer took a
-            galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged. It was popularized in
-            the 1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop publishing software like
-            Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
-        </div> */}
+        
         <div className="services-section">
           <h3>Amenties & Requirement</h3>
           <div className="services">
             {hallDetails.services.map((service) => {
               return <p>{service}</p>;
             })}
-            {/* <p>Bride Dressing Area</p>
-            <p>Dance Floor</p>
-            <p>Groom's Dressing Area</p>
-            <p>Public Parking</p>
-            <p>Tables & Chairs Provided</p>
-            <p>Kitchen's for serve only</p> */}
+            
           </div>
         </div>
 
@@ -57,19 +42,7 @@ function HallDetails() {
           {hallDetails.requirements.map((req) => {
               return <li>{req}</li>;
             })}
-            {/* <li>
-              - A permit is required for any open flame (candles, cooking,
-              sterno, etc.)
-            </li>
-            <li>- A permit is required for events with 200+ people</li>
-            <li>- Meal must be served by licensed caterer</li>
-            <li>- Amplified music OK indoors only</li>
-            <li>- Approved outside caterer allowed</li>
-            <li>- General liability insurance required</li>
-            <li>- Music must end by 11:00PM</li>
-            <li>- No rice, birdseed, confetti, etc.</li>
-            <li>- Smoking in designated areas only</li>
-            <li>- Venue must approve all decorations</li> */}
+           
           </ul>
         </div>
 
@@ -77,15 +50,13 @@ function HallDetails() {
           <h3>
             Venue Capacity: <span>Upto 400</span>
           </h3>
-          {/* <h3>
-            Services: <span>Ceremony / Reception</span>
-          </h3> */}
+        
         </div>
 
         <div className="buttons">
-          <Link to="/checkout">
-          <button className="btn1" >Book Now</button>
-          </Link>
+         
+          <button className="btn1"   onClick={() => handleDetailsClick(hallDetails)}>Book Now</button>
+          
           <button className="btn2">Add to Favorite</button>
         </div>
 

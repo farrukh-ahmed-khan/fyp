@@ -22,7 +22,7 @@ const HallData = [
     rating: "4.5",
     phone: "021-3663-0000",
     guests: "100",
-    advanced: "5000",
+    advanced: 5000,
     // shotDesc:
     //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
     services: [
@@ -54,6 +54,7 @@ const HallData = [
     rating: "3.5",
     phone: "021-3663-869856",
     guests: "200",
+    advanced: 5000,
     services: [
       "Bride Dressing Area",
       "Dance Floor",
@@ -85,6 +86,7 @@ const HallData = [
     rating: "2.5",
     phone: "021-3663-xxxx",
     guests: "100",
+    advanced: 5000,
     services: [
       "Bride Dressing Area",
       "Dance Floor",
@@ -117,6 +119,7 @@ const HallData = [
     rating: "4.5",
     phone: "021-3663-980000",
     guests: "100",
+    advanced: 5000,
     services: [
       "Bride Dressing Area",
       "Dance Floor",
@@ -148,6 +151,7 @@ const HallData = [
     rating: "4.5",
     phone: "021-3663-0000",
     guests: "500",
+    advanced: 5000,
     services: [
       "Bride Dressing Area",
       "Dance Floor",
