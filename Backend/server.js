@@ -169,33 +169,109 @@ app.post('/vendorform', (req, res) => {
 
 // stripe payment gateway
 
+// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+// app.post('/checkout', async (req, res) => {
+//     try {
+//       const session = await stripe.checkout.sessions.create({
+//         payment_method_types: ['card'],
+//         mode: 'payment',
+//         line_items: req.body.items.map(item => {
+//           return {
+//             price_data: {
+//               currency: 'pkr',
+//               product_data: {
+//                 name: item.name,
+//               },
+//               unit_amount: item.price * 100,
+//             },
+//             quantity: item.quantity,
+//           };
+//         }),
+//         success_url: 'http://localhost:3000/success',
+//         cancel_url: 'http://localhost:3000/cancel',
+//       });
+  
+//       res.json({ url: session.url });
+//     } catch (error) {
+//       console.log(error);
+//       res.status(500).json({ error: error.message });
+//     }
+//   });
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+// app.post('/checkout', async (req, res) => {
+//     try {
+//         const { date, time, hallName, items } = req.body;
+
+//         const session = await stripe.checkout.sessions.create({
+//             payment_method_types: ['card'],
+//             mode: 'payment',
+//             line_items: items.map(item => {
+//                 return {
+//                     price_data: {
+//                         currency: 'pkr',
+//                         product_data: {
+//                             name: item.name,
+//                         },
+//                         unit_amount: item.price * 100,
+//                     },
+//                     quantity: item.quantity,
+//                 };
+//             }),
+//             success_url: 'http://localhost:3000/success',
+//             cancel_url: 'http://localhost:3000/cancel',
+//             metadata: {
+//                 date,
+//                 time,
+//                 hallName,
+//             },
+//         });
+
+//         // Log the session.url to check if it's set properly
+//         console.log("Received data:", req.body);
+//         // console.log("Session URL:", session.url);
+
+//         res.json({ url: session.url });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ error: error.message });
+//     }
+// });
+
 app.post('/checkout', async (req, res) => {
-    try {
+  try {
+      const { date, time, hallName, items } = req.body;
+
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        mode: 'payment',
-        line_items: req.body.items.map(item => {
-          return {
+          payment_method_types: ['card'],
+          mode: 'payment',
+          line_items: items.map(item => ({
             price_data: {
               currency: 'pkr',
               product_data: {
                 name: item.name,
+                description: `Date: ${date}, Time: ${time}, Hall: ${hallName}`,
               },
               unit_amount: item.price * 100,
             },
             quantity: item.quantity,
-          };
-        }),
-        success_url: 'http://localhost:3000/success',
-        cancel_url: 'http://localhost:3000/cancel',
+          })),
+          success_url: 'http://localhost:3000/success',
+          cancel_url: 'http://localhost:3000/cancel',
+          metadata: {
+              date,
+              time,
+              hallName,
+          },
       });
-  
+
+      console.log("Received data:", req.body);
+      console.log("Session URL:", session.url);
+
       res.json({ url: session.url });
-    } catch (error) {
+  } catch (error) {
       console.log(error);
       res.status(500).json({ error: error.message });
-    }
-  });
-  
+  }
+});

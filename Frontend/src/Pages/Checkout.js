@@ -5,50 +5,103 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const Checkout = () => {
   const location = useLocation();
   const hallDetails = location.state.hallDetails;
-  console.log("chekc", hallDetails);
-  // const itemName = "Product 1";
-  // const itemPrice = 1000;
-  // const [quantity, setQuantity] = useState(1);
 
-  // const checkout = async() => {
-  //   try{
-  //     const res = await fetch('http://localhost:8081/checkout', {
-  //       method: "POST",
-  //       headers: {
-
-  //         "Content-Type": "application/json"
-  //       },
-  //       mode: "cors",
-  //       body: JSON.stringify({
-  //         items:[
-  //           {
-  //             id: 1,
-  //             quantity: quantity,
-  //             price: itemPrice,
-  //             name: itemName
-
-  //           },
-  //         ]
-  //       })
-
-  //     });
-  //     const data = await res.json();
-  //     window.location = data.url;
-
-  //   }
-  //   catch(err){
-  //     console.log(err);
-  //   }
-  // }
-
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("morning");
   const [selectedServices, setSelectedServices] = useState([]);
   const [servicePackages, setServicePackages] = useState({});
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
+  
+
+  // const checkout = async () => {
+  //   console.log(selectedDate);
+  //   console.log(selectedTime);
+  //   try {
+  //     const res = await fetch("http://localhost:8081/checkout", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       mode: "cors",
+  //       body: JSON.stringify({
+  //         date: selectedDate,
+  //         time: selectedTime,
+  //         hallName: hallDetails.hallName,
+  //         items: [
+  //           {
+  //             id: 1,
+  //             price: hallDetails.advanced,
+  //             name: hallDetails.hallName,
+  //             quantity: 1, // Add quantity property
+
+  //           },
+  //         ],
+  //       }),
+  //     });
+  //     const data = await res.json();
+  
+  //     // Log the session.url to check if it's set properly
+  //     console.log("Session URL:", data.url);
+  
+  //     // Check if session.url is not undefined before redirecting
+  //     if (data.url) {
+  //       window.location = data.url;
+  //     } else {
+  //       console.error("Session URL is undefined.");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const checkout = async () => {
+    console.log(selectedDate);
+    console.log(selectedTime);
+  
+    try {
+      const res = await fetch("http://localhost:8081/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+        body: JSON.stringify({
+          date: selectedDate,
+          time: selectedTime,
+          hallName: hallDetails.hallName,
+          items: selectedServices.map((service, index) => ({
+            id: index + 1, // You can use a unique identifier for each service
+            price: hallDetails.advanced, // Replace with the actual price
+            name: service,
+            quantity: 1,
+          })),
+        }),
+      });
+  
+      const data = await res.json();
+  
+      // Log the session.url to check if it's set properly
+      console.log("Session URL:", data.url);
+  
+      // Check if session.url is not undefined before redirecting
+      if (data.url) {
+        window.location = data.url;
+      } else {
+        console.error("Session URL is undefined.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  
 
   const handleServiceSelect = (selectedService) => {
     setSelectedServices((prevSelectedServices) => {
       if (prevSelectedServices.includes(selectedService)) {
-        return prevSelectedServices.filter((service) => service !== selectedService);
+        return prevSelectedServices.filter(
+          (service) => service !== selectedService
+        );
       } else {
         return [...prevSelectedServices, selectedService];
       }
@@ -56,13 +109,16 @@ const Checkout = () => {
 
     setServicePackages((prevPackages) => {
       const updatedPackages = { ...prevPackages };
-      updatedPackages[selectedService] = 'basic'; // Set the default package to basic
+      updatedPackages[selectedService] = "basic"; // Set the default package to basic
       return updatedPackages;
     });
   };
 
   const handlePackageSelect = (service, packageType) => {
-    setServicePackages((prevPackages) => ({ ...prevPackages, [service]: packageType }));
+    setServicePackages((prevPackages) => ({
+      ...prevPackages,
+      [service]: packageType,
+    }));
   };
 
   const calculateTotalAdvance = () => {
@@ -76,7 +132,7 @@ const Checkout = () => {
         platinum: 300, // Replace with your platinum package price for the service
       };
 
-      const selectedPackage = servicePackages[service] || 'basic';
+      const selectedPackage = servicePackages[service] || "basic";
       total += basePrice + packagePriceMap[selectedPackage];
     });
 
@@ -120,19 +176,6 @@ const Checkout = () => {
                 </h3>
               </div>
 
-              {/* <div className="services-section">
-                <h3>Additional Services</h3>
-                <div className="services">
-                  <input type="checkbox" />
-                  <label>Photography</label>
-                  <br />
-                  <input type="checkbox" />
-                  <label>Decoration</label>
-                  <br />
-                  <input type="checkbox" />
-                  <label>Make Up</label>
-                </div>
-              </div> */}
               <div className="services-section">
                 <h3>Additional Services</h3>
                 <div className="services">
@@ -147,6 +190,8 @@ const Checkout = () => {
                         Select Service
                       </option>
                       <option value="Photography">Photography</option>
+                      <option value="Decoration">Decoration</option>
+                      <option value="Make Up">Make Up</option>
                       {/* Add more service options as needed */}
                     </select>
                   </label>
@@ -172,11 +217,17 @@ const Checkout = () => {
 
               <div className="select-event-date">
                 <h3>Select Event Date</h3>
-                <input type="date" />
+                <input
+                  type="date"
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
               </div>
               <div className="select-evening-morning">
                 <h3>Select Morning/Evening</h3>
-                <select>
+                <select
+                  onChange={(e) => setSelectedTime(e.target.value)}
+                  value={selectedTime}
+                >
                   <option value="morning">Morning</option>
                   <option value="evening">Evening</option>
                 </select>
@@ -194,7 +245,7 @@ const Checkout = () => {
           </div>
           <div className="row">
             <div className="buttons">
-              <button className="btn1">Pay Now</button>
+              <button className="btn1" onClick={checkout}>Pay Now</button>
             </div>
           </div>
         </div>
