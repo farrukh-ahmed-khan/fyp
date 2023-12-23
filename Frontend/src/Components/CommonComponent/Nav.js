@@ -88,7 +88,7 @@ const Navbr = () => {
               ) : (
                 <LinkContainer to="/venue-booking">
                   <Nav.Link href="/venue-booking" className="link">
-                    Reserved the date
+                    Venue Booking
                   </Nav.Link>
                 </LinkContainer>
               )}

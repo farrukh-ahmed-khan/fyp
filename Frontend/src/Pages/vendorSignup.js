@@ -50,8 +50,8 @@ const Signup = () => {
         .post("http://localhost:8081/vendors", values)
         .then((res) => {
           console.log(res.data);
-          navigate("/login");
-          console.log("Registration Successful");
+          navigate("/Vendorlogin");
+          alert("Registration Successful");
         })
         .catch((err) => console.log(err));
     }

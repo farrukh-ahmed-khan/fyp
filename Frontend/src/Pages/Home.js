@@ -1,4 +1,5 @@
 import "../Assets/css/home-page.css";
+import { Link } from "react-router-dom";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 import image1 from "../Assets/images/Home_images/image1.png";
@@ -20,9 +21,9 @@ const Home = () => {
         <Navbr />
       </div>
       <div className="home-container" style={{ background: `url("${bg}")` }}>
-        <div className="container" >
+        <div className="container">
           <div className="row main-section">
-            <div className="col-lg-6" >
+            <div className="col-lg-6">
               {/* data-aos="fade-right" */}
               <p>EXPLORE THE VENUES</p>
               <h1>
@@ -31,6 +32,16 @@ const Home = () => {
               <p className="tagline">
                 Find thousands of venues across the Karachi
               </p>
+
+              <div class="buttons">
+                <Link to="/venue-booking">
+                  <button class="btn1">Book Now</button>
+                </Link>
+
+                <Link to="/Service">
+                  <button class="btn2">Explore More</button>
+                </Link>
+              </div>
 
               {/* <div className="book-venue d-flex align-items-center px-4 pt-2">
                 <div>
@@ -42,7 +53,7 @@ const Home = () => {
                 <button className="btn btn-primary">Book Now</button>
               </div> */}
             </div>
-            <div className="col-lg-6" >
+            <div className="col-lg-6">
               {/* data-aos="fade-left" */}
               <div className="row">
                 <div className="col-lg-6">

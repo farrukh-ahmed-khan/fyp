@@ -11,7 +11,6 @@ const Checkout = () => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [servicePackages, setServicePackages] = useState({});
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
-  
 
   // const checkout = async () => {
   //   console.log(selectedDate);
@@ -39,10 +38,10 @@ const Checkout = () => {
   //       }),
   //     });
   //     const data = await res.json();
-  
+
   //     // Log the session.url to check if it's set properly
   //     console.log("Session URL:", data.url);
-  
+
   //     // Check if session.url is not undefined before redirecting
   //     if (data.url) {
   //       window.location = data.url;
@@ -57,7 +56,7 @@ const Checkout = () => {
   const checkout = async () => {
     console.log(selectedDate);
     console.log(selectedTime);
-  
+
     try {
       const res = await fetch("http://localhost:8081/checkout", {
         method: "POST",
@@ -77,12 +76,12 @@ const Checkout = () => {
           })),
         }),
       });
-  
+
       const data = await res.json();
-  
+
       // Log the session.url to check if it's set properly
       console.log("Session URL:", data.url);
-  
+
       // Check if session.url is not undefined before redirecting
       if (data.url) {
         window.location = data.url;
@@ -93,8 +92,6 @@ const Checkout = () => {
       console.log(err);
     }
   };
-  
-  
 
   const handleServiceSelect = (selectedService) => {
     setSelectedServices((prevSelectedServices) => {
@@ -144,7 +141,7 @@ const Checkout = () => {
       <section>
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <div className="heading my-5">
                 <h1>{hallDetails.hallName}</h1>
                 <p>
@@ -233,19 +230,21 @@ const Checkout = () => {
                 </select>
               </div>
 
-              <div className="capacity my-5">
+              <div className="capacity mt-3">
                 <h3>
                   Advance: <span>{totalAdvance}</span>
                 </h3>
               </div>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <img src="https://picsum.photos/200/300" alt="" />
-            </div>
+            </div> */}
           </div>
           <div className="row">
             <div className="buttons">
-              <button className="btn1" onClick={checkout}>Pay Now</button>
+              <button className="btn1 mb-2" onClick={checkout}>
+                Pay Now
+              </button>
             </div>
           </div>
         </div>

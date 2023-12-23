@@ -29,7 +29,7 @@ const AdminPanel = () => {
                     <img src={DashboardImg} /> Dashboard
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a href="#">
                     <img src={ServiceImg} />
                     Services
@@ -58,7 +58,7 @@ const AdminPanel = () => {
                     <img src={ViewListImg} />
                     Venue List
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
