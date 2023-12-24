@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../Assets/css/nav.css";
+import { useNavigate } from 'react-router-dom';
 
 const Navbr = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -23,12 +24,20 @@ const Navbr = () => {
       setIsVendorLoggedIn(true);
     }
   }, []);
+  const navigate = useNavigate(); // Use useNavigate hook
 
-  const handleLogout = () => {
+  const handleLogout = (userType) => {
     localStorage.removeItem("user");
     localStorage.removeItem("vendor");
+  
     setIsUserLoggedIn(false);
     setIsVendorLoggedIn(false);
+  
+    // Determine the appropriate route based on the userType
+    const logoutRoute = userType === 'vendor' ? '/vendorlogin' : '/login';
+  
+    // Navigate to the logout route using useNavigate
+    navigate(logoutRoute);
   };
 
   return (
@@ -109,7 +118,7 @@ const Navbr = () => {
             </Nav>
             <Form className="d-flex icons align-items-center">
               {isUserLoggedIn || isVendorLoggedIn ? (
-                <button className="nav-btn" onClick={handleLogout}>
+                <button className="nav-btn" onClick={() => handleLogout(isVendorLoggedIn ? 'vendor' : 'user')}>
                   Logout
                 </button>
               ) : (
