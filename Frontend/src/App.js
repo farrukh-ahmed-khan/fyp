@@ -18,6 +18,7 @@ import Checkout from "./Pages/Checkout";
 import Success from "./Pages/Success";
 import AdminPanel from "./AdminPanel/AdminPanel";
 import ProtectedRoutes from "./ProtectedRoute";
+import ServicesCheckout from "./Pages/ServicesCheckout";
 
 function App() {
   const isAuth = localStorage.getItem("user") !== null;
@@ -41,6 +42,7 @@ function App() {
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
           <Route path="/Thankyou" element={<ThankYouPage />} />
+          <Route path="/servicecheckout" element={<ServicesCheckout/>}/>
 
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/success" element={<Success />} />

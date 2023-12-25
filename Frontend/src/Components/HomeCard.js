@@ -3,6 +3,7 @@ import "../Assets/css/homecard.css";
 import card_img1 from "../Assets/images/card-image1.png";
 import card_img2 from "../Assets/images/card-image2.png";
 import card_img3 from "../Assets/images/card-image3.png";
+import { Link } from "react-router-dom";
 
 const HomeCard = ({ type }) => {
   let data;
@@ -14,6 +15,7 @@ const HomeCard = ({ type }) => {
         title: "Photography",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua.",
+
       };
 
       break;
@@ -49,7 +51,9 @@ const HomeCard = ({ type }) => {
           <p>{data.description}</p>
         </div>
         <div className="btn-section">
+          <Link to="/Service">
           <button className="btn">Explore More</button>
+          </Link>
         </div>
       </div>
     </div>

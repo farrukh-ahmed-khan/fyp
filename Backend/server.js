@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 require('dotenv').config();
-
+const { prices } = require('./constant');
 
 const app = express();
 app.use(cors());
@@ -275,3 +275,62 @@ app.post('/checkout', async (req, res) => {
       res.status(500).json({ error: error.message });
   }
 });
+
+// Inside your server.js
+app.post('/onlyservice', async (req, res) => {
+    try {
+      const {
+        date,
+        time,
+        selectedServices,
+        selectedPackage,
+        totalPrice,
+        address,
+        name,
+        email,
+        phone,
+      } = req.body;
+  
+      // Convert selectedServices array to a comma-separated string
+      const servicesDescription = selectedServices.join(', ');
+  
+      // Modify this part based on your actual Stripe integration logic
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        mode: 'payment',
+        line_items: selectedServices.map((service) => ({
+          price_data: {
+            currency: 'pkr',
+            product_data: {
+              name: service,
+              description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
+            },
+            unit_amount: prices[service][selectedPackage] * 100,
+          },
+          quantity: 1,
+        })),
+        success_url: 'http://localhost:3000/success',
+        cancel_url: 'http://localhost:3000/cancel',
+        metadata: {
+          date,
+          time,
+          selectedServices: servicesDescription, // Use the string here
+          totalPrice,
+          address,
+          name,
+          email,
+          phone,
+        },
+      });
+  
+      console.log("Received data:", req.body);
+      console.log("Session URL:", session.url);
+  
+      res.json({ url: session.url });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  

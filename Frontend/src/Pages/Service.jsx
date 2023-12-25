@@ -73,6 +73,7 @@ const Service = () => {
           </h3>
           <div className="row">
             <div className="cards">
+              
               <MakeupServiceCard type="silver" />
               <MakeupActiveCard type="platinum"/>           
               <MakeupServiceCard type="gold" />            

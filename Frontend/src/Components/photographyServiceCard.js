@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const PhotographyServiceCard = ({ type }) => {
   let data;
@@ -52,9 +53,11 @@ const PhotographyServiceCard = ({ type }) => {
         <li className="bottom-bar">{data.point3}</li>
         <li className="bottom-bar">{data.point4}</li>
         <li className="bottom-bar">{data.point5}</li>
+        <Link to="/servicecheckout">
         <li>
           <button className="btn">{data.btnTitle}</button>
         </li>
+        </Link>
       </ul>
     </div>
   );

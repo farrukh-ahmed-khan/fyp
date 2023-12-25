@@ -1,8 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MakeupServiceCard = ({ type }) => {
   let data;
-  // temporay
   switch (type) {
     case "silver":
       data = {
@@ -41,7 +41,10 @@ const MakeupServiceCard = ({ type }) => {
         <li className="bottom-bar">{data.point4}</li>
         <li className="bottom-bar">{data.point5}</li>
         <li>
+        <Link to="/servicecheckout">
+
           <button className="btn">{data.btnTitle}</button>
+        </Link>
         </li>
       </ul>
     </div>
