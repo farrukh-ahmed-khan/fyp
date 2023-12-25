@@ -245,9 +245,9 @@ const VenueBooking = () => {
                             placeholder="City"
                           >
                             <option>Karachi</option>
+                            {/* <option>Karachi</option>
                             <option>Karachi</option>
-                            <option>Karachi</option>
-                            <option>Karachi</option>
+                            <option>Karachi</option> */}
                           </select>
                         </div>
                         <div className="inp-wrapper">

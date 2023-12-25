@@ -34,6 +34,7 @@ const HallVendorForm = () => {
     maxPrice: "",
     address: "",
     capacity: "",
+    advancepayment:"",
     additionalDetails: "",
   });
 
@@ -202,6 +203,20 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="advancepayment">Advance Payment</label>
+                  <input
+                    type="number"
+                    name="advancepayment"
+                    id="advancepayment"
+                    className="form-control"
+                    placeholder="Enter your advance payment"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
               {/* <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="type">Image</label>
@@ -219,8 +234,8 @@ const HallVendorForm = () => {
                 <div className="form-group">
                   <label htmlFor="additionalDetails">Additional Details</label>
                   <textarea
-                    name=""
-                    id=""
+                    name="additionalDetails"
+                    id="additionalDetails"
                     placeholder="Enter Short Description"
                   ></textarea>
                 </div>
@@ -337,12 +352,12 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="A permit is required for any open flame"
+                            id="defaultCheck11"
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="defaultCheck11"
                           >
                             A permit is required for any open flame
                           </label>
@@ -353,12 +368,12 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="A permit is required for events with 200+ people"
+                            id="defaultCheck12"
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="defaultCheck12"
                           >
                             A permit is required for events with 200+ people
                           </label>
@@ -369,12 +384,12 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Meal must be served by licensed caterer"
+                            id="defaultCheck13"
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="defaultCheck13"
                           >
                             Meal must be served by licensed caterer
                           </label>
@@ -385,12 +400,12 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Amplified music OK indoors only"
+                            id="defaultCheck14"
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="defaultCheck14"
                           >
                             Amplified music OK indoors only
                           </label>
@@ -401,12 +416,12 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Amplified music OK indoors only"
+                            id="defaultCheck14"
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="defaultCheck14"
                           >
                             Approved outside caterer allowed
                           </label>

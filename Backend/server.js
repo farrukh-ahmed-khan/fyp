@@ -115,7 +115,7 @@ app.post('/vendorform', (req, res) => {
     const selectedServices = req.body.services || [];
     const selectedRequirements = req.body.requirements || [];
   
-    const vendorFormSql = "INSERT INTO vendorform (name, email, phoneNumber, minPrice, maxPrice, address, capacity, additionalDetails) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const vendorFormSql = "INSERT INTO vendorform (name, email, phoneNumber, minPrice, maxPrice, address, capacity, advancepayment,additionalDetails) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
     const vendorFormValues = [
       formData.name,
       formData.email,
@@ -124,7 +124,8 @@ app.post('/vendorform', (req, res) => {
       formData.maxPrice,
       formData.address,
       formData.capacity,
-      formData.additionalDetails,
+      formData.advancepayment,
+      formData.additionalDetails
     ];
   
     db.query(vendorFormSql, vendorFormValues, (err, vendorFormResult) => {
