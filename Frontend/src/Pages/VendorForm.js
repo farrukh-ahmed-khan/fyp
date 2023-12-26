@@ -29,13 +29,17 @@ const HallVendorForm = () => {
   const [vendorData, setVendorData] = useState({
     name: "",
     email: "",
-    phoneNumber: "",
-    minPrice: "",
+    hallName: "",
+    city: "",
+    area: "",
     maxPrice: "",
-    address: "",
-    capacity: "",
-    advancepayment:"",
+    price: "",
+    guests: "",
+    rating: "",
+    phone: "",
+    advanced:"",
     additionalDetails: "",
+    
   });
 
   const [selectedServices, setSelectedServices] = useState([]);
@@ -134,11 +138,11 @@ const HallVendorForm = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="phoneNumber">Phone Number</label>
+                  <label htmlFor="phone">Phone Number</label>
                   <input
                     type="tel"
-                    name="phoneNumber"
-                    id="phoneNumber"
+                    name="phone"
+                    id="phone"
                     className="form-control"
                     placeholder="Enter your phone number"
                     onChange={handleChange}
@@ -148,11 +152,25 @@ const HallVendorForm = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="minPrice">Minimum Price</label>
+                  <label htmlFor="hallName">Hall Name</label>
+                  <input
+                    type="text"
+                    name="hallName"
+                    id="hallName"
+                    className="form-control"
+                    placeholder="Enter your Hall Name"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="price">Minimum Price</label>
                   <input
                     type="number"
-                    name="minPrice"
-                    id="minPrice"
+                    name="price"
+                    id="price"
                     className="form-control"
                     placeholder="Enter your minimum price"
                     onChange={handleChange}
@@ -174,13 +192,14 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
+              
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="address">Address</label>
+                  <label htmlFor="area">Area</label>
                   <input
                     type="text"
-                    name="address"
-                    id="address"
+                    name="area"
+                    id="area"
                     className="form-control"
                     placeholder="Enter your address"
                     onChange={handleChange}
@@ -188,16 +207,15 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
-
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="capacity">Capacity</label>
+                  <label htmlFor="city">City</label>
                   <input
-                    type="number"
-                    name="capacity"
-                    id="capacity"
+                    type="text"
+                    name="city"
+                    id="city"
                     className="form-control"
-                    placeholder="Enter your capacity"
+                    placeholder="Enter your address"
                     onChange={handleChange}
                     required
                   />
@@ -205,18 +223,47 @@ const HallVendorForm = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="advancepayment">Advance Payment</label>
+                  <label htmlFor="guests">Capacity</label>
                   <input
                     type="number"
-                    name="advancepayment"
-                    id="advancepayment"
+                    name="guests"
+                    id="guests"
                     className="form-control"
-                    placeholder="Enter your advance payment"
+                    placeholder="Enter your guests capacity"
                     onChange={handleChange}
                     required
                   />
                 </div>
               </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="rating">Rating</label>
+                  <input
+                    type="text"
+                    name="rating"
+                    id="rating"
+                    className="form-control"
+                    placeholder="Enter your google rating"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="advanced">Advance Payment</label>
+                  <input
+                    type="number"
+                    name="advanced"
+                    id="advanced"
+                    className="form-control"
+                    placeholder="Enter your advance amount"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              
               {/* <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="type">Image</label>
@@ -237,6 +284,7 @@ const HallVendorForm = () => {
                     name="additionalDetails"
                     id="additionalDetails"
                     placeholder="Enter Short Description"
+                    onChange={handleChange}
                   ></textarea>
                 </div>
               </div>
@@ -311,12 +359,13 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Tables & Chairs Provide"
+                            id="TablesChairsProvide"
+                            onChange={handleServiceChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="TablesChairsProvide"
                           >
                             Tables & Chairs Provided
                           </label>
@@ -327,12 +376,13 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Kitchenforserveonly"
+                            id="Kitchenforserveonly"
+                            onChange={handleServiceChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="Kitchenforserveonly"
                           >
                             Kitchen's for serve only
                           </label>
@@ -353,11 +403,12 @@ const HallVendorForm = () => {
                             className="form-check-input"
                             type="checkbox"
                             value="A permit is required for any open flame"
-                            id="defaultCheck11"
+                            id="Apermitisrequiredforanyopenflame"
+                            onChange={handleRequirementChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck11"
+                            htmlFor="Apermitisrequiredforanyopenflame"
                           >
                             A permit is required for any open flame
                           </label>
@@ -369,11 +420,12 @@ const HallVendorForm = () => {
                             className="form-check-input"
                             type="checkbox"
                             value="A permit is required for events with 200+ people"
-                            id="defaultCheck12"
+                            id="apermitisrequiredforeventswith200people"
+                            onChange={handleRequirementChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck12"
+                            htmlFor="apermitisrequiredforeventswith200people"
                           >
                             A permit is required for events with 200+ people
                           </label>
@@ -385,11 +437,12 @@ const HallVendorForm = () => {
                             className="form-check-input"
                             type="checkbox"
                             value="Meal must be served by licensed caterer"
-                            id="defaultCheck13"
+                            id="Mealmustbeservedbylicensedcaterer"
+                            onChange={handleRequirementChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck13"
+                            htmlFor="Mealmustbeservedbylicensedcaterer"
                           >
                             Meal must be served by licensed caterer
                           </label>
@@ -401,11 +454,12 @@ const HallVendorForm = () => {
                             className="form-check-input"
                             type="checkbox"
                             value="Amplified music OK indoors only"
-                            id="defaultCheck14"
+                            id="AmplifiedmusicOKindoorsonly"
+                            onChange={handleRequirementChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck14"
+                            htmlFor="AmplifiedmusicOKindoorsonly"
                           >
                             Amplified music OK indoors only
                           </label>
@@ -416,12 +470,13 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value="Amplified music OK indoors only"
-                            id="defaultCheck14"
+                            value="Approved outside caterer allowed"
+                            id="Approvedoutsidecatererallowed"
+                            onChange={handleRequirementChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck14"
+                            htmlFor="Approvedoutsidecatererallowed"
                           >
                             Approved outside caterer allowed
                           </label>
@@ -432,12 +487,13 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="General liability insurance required"
+                            id="Generalliabilityinsurancerequired"
+                            onChange={handleRequirementChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="Generalliabilityinsurancerequired"
                           >
                             General liability insurance required
                           </label>
@@ -448,12 +504,13 @@ const HallVendorForm = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            value=""
-                            id="defaultCheck1"
+                            value="Music must end by 11:00PM"
+                            id="Musicmustendby11:00PM"
+                            onChange={handleRequirementChange}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
+                            htmlFor="Musicmustendby11:00PM"
                           >
                             Music must end by 11:00PM
                           </label>

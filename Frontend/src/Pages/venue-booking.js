@@ -1,7 +1,7 @@
 import React from "react";
 import "../Assets/css/home.css";
 import "../Assets/css/venue-booking.css";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import Carosel from "../Components/CommonComponent/Carosel";
 import Navbr from "../Components/CommonComponent/Nav";
@@ -10,191 +10,249 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 
-const HallData = [
-  {
-    hallName: "AL-Mehfil Banquet",
-    img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
-    city: "Karachi",
-    area: "North Nazimabad",
-    price: "5000",
-    maxPrice: "10000",
-    guests: "100",
-    rating: "4.5",
-    phone: "021-3663-0000",
-    guests: "100",
-    advanced: 5000,
-    // shotDesc:
-    //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
-    services: [
-      "Bride Dressing Area",
-      "Dance Floor",
-      "Groom's Dressing Area",
-      "Public Parking",
-      "Tables & Chairs Provided",
-      "Kitchen's for serve only",
-    ],
-    requirements: [
-      "A permit is required for any open flame (candles, cooking, sterno, etc.)",
-      "A permit is required for events with 200+ people",
-      "Meal must be served by licensed caterer",
-      "Amplified music OK indoors only",
-      "Approved outside caterer allowed",
-      "General liability insurance required",
-      "Music must end by 11:00PM",
-    ],
-  },
-  {
-    hallName: "Jhumar Banquet",
-    img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
-    city: "Karachi",
-    area: "Sakhia Hassan",
-    price: "5000",
-    maxPrice: "30000",
-    guests: "200",
-    rating: "3.5",
-    phone: "021-3663-869856",
-    guests: "200",
-    advanced: 5000,
-    services: [
-      "Bride Dressing Area",
-      "Dance Floor",
-      "Groom's Dressing Area",
-      "Public Parking",
-      "Tables & Chairs Provided",
-      "Kitchen's for serve only",
-    ],
-    requirements: [
-      "A permit is required for any open flame (candles, cooking, sterno, etc.)",
-      "A permit is required for events with 200+ people",
-      "Meal must be served by licensed caterer",
-      "Amplified music OK indoors only",
-      "Approved outside caterer allowed",
-      "General liability insurance required",
-      "Music must end by 11:00PM",
-    ],
-    // shotDesc:
-    //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
-  },
-  {
-    hallName: "casabinca Banquet",
-    img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
-    city: "Karachi",
-    area: "Gulshan-e-Iqbal",
-    price: "5000",
-    maxPrice: "10000",
-    guests: "100",
-    rating: "2.5",
-    phone: "021-3663-xxxx",
-    guests: "100",
-    advanced: 5000,
-    services: [
-      "Bride Dressing Area",
-      "Dance Floor",
-      "Groom's Dressing Area",
-      "Public Parking",
-      "Tables & Chairs Provided",
-      "Kitchen's for serve only",
-    ],
-    requirements: [
-      "A permit is required for any open flame (candles, cooking, sterno, etc.)",
-      "A permit is required for events with 200+ people",
-      "Meal must be served by licensed caterer",
-      "Amplified music OK indoors only",
-      "Approved outside caterer allowed",
-      "General liability insurance required",
-      "Music must end by 11:00PM",
-    ],
-    // shotDesc:
-    //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
-  },
+// const HallData = [
+//   {
+//     hallName: "AL-Mehfil Banquet",
+//     img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
+//     city: "Karachi",
+//     area: "North Nazimabad",
+//     price: "5000",
+//     maxPrice: "10000",
+//     guests: "100",
+//     rating: "4.5",
+//     phone: "021-3663-0000",
+//     guests: "100",
+//     advanced: 5000,
+//     // shotDesc:
+//     //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
+//     services: [
+//       "Bride Dressing Area",
+//       "Dance Floor",
+//       "Groom's Dressing Area",
+//       "Public Parking",
+//       "Tables & Chairs Provided",
+//       "Kitchen's for serve only",
+//     ],
+//     requirements: [
+//       "A permit is required for any open flame (candles, cooking, sterno, etc.)",
+//       "A permit is required for events with 200+ people",
+//       "Meal must be served by licensed caterer",
+//       "Amplified music OK indoors only",
+//       "Approved outside caterer allowed",
+//       "General liability insurance required",
+//       "Music must end by 11:00PM",
+//     ],
+//   },
+//   {
+//     hallName: "Jhumar Banquet",
+//     img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
+//     city: "Karachi",
+//     area: "Sakhia Hassan",
+//     price: "5000",
+//     maxPrice: "30000",
+//     guests: "200",
+//     rating: "3.5",
+//     phone: "021-3663-869856",
+//     guests: "200",
+//     advanced: 5000,
+//     services: [
+//       "Bride Dressing Area",
+//       "Dance Floor",
+//       "Groom's Dressing Area",
+//       "Public Parking",
+//       "Tables & Chairs Provided",
+//       "Kitchen's for serve only",
+//     ],
+//     requirements: [
+//       "A permit is required for any open flame (candles, cooking, sterno, etc.)",
+//       "A permit is required for events with 200+ people",
+//       "Meal must be served by licensed caterer",
+//       "Amplified music OK indoors only",
+//       "Approved outside caterer allowed",
+//       "General liability insurance required",
+//       "Music must end by 11:00PM",
+//     ],
+//     // shotDesc:
+//     //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
+//   },
+//   {
+//     hallName: "casabinca Banquet",
+//     img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
+//     city: "Karachi",
+//     area: "Gulshan-e-Iqbal",
+//     price: "5000",
+//     maxPrice: "10000",
+//     guests: "100",
+//     rating: "2.5",
+//     phone: "021-3663-xxxx",
+//     guests: "100",
+//     advanced: 5000,
+//     services: [
+//       "Bride Dressing Area",
+//       "Dance Floor",
+//       "Groom's Dressing Area",
+//       "Public Parking",
+//       "Tables & Chairs Provided",
+//       "Kitchen's for serve only",
+//     ],
+//     requirements: [
+//       "A permit is required for any open flame (candles, cooking, sterno, etc.)",
+//       "A permit is required for events with 200+ people",
+//       "Meal must be served by licensed caterer",
+//       "Amplified music OK indoors only",
+//       "Approved outside caterer allowed",
+//       "General liability insurance required",
+//       "Music must end by 11:00PM",
+//     ],
+//     // shotDesc:
+//     //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
+//   },
 
-  {
-    hallName: "Unique Banquet",
-    img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
-    city: "Karachi",
-    area: "Gulshan-e-Iqbal",
-    price: "5000",
-    maxPrice: "10000",
-    guests: "100",
-    rating: "4.5",
-    phone: "021-3663-980000",
-    guests: "100",
-    advanced: 5000,
-    services: [
-      "Bride Dressing Area",
-      "Dance Floor",
-      "Groom's Dressing Area",
-      "Public Parking",
-      "Tables & Chairs Provided",
-      "Kitchen's for serve only",
-    ],
-    requirements: [
-      "A permit is required for any open flame (candles, cooking, sterno, etc.)",
-      "A permit is required for events with 200+ people",
-      "Meal must be served by licensed caterer",
-      "Amplified music OK indoors only",
-      "Approved outside caterer allowed",
-      "General liability insurance required",
-      "Music must end by 11:00PM",
-    ],
-    // shotDesc:
-    //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
-  },
-  {
-    hallName: "Royal Banquet",
-    img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
-    city: "Karachi",
-    area: "Gulberg",
-    price: "5000",
-    maxPrice: "10000",
-    guests: "100",
-    rating: "4.5",
-    phone: "021-3663-0000",
-    guests: "500",
-    advanced: 5000,
-    services: [
-      "Bride Dressing Area",
-      "Dance Floor",
-      "Groom's Dressing Area",
-      "Public Parking",
-      "Tables & Chairs Provided",
-      "Kitchen's for serve only",
-    ],
-    requirements: [
-      "A permit is required for any open flame (candles, cooking, sterno, etc.)",
-      "A permit is required for events with 200+ people",
-      "Meal must be served by licensed caterer",
-      "Amplified music OK indoors only",
-      "Approved outside caterer allowed",
-      "General liability insurance required",
-      "Music must end by 11:00PM",
-    ],
-    // shotDesc:
-    //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
-  },
-];
+//   {
+//     hallName: "Unique Banquet",
+//     img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
+//     city: "Karachi",
+//     area: "Gulshan-e-Iqbal",
+//     price: "5000",
+//     maxPrice: "10000",
+//     guests: "100",
+//     rating: "4.5",
+//     phone: "021-3663-980000",
+//     guests: "100",
+//     advanced: 5000,
+//     services: [
+//       "Bride Dressing Area",
+//       "Dance Floor",
+//       "Groom's Dressing Area",
+//       "Public Parking",
+//       "Tables & Chairs Provided",
+//       "Kitchen's for serve only",
+//     ],
+//     requirements: [
+//       "A permit is required for any open flame (candles, cooking, sterno, etc.)",
+//       "A permit is required for events with 200+ people",
+//       "Meal must be served by licensed caterer",
+//       "Amplified music OK indoors only",
+//       "Approved outside caterer allowed",
+//       "General liability insurance required",
+//       "Music must end by 11:00PM",
+//     ],
+//     // shotDesc:
+//     //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
+//   },
+//   {
+//     hallName: "Royal Banquet",
+//     img: "https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg",
+//     city: "Karachi",
+//     area: "Gulberg",
+//     price: "5000",
+//     maxPrice: "10000",
+//     guests: "100",
+//     rating: "4.5",
+//     phone: "021-3663-0000",
+//     guests: "500",
+//     advanced: 5000,
+//     services: [
+//       "Bride Dressing Area",
+//       "Dance Floor",
+//       "Groom's Dressing Area",
+//       "Public Parking",
+//       "Tables & Chairs Provided",
+//       "Kitchen's for serve only",
+//     ],
+//     requirements: [
+//       "A permit is required for any open flame (candles, cooking, sterno, etc.)",
+//       "A permit is required for events with 200+ people",
+//       "Meal must be served by licensed caterer",
+//       "Amplified music OK indoors only",
+//       "Approved outside caterer allowed",
+//       "General liability insurance required",
+//       "Music must end by 11:00PM",
+//     ],
+//     // shotDesc:
+//     //   "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem. North Nazimabad,karachi,Pakistan. 'AL-mehfil Banquet ' is ideal for weddings, corporate dinners, private dinners and AL-mehfil banquet ' is ideal for all types of summer and winter events",
+//   },
+// ];
 const VenueBooking = () => {
+  // const navigate = useNavigate();
+  // const handleDetailsClick = (hallDetails) => {
+  //   navigate("/HallDetails", { state: { hallDetails } });
+  // };
+  // const [City, setCity] = useState("");
+  // const [Area, setArea] = useState("");
+  // const [Price, setPrice] = useState("");
+  // const [MaxPrice, setMaxPrice] = useState("");
+  // const [Guests, setGuests] = useState("");
+  // const [filteredData, setFilteredData] = useState(HallData);
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if (name === "city") setCity(value);
+  //   if (name === "area") setArea(value);
+  //   if (name === "price") setPrice(value);
+  //   if (name === "maxPrice") setMaxPrice(value);
+  //   if (name === "guests") setGuests(value);
+  // };
+  // const handleSearch = () => {
+  //   console.log("searching");
+  //   const newFilteredData = HallData.filter((item) => {
+  //     return (
+  //       (City === "" || item.city.toLowerCase() === City.toLowerCase()) &&
+  //       (Area === "" || item.area.toLowerCase() === Area.toLowerCase()) &&
+  //       (Price === "" || item.price <= parseInt(Price)) &&
+  //       (MaxPrice === "" || item.maxPrice >= parseInt(MaxPrice)) &&
+  //       (Guests === "" || item.guests >= parseInt(Guests))
+  //     );
+  //   });
+
+  //   setFilteredData(newFilteredData);
+  // };
+
+
   const navigate = useNavigate();
-  const handleDetailsClick = (hallDetails) => {
-    navigate("/HallDetails", { state: { hallDetails } });
-  };
+  const [HallData, setHallData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [City, setCity] = useState("");
   const [Area, setArea] = useState("");
   const [Price, setPrice] = useState("");
   const [MaxPrice, setMaxPrice] = useState("");
   const [Guests, setGuests] = useState("");
-  const [filteredData, setFilteredData] = useState(HallData);
+
+  useEffect(() => {
+    fetch("http://localhost:8081/getvendorforms")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        return response.text();
+      })
+      .then((data) => {
+        console.log('API Response:', data); 
+
+        try {
+          const jsonData = JSON.parse(data);
+          setHallData(jsonData);
+          setFilteredData(jsonData);
+        } catch (parseError) {
+          console.error('Error parsing JSON:', parseError);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data from the API:", error);
+      });
+  }, []);
+
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    // Update the corresponding state variable based on the input's name attribute
     if (name === "city") setCity(value);
     if (name === "area") setArea(value);
     if (name === "price") setPrice(value);
     if (name === "maxPrice") setMaxPrice(value);
     if (name === "guests") setGuests(value);
   };
+
   const handleSearch = () => {
-    console.log("searching");
     const newFilteredData = HallData.filter((item) => {
       return (
         (City === "" || item.city.toLowerCase() === City.toLowerCase()) &&
@@ -207,6 +265,14 @@ const VenueBooking = () => {
 
     setFilteredData(newFilteredData);
   };
+
+  const handleDetailsClick = (hallDetails) => {
+    navigate("/HallDetails", { state: { hallDetails } });
+  };
+
+
+
+
 
   return (
     <div className="home-page">
@@ -320,7 +386,7 @@ const VenueBooking = () => {
                         <div className="row">
                           <div className="col-lg-4">
                             <div className="hall-img-wrapper">
-                              <img src={item.img} />
+                              <img src="https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg" />
                             </div>
                           </div>
                           <div className="col-lg-8">

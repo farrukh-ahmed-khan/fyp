@@ -6,11 +6,66 @@ const Checkout = () => {
   const location = useLocation();
   const hallDetails = location.state.hallDetails;
 
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("morning");
   const [selectedServices, setSelectedServices] = useState([]);
-  const [servicePackages, setServicePackages] = useState({});
+  const [selectedPackage, setSelectedPackage] = useState("silver");
+  const [totalPrice, setTotalPrice] = useState(hallDetails.advanced);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
+  const prices = {
+    photography: {
+      silver: 3000,
+      gold: 5000,
+      platinum: 7000,
+    },
+    makeup: {
+      silver: 4000,
+      gold: 6000,
+      platinum: 8000,
+    },
+    decoration: {
+      silver: 2000,
+      gold: 3000,
+      platinum: 4000,
+    },
+  };
+
+  const handleServiceChange = (service) => {
+    const isSelected = selectedServices.includes(service);
+    const updatedServices = isSelected
+      ? selectedServices.filter((selected) => selected !== service)
+      : [...selectedServices, service];
+
+    setSelectedServices(updatedServices);
+
+    updateTotalPrice(updatedServices, selectedPackage);
+  };
+
+  const handlePackageChange = (packageType) => {
+    setSelectedPackage(packageType);
+    updateTotalPrice(selectedServices, packageType);
+  };
+
+  const handleRemoveService = (service) => {
+    const updatedServices = selectedServices.filter(
+      (selected) => selected !== service
+    );
+    setSelectedServices(updatedServices);
+    updateTotalPrice(updatedServices, selectedPackage);
+  };
+
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+  };
+
+  const handleTimeChange = (e) => {
+    setSelectedTime(e.target.value);
+  };
+  const updateTotalPrice = (services, packageType) => {
+    const totalPrice = services.reduce((sum, service) => sum + prices[service][packageType], 0);
+    setTotalPrice(totalPrice);
+  };
+
 
   // const checkout = async () => {
   //   console.log(selectedDate);
@@ -70,7 +125,7 @@ const Checkout = () => {
           hallName: hallDetails.hallName,
           items: selectedServices.map((service, index) => ({
             id: index + 1, // You can use a unique identifier for each service
-            price: hallDetails.advanced, // Replace with the actual price
+            price: totalPrice, // Replace with the actual price
             name: service,
             quantity: 1,
           })),
@@ -169,71 +224,66 @@ const Checkout = () => {
 
               <div className="capacity">
                 <h3>
-                  Venue Capacity: <span>Upto 400</span>
+                  Venue Capacity: <span>{hallDetails.guests}</span>
                 </h3>
               </div>
 
-              <div className="services-section">
-                <h3>Additional Services</h3>
-                <div className="services">
-                  <label>
-                    <select
-                      onChange={(e) => {
-                        handleServiceSelect(e.target.value);
-                        calculateTotalAdvance();
-                      }}
-                    >
-                      <option value="" disabled selected>
-                        Select Service
-                      </option>
-                      <option value="Photography">Photography</option>
-                      <option value="Decoration">Decoration</option>
-                      <option value="Make Up">Make Up</option>
-                      {/* Add more service options as needed */}
-                    </select>
-                  </label>
-                  {selectedServices.map((service) => (
-                    <div key={service} className="package-options">
-                      <label>
-                        Select Package:{" "}
-                        <select
-                          onChange={(e) => {
-                            handlePackageSelect(service, e.target.value);
-                            calculateTotalAdvance();
-                          }}
-                        >
-                          <option value="basic">Basic</option>
-                          <option value="premium">Premium</option>
-                          <option value="platinum">Platinum</option>
-                        </select>
-                      </label>
-                    </div>
-                  ))}
+              <div>
+                <h1>Services Checkout</h1>
+                <div>
+                  <label>Select Services:</label>
+                  <select
+                    multiple
+                    value={selectedServices}
+                    onChange={(e) => handleServiceChange(e.target.value)}
+                  >
+                    <option value="photography">Photography</option>
+                    <option value="makeup">Makeup</option>
+                    <option value="decoration">Decoration</option>
+                  </select>
+                  <ul>
+                    {selectedServices.map((service) => (
+                      <li key={service}>
+                        {service}{" "}
+                        <button onClick={() => handleRemoveService(service)}>
+                          Remove
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-
-              <div className="select-event-date">
-                <h3>Select Event Date</h3>
-                <input
-                  type="date"
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                />
-              </div>
-              <div className="select-evening-morning">
-                <h3>Select Morning/Evening</h3>
-                <select
-                  onChange={(e) => setSelectedTime(e.target.value)}
-                  value={selectedTime}
-                >
-                  <option value="morning">Morning</option>
-                  <option value="evening">Evening</option>
-                </select>
-              </div>
-
-              <div className="capacity mt-3">
-                <h3>
-                  Advance: <span>{totalAdvance}</span>
-                </h3>
+                <div>
+                  <label>Select Package:</label>
+                  <select
+                    value={selectedPackage}
+                    onChange={(e) => handlePackageChange(e.target.value)}
+                  >
+                    <option value="silver">Silver</option>
+                    <option value="gold">Gold</option>
+                    <option value="platinum">Platinum</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Date:</label>
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                  />
+                </div>
+                <div>
+                  <label>Time:</label>
+                  <input
+                    type="time"
+                    value={selectedTime}
+                    onChange={handleTimeChange}
+                  />
+                </div>
+                
+                <div>
+                  <p>Total Price: ${totalPrice}</p>
+                </div>
+                
               </div>
             </div>
             {/* <div className="col-md-6">
