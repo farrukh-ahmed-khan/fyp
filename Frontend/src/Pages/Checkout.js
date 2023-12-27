@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
+import "../Assets/css/checkout.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 const Checkout = () => {
   const location = useLocation();
@@ -69,18 +70,16 @@ const Checkout = () => {
     );
     const totalAdvance = hallDetails.advanced;
     const finalPrice = totalPrice + totalAdvance;
-  
+
     setTotalPrice(totalPrice);
     setFinalPrice(finalPrice);
     setTotalAdvance(totalAdvance);
   };
 
-
-
   // const checkout = async () => {
   //   console.log(selectedDate);
   //   console.log(selectedTime);
-  
+
   //   try {
   //     const res = await fetch("http://localhost:8081/checkout", {
   //       method: "POST",
@@ -94,7 +93,7 @@ const Checkout = () => {
   //         hallName: hallDetails.hallName,
   //         items: selectedServices.map((service, index) => ({
   //           id: index + 1,
-  //           price: prices[service][selectedPackage]+hallDetails.advanced, 
+  //           price: prices[service][selectedPackage]+hallDetails.advanced,
   //           // price: finalPrice,
   //           name: service,
   //           quantity: 1,
@@ -103,12 +102,12 @@ const Checkout = () => {
   //         finalPrice: finalPrice, // Include the final price in the request
   //       }),
   //     });
-  
+
   //     const data = await res.json();
-  
+
   //     // Log the session.url to check if it's set properly
   //     console.log("Session URL:", data.url);
-  
+
   //     // Check if session.url is not undefined before redirecting
   //     if (data.url) {
   //       window.location = data.url;
@@ -119,49 +118,50 @@ const Checkout = () => {
   //     console.log(err);
   //   }
   // };
-  
+
   const checkout = async () => {
     console.log(selectedDate);
     console.log(selectedTime);
 
     try {
-        const res = await fetch("http://localhost:8081/checkout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            mode: "cors",
-            body: JSON.stringify({
-                date: selectedDate,
-                time: selectedTime,
-                hallName: hallDetails.hallName,
-                items: selectedServices.map((service, index) => ({
-                    id: index + 1,
-                    price: prices[service][selectedPackage] + (index === 0 ? hallDetails.advanced : 0),
-                    name: service,
-                    quantity: 1,
-                })),
-                package: selectedPackage,
-                halladvance: hallDetails.advanced, // Include the final price in the request
-            }),
-        });
+      const res = await fetch("http://localhost:8081/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+        body: JSON.stringify({
+          date: selectedDate,
+          time: selectedTime,
+          hallName: hallDetails.hallName,
+          items: selectedServices.map((service, index) => ({
+            id: index + 1,
+            price:
+              prices[service][selectedPackage] +
+              (index === 0 ? hallDetails.advanced : 0),
+            name: service,
+            quantity: 1,
+          })),
+          package: selectedPackage,
+          halladvance: hallDetails.advanced, // Include the final price in the request
+        }),
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        // Log the session.url to check if it's set properly
-        console.log("Session URL:", data.url);
+      // Log the session.url to check if it's set properly
+      console.log("Session URL:", data.url);
 
-        // Check if session.url is not undefined before redirecting
-        if (data.url) {
-            window.location = data.url;
-        } else {
-            console.error("Session URL is undefined.");
-        }
+      // Check if session.url is not undefined before redirecting
+      if (data.url) {
+        window.location = data.url;
+      } else {
+        console.error("Session URL is undefined.");
+      }
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-};
-
+  };
 
   return (
     <>
@@ -178,7 +178,7 @@ const Checkout = () => {
               </div>
 
               <div className="services-section">
-                <h3>Amenties & Requirement</h3>
+                <h3 className="fw-bold">Amenties & Requirement</h3>
                 <div className="services">
                   {hallDetails.services.map((service) => {
                     return <p>{service}</p>;
@@ -187,80 +187,109 @@ const Checkout = () => {
               </div>
 
               <div className="requirement-section">
-                <h3>Requirements</h3>
+                <h3 className="fw-bold">Requirements</h3>
                 <ul>
                   {hallDetails.requirements.map((req) => {
-                    return <li>{req}</li>;
+                    return <li> • {req}</li>;
                   })}
                 </ul>
               </div>
 
               <div className="capacity">
-                <h3>
+                <h3 className="fw-bold">
                   Venue Capacity: <span>{hallDetails.guests}</span>
                 </h3>
               </div>
+              <hr />
 
               <div>
-                <h1>Services Checkout</h1>
-                <div>
-                  <label>Select Services:</label>
-                  <select
-                    multiple
-                    value={selectedServices}
-                    onChange={(e) => handleServiceChange(e.target.value)}
-                  >
-                    <option value="photography">Photography</option>
-                    <option value="makeup">Makeup</option>
-                    <option value="decoration">Decoration</option>
-                  </select>
-                  <ul>
-                    {selectedServices.map((service) => (
-                      <li key={service}>
-                        {service}{" "}
-                        <button onClick={() => handleRemoveService(service)}>
-                          Remove
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                <h1 className="service-checkout-heading">Services Checkout</h1>
+                
+                <div className="d-flex justify-content-between flex-wrap">
+                  <div>
+                    <label>Select Services </label>
+                    <br />
+                    <select
+                      //multiple
+                      value={selectedServices}
+                      onChange={(e) => handleServiceChange(e.target.value)}
+                      className="service-drop-down"
+                    >
+                      <option value="photography">Photography</option>
+                      <option value="makeup">Makeup</option>
+                      <option value="decoration">Decoration</option>
+                    </select>
+                    <ul  style={{border:"1px solid #ccc", padding:"10px", marginTop:"10px"}}>
+                      {selectedServices.map((service) => (
+                        <li key={service} className="mt-2 service-list" style={{width:"100%"}}>
+                          {service}{" "}
+                          <button
+                            className="btn-danger"
+                            onClick={() => handleRemoveService(service)}
+                           
+                          >
+                            X
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <br />
+                  <div>
+                    <label>Select Package</label>
+                    <br />
+                    <select
+                      value={selectedPackage}
+                      onChange={(e) => handlePackageChange(e.target.value)}
+                      className="service-drop-down"
+                    >
+                      <option value="silver">Silver</option>
+                      <option value="gold">Gold</option>
+                      <option value="platinum">Platinum</option>
+                    </select>
+                  </div>{" "}
+                  <br />
+                  <div>
+                    <label>Date</label>
+                    <br />
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      className="service-drop-down"
+                    />
+                  </div>
+                  <br />
+                  <div>
+                    <label>Time</label>
+                    <br />
+                    <input
+                      type="time"
+                      value={selectedTime}
+                      onChange={handleTimeChange}
+                      className="service-drop-down"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label>Select Package:</label>
-                  <select
-                    value={selectedPackage}
-                    onChange={(e) => handlePackageChange(e.target.value)}
-                  >
-                    <option value="silver">Silver</option>
-                    <option value="gold">Gold</option>
-                    <option value="platinum">Platinum</option>
-                  </select>
-                </div>
-                <div>
-                  <label>Date:</label>
-                  <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                  />
-                </div>
-                <div>
-                  <label>Time:</label>
-                  <input
-                    type="time"
-                    value={selectedTime}
-                    onChange={handleTimeChange}
-                  />
-                </div>
+                <br />
 
+              
+                <div className="service-price">
                 <div>
-                  <p>Total service Price: ${totalPrice}</p>
+                  <p>
+                    <b>Total service Price:</b> ${totalPrice}
+                  </p>
                 </div>
                 <div>
-                  <p>Total Advance: ${totalAdvance}</p>
+                  <p>
+                    <b>Total Advance:</b> ${totalAdvance}
+                  </p>
                 </div>
                 <div>
-                  <p>Final Price: ${finalPrice}</p>
+                  <p>
+                    <b>Final Price:</b> ${finalPrice}
+                  </p>
+                </div>
                 </div>
               </div>
             </div>
@@ -269,8 +298,8 @@ const Checkout = () => {
             </div> */}
           </div>
           <div className="row">
-            <div className="buttons">
-              <button className="btn1 mb-2" onClick={checkout}>
+            <div>
+              <button className="payBtn" onClick={checkout}>
                 Pay Now
               </button>
             </div>

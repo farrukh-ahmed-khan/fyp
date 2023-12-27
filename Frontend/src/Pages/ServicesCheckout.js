@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import Navbr from '../Components/CommonComponent/Nav';
-import Footer from '../Components/CommonComponent/Footer';
-import axios from 'axios';
+import React, { useState } from "react";
+import "../Assets/css/checkout.css";
+import Navbr from "../Components/CommonComponent/Nav";
+import Footer from "../Components/CommonComponent/Footer";
+import axios from "axios";
 
 const ServicesCheckout = () => {
   const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState('silver');
+  const [selectedPackage, setSelectedPackage] = useState("silver");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [address, setAddress] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [address, setAddress] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   const prices = {
     photography: {
@@ -49,7 +49,9 @@ const ServicesCheckout = () => {
   };
 
   const handleRemoveService = (service) => {
-    const updatedServices = selectedServices.filter((selected) => selected !== service);
+    const updatedServices = selectedServices.filter(
+      (selected) => selected !== service
+    );
     setSelectedServices(updatedServices);
     updateTotalPrice(updatedServices, selectedPackage);
   };
@@ -79,11 +81,13 @@ const ServicesCheckout = () => {
   };
 
   const updateTotalPrice = (services, packageType) => {
-    const totalPrice = services.reduce((sum, service) => sum + prices[service][packageType], 0);
+    const totalPrice = services.reduce(
+      (sum, service) => sum + prices[service][packageType],
+      0
+    );
     setTotalPrice(totalPrice);
   };
 
-  
   const handleSubmit = async () => {
     try {
       const response = await axios.post("http://localhost:8081/onlyservice", {
@@ -97,11 +101,11 @@ const ServicesCheckout = () => {
         email: email,
         phone: phone,
       });
-  
+
       const data = response.data;
-  
+
       console.log("Session URL:", data.url);
-  
+
       if (data.url) {
         window.location = data.url;
       } else {
@@ -111,18 +115,18 @@ const ServicesCheckout = () => {
       console.error(err);
     }
   };
-  
 
   return (
     <div>
-        <Navbr/>
-      <h1>Services Checkout</h1>
-      <div>
+      <Navbr />
+
+      {/* <div>
         <label>Select Services:</label>
         <select
-          multiple
+          //multiple
           value={selectedServices}
           onChange={(e) => handleServiceChange(e.target.value)}
+          className="service-drop-down"
         >
           <option value="photography">Photography</option>
           <option value="makeup">Makeup</option>
@@ -131,15 +135,20 @@ const ServicesCheckout = () => {
         <ul>
           {selectedServices.map((service) => (
             <li key={service}>
-              {service}{' '}
-              <button onClick={() => handleRemoveService(service)}>Remove</button>
+              {service}{" "}
+              <button onClick={() => handleRemoveService(service)}>
+                Remove
+              </button>
             </li>
           ))}
         </ul>
       </div>
       <div>
         <label>Select Package:</label>
-        <select value={selectedPackage} onChange={(e) => handlePackageChange(e.target.value)}>
+        <select
+          value={selectedPackage}
+          onChange={(e) => handlePackageChange(e.target.value)}
+        >
           <option value="silver">Silver</option>
           <option value="gold">Gold</option>
           <option value="platinum">Platinum</option>
@@ -153,27 +162,139 @@ const ServicesCheckout = () => {
         <label>Time:</label>
         <input type="time" value={selectedTime} onChange={handleTimeChange} />
       </div>
-      <div>
-        <label>Address:</label>
-        <input type="text" value={address} onChange={handleAddressChange} />
+       */}
+      <h1 className="service-checkout-heading mt-4">Services Checkout</h1>
+      <div className="d-flex justify-content-between flex-wrap container ">
+        <div>
+          <label>Select Services </label>
+          <br />
+          <select
+            //multiple
+            value={selectedServices}
+            onChange={(e) => handleServiceChange(e.target.value)}
+            className="service-drop-down"
+          >
+            <option value="photography">Photography</option>
+            <option value="makeup">Makeup</option>
+            <option value="decoration">Decoration</option>
+          </select>
+          <ul
+            style={{
+              border: "1px solid #ccc",
+              padding: "10px",
+              marginTop: "10px",
+            }}
+          >
+            {selectedServices.map((service) => (
+              <li
+                key={service}
+                className="mt-2 service-list"
+                style={{ width: "100%" }}
+              >
+                {service}{" "}
+                <button
+                  className="btn-danger"
+                  onClick={() => handleRemoveService(service)}
+                >
+                  X
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <br />
+        <div>
+          <label>Select Package</label>
+          <br />
+          <select
+            value={selectedPackage}
+            onChange={(e) => handlePackageChange(e.target.value)}
+            className="service-drop-down"
+          >
+            <option value="silver">Silver</option>
+            <option value="gold">Gold</option>
+            <option value="platinum">Platinum</option>
+          </select>
+        </div>{" "}
+        <br />
+        <div>
+          <label>Date</label>
+          <br />
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={handleDateChange}
+            className="service-drop-down"
+          />
+        </div>
+        <br />
+        <div>
+          <label>Time</label>
+          <br />
+          <input
+            type="time"
+            value={selectedTime}
+            onChange={handleTimeChange}
+            className="service-drop-down"
+          />
+        </div>{" "}
+        <hr />
       </div>
-      <div>
-        <label>Name:</label>
-        <input type="text" value={name} onChange={handleNameChange} />
+
+      <div className="container d-flex justify-content-between flex-wrap">
+        <div>
+          <label>Address</label>
+          <br />
+          <input
+            className="inputField"
+            type="text"
+            value={address}
+            onChange={handleAddressChange}
+          />
+        </div>
+        <div>
+          <label>Name</label>
+          <br />
+          <input
+            className="inputField"
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+          />
+        </div>
+        <div>
+          <label>Email</label> <br />
+          <input
+            className="inputField"
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+        </div>
+        <div>
+          <label>Phone</label>
+          <br />
+          <input
+            className="inputField"
+            type="tel"
+            value={phone}
+            onChange={handlePhoneChange}
+          />
+        </div>
       </div>
-      <div>
-        <label>Email:</label>
-        <input type="email" value={email} onChange={handleEmailChange} />
+
+      <div className="container">
+        <div className="mt-3">
+          <p style={{ fontSize: "17px" }}>
+            <b>Total Price: </b>${totalPrice}
+          </p>
+        </div>
+        <button className="payBtn" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
-      <div>
-        <label>Phone:</label>
-        <input type="tel" value={phone} onChange={handlePhoneChange} />
-      </div>
-      <div>
-        <p>Total Price: ${totalPrice}</p>
-      </div>
-      <button onClick={handleSubmit}>Submit</button>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 };

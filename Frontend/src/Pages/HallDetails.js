@@ -63,7 +63,7 @@ function HallDetails() {
           {/* <button className="btn2">Add to Favorite</button> */}
         </div>
 
-        <div className="location-section">
+        <div className="location-section mb-3">
           <h3>Venue Location</h3>
           {/* <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.671921781032!2d67.0461785742498!3d24.94324404194211!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb3408030039581%3A0x5787d44ab04d6226!2sAl-Mehmil%20Banquet%20Hall!5e0!3m2!1sen!2s!4v1699361799157!5m2!1sen!2s"
@@ -76,7 +76,7 @@ function HallDetails() {
             className="mb-5 mt-2"
           /> */}
           <span>
-            {hallDetails.city}, {hallDetails.area}
+            {hallDetails.city} | {hallDetails.area}
           </span>
         </div>
       </div>

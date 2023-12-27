@@ -1,0 +1,132 @@
+
+.service-drop-down {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #8e44ad; 
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  
+
+  .service-drop-down select {
+    width: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: transparent; 
+  }
+  
+  .service-drop-down option {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .service-drop-down:focus-within {
+    border-color: #9b59b6; 
+    box-shadow: 0 0 8px rgba(155, 89, 182, 0.7); 
+  }
+  
+
+  .service-drop-down select option:checked {
+    background-color: #9b59b6; 
+    color: #fff; 
+  }
+
+ /* Style for the btn-danger class */
+.btn-danger {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #d9534f; /* Red border color */
+    border-radius: 5px;
+    color: #fff; /* White text color */
+    background-color: #d9534f; /* Red background color */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  }
+  
+  /* Hover effect */
+  .btn-danger:hover {
+    background-color: #c9302c; /* Darker red on hover */
+    border-color: #c9302c; /* Darker red border on hover */
+  }
+  
+  /* Active effect */
+  .btn-danger:active {
+    background-color: #ac2925; /* Even darker red on click */
+    border-color: #ac2925; /* Even darker red border on click */
+  }
+  
+  .service-list{
+    text-transform: capitalize;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+   
+  }
+
+  .service-checkout-heading {
+    text-align: center;
+    font-size: 40px;
+   padding-bottom: 10px;
+   font-weight: bold;
+   color: #5C3D9E;
+  }
+
+  label {
+    font-size:18px;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  .payBtn{
+    outline: none;
+    border: none;
+    color: #fff;
+    background-color: #5C3D9E;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    width: 18%;
+  }
+
+  .payBtn:hover{
+    background-color: #4A2D73;
+  }
+
+  .service-price{
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+    width: 18%;
+    margin-bottom: 10px;
+    box-shadow:0px 4px 16px -1px rgba(173,173,173,0.75);
+  }
+
+  .inputField {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #5C3D9E; /* Blue border color */
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  /* Hover effect for the input field */
+  .inputField:hover {
+    border-color: #5C3D9E; /* Darker blue on hover */
+  }
+  
+  /* Focus effect for the input field */
+  .inputField:focus {
+    border-color: #a887ee; /* Darker blue on focus */
+    box-shadow: 0 0 5px #8b6bcf; /* Add a subtle box shadow on focus */
+  }
