@@ -33,37 +33,9 @@ app.post("/weddingspot", (req, res) => {
   });
 });
 
-app.post("/vendors", (req, res) => {
-  const sql =
-    "INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?)";
-  const values = [
-    req.body.fname,
-    req.body.lname,
-    req.body.email,
-    req.body.password,
-  ];
-  db.query(sql, [values], (err, data) => {
-    if (err) {
-      res.json("Error");
-    }
-    return res.json(data);
-  });
-});
 
-app.post("/vendorlogin", (req, res) => {
-  const sql = "SELECT * FROM vendorlogin WHERE `email` = ? AND `password` = ?";
 
-  db.query(sql, [req.body.email, req.body.password], (err, data) => {
-    if (err) {
-      res.json("Error");
-    }
-    if (data.length > 0) {
-      return res.json("Login Successful");
-    } else {
-      return res.json("Invalid Email or Password");
-    }
-  });
-});
+
 
 app.post("/contact", (req, res) => {
   const sql =
@@ -106,6 +78,40 @@ app.listen(8081, () => {
 
 // vendor-form api
 
+app.post("/vendors", (req, res) => {
+  const sql =
+    "INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?)";
+  const values = [
+    req.body.fname,
+    req.body.lname,
+    req.body.email,
+    req.body.password,
+  ];
+  db.query(sql, [values], (err, data) => {
+    if (err) {
+      res.json("Error");
+    }
+    return res.json(data);
+  });
+});
+
+
+
+app.post("/vendorlogin", (req, res) => {
+  const sql = "SELECT * FROM vendorlogin WHERE `email` = ? AND `password` = ?";
+
+  db.query(sql, [req.body.email, req.body.password], (err, data) => {
+    if (err) {
+      res.json("Error");
+    }
+    if (data.length > 0) {
+      return res.json("Login Successful");
+    } else {
+      return res.json("Invalid Email or Password");
+    }
+  });
+});
+ 
 app.post("/vendorform", (req, res) => {
   const formData = req.body;
 
@@ -184,6 +190,84 @@ app.post("/vendorform", (req, res) => {
     res.json({ success: true, vendorId });
   });
 });
+
+
+// app.get('/vendor-venues', (req, res) => {
+//   const { email } = req.query;
+
+//   const sql = 'SELECT * FROM vendorform WHERE email = ?';
+
+//   db.query(sql, [email], (err, venues) => {
+//     if (err) {
+//       console.error('Error fetching venues:', err);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     } else {
+//       res.json(venues);
+//     }
+//   });
+// });
+
+app.get("/vendor-venues", (req, res) => {
+  const vendorEmail = req.query.email;
+
+  const venuesSql = "SELECT * FROM vendorform WHERE email = ?";
+  db.query(venuesSql, [vendorEmail], (err, venuesResult) => {
+    if (err) {
+      console.error("Error fetching vendor venues:", err);
+      return res.status(500).json({ error: "Error fetching vendor venues" });
+    }
+
+    const venues = venuesResult.map((venue) => {
+      const { id, hallName, city, area,maxPrice,price,	guests,rating,phone,	advanced,	createdAt,name,email,	additionalDetails } = venue;
+      return { id, hallName, city, area,maxPrice,price,	guests,rating,phone,	advanced,	createdAt,name,email,	additionalDetails};
+    });
+
+    // Fetch services and requirements for each venue
+    const venuesWithDetails = [];
+
+    const fetchDetailsPromises = venues.map(async (venue) => {
+      const { id } = venue;
+
+      const servicesSql = "SELECT serviceName FROM vendor_services WHERE vendorId = ?";
+      const requirementsSql = "SELECT requirementName FROM vendor_requirements WHERE vendorId = ?";
+
+      const [servicesResult, requirementsResult] = await Promise.all([
+        new Promise((resolve) => {
+          db.query(servicesSql, [id], (err, servicesResult) => {
+            if (err) {
+              console.error("Error fetching services:", err);
+              resolve([]);
+            } else {
+              resolve(servicesResult.map((service) => service.serviceName));
+            }
+          });
+        }),
+        new Promise((resolve) => {
+          db.query(requirementsSql, [id], (err, requirementsResult) => {
+            if (err) {
+              console.error("Error fetching requirements:", err);
+              resolve([]);
+            } else {
+              resolve(requirementsResult.map((requirement) => requirement.requirementName));
+            }
+          });
+        }),
+      ]);
+
+      venuesWithDetails.push({
+        ...venue,
+        services: servicesResult,
+        requirements: requirementsResult,
+      });
+    });
+
+    Promise.all(fetchDetailsPromises).then(() => {
+      res.json(venuesWithDetails);
+    });
+  });
+});
+
+
 
 // Assuming you have an Express app and a database connection (db) set up
 

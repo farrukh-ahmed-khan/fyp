@@ -89,8 +89,8 @@ const Navbr = () => {
                 </Nav.Link>
               </LinkContainer> */}
               {isVendorLoggedIn ? (
-                <LinkContainer to="/vendor-dashboard">
-                  <Nav.Link href="/vendor-dashboard" className="link">
+                <LinkContainer to="/vendordashboard">
+                  <Nav.Link href="/vendordashboard" className="link">
                     Vendor Dashboard
                   </Nav.Link>
                 </LinkContainer>

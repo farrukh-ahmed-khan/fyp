@@ -7,28 +7,16 @@ import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 
 const HallVendorForm = () => {
-  // const [vendorData, setVendorData] = useState({
-  //   name: "",
-  //   email: "",
-  //   phoneNumber: "",
-  //   minPrice: "",
-  //   maxPrice: "",
-  //   additionalDetails: "",
-  // });
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setVendorData({ ...vendorData, [name]: value });
-  // };
+  const storedData = localStorage.getItem("vendor");
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Form submitted:", vendorData);
-  // };
+
+  const data = storedData ? JSON.parse(storedData) : {};
+  const initialEmail = data.email || "";
 
   const [vendorData, setVendorData] = useState({
     name: "",
-    email: "",
+    email:initialEmail,
     hallName: "",
     city: "",
     area: "",
@@ -80,8 +68,6 @@ const HallVendorForm = () => {
     };
 
     try {
-      // const response = await fetch('/vendorform', requestOptions);
-      // const response = await fetch('http://localhost:your-server-port/vendorform', requestOptions);
 
       const response = await fetch('http://localhost:8081/vendorform', requestOptions);
 
@@ -122,7 +108,7 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="email">Email</label>
                   <input
@@ -135,7 +121,7 @@ const HallVendorForm = () => {
                     required
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="phone">Phone Number</label>
