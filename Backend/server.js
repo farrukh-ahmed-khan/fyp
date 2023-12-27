@@ -189,7 +189,6 @@ app.post("/vendorform", (req, res) => {
 
 // GET endpoint for fetching all vendor form data with services and requirements
 app.get("/getvendorforms", (req, res) => {
-  // Query to get all vendor form data
   const getAllVendorFormsSql = "SELECT * FROM vendorform";
   db.query(getAllVendorFormsSql, (err, vendorFormsResult) => {
     if (err) {
@@ -326,7 +325,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.post("/checkout", async (req, res) => {
   try {
-    const { date, time, hallName, items } = req.body;
+    const { date, time, hallName, items, package, halladvance } = req.body;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -348,6 +347,8 @@ app.post("/checkout", async (req, res) => {
         date,
         time,
         hallName,
+        package, // Add package to metadata
+        halladvance, // Add finalPrice to metadata
       },
     });
 
@@ -360,6 +361,7 @@ app.post("/checkout", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Inside your server.js
 app.post("/onlyservice", async (req, res) => {

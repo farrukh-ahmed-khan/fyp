@@ -8,7 +8,8 @@ const Checkout = () => {
 
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState("silver");
-  const [totalPrice, setTotalPrice] = useState(hallDetails.advanced);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
@@ -62,14 +63,24 @@ const Checkout = () => {
     setSelectedTime(e.target.value);
   };
   const updateTotalPrice = (services, packageType) => {
-    const totalPrice = services.reduce((sum, service) => sum + prices[service][packageType], 0);
+    const totalPrice = services.reduce(
+      (sum, service) => sum + prices[service][packageType],
+      0
+    );
+    const totalAdvance = hallDetails.advanced;
+    const finalPrice = totalPrice + totalAdvance;
+  
     setTotalPrice(totalPrice);
+    setFinalPrice(finalPrice);
+    setTotalAdvance(totalAdvance);
   };
+
 
 
   // const checkout = async () => {
   //   console.log(selectedDate);
   //   console.log(selectedTime);
+  
   //   try {
   //     const res = await fetch("http://localhost:8081/checkout", {
   //       method: "POST",
@@ -81,22 +92,23 @@ const Checkout = () => {
   //         date: selectedDate,
   //         time: selectedTime,
   //         hallName: hallDetails.hallName,
-  //         items: [
-  //           {
-  //             id: 1,
-  //             price: hallDetails.advanced,
-  //             name: hallDetails.hallName,
-  //             quantity: 1, // Add quantity property
-
-  //           },
-  //         ],
+  //         items: selectedServices.map((service, index) => ({
+  //           id: index + 1,
+  //           price: prices[service][selectedPackage]+hallDetails.advanced, 
+  //           // price: finalPrice,
+  //           name: service,
+  //           quantity: 1,
+  //         })),
+  //         package: selectedPackage,
+  //         finalPrice: finalPrice, // Include the final price in the request
   //       }),
   //     });
+  
   //     const data = await res.json();
-
+  
   //     // Log the session.url to check if it's set properly
   //     console.log("Session URL:", data.url);
-
+  
   //     // Check if session.url is not undefined before redirecting
   //     if (data.url) {
   //       window.location = data.url;
@@ -107,89 +119,50 @@ const Checkout = () => {
   //     console.log(err);
   //   }
   // };
-
+  
   const checkout = async () => {
     console.log(selectedDate);
     console.log(selectedTime);
 
     try {
-      const res = await fetch("http://localhost:8081/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        body: JSON.stringify({
-          date: selectedDate,
-          time: selectedTime,
-          hallName: hallDetails.hallName,
-          items: selectedServices.map((service, index) => ({
-            id: index + 1, // You can use a unique identifier for each service
-            price: totalPrice, // Replace with the actual price
-            name: service,
-            quantity: 1,
-          })),
-        }),
-      });
+        const res = await fetch("http://localhost:8081/checkout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            mode: "cors",
+            body: JSON.stringify({
+                date: selectedDate,
+                time: selectedTime,
+                hallName: hallDetails.hallName,
+                items: selectedServices.map((service, index) => ({
+                    id: index + 1,
+                    price: prices[service][selectedPackage] + (index === 0 ? hallDetails.advanced : 0),
+                    name: service,
+                    quantity: 1,
+                })),
+                package: selectedPackage,
+                halladvance: hallDetails.advanced, // Include the final price in the request
+            }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      // Log the session.url to check if it's set properly
-      console.log("Session URL:", data.url);
+        // Log the session.url to check if it's set properly
+        console.log("Session URL:", data.url);
 
-      // Check if session.url is not undefined before redirecting
-      if (data.url) {
-        window.location = data.url;
-      } else {
-        console.error("Session URL is undefined.");
-      }
+        // Check if session.url is not undefined before redirecting
+        if (data.url) {
+            window.location = data.url;
+        } else {
+            console.error("Session URL is undefined.");
+        }
     } catch (err) {
-      console.log(err);
+        console.log(err);
     }
-  };
+};
 
-  const handleServiceSelect = (selectedService) => {
-    setSelectedServices((prevSelectedServices) => {
-      if (prevSelectedServices.includes(selectedService)) {
-        return prevSelectedServices.filter(
-          (service) => service !== selectedService
-        );
-      } else {
-        return [...prevSelectedServices, selectedService];
-      }
-    });
 
-    setServicePackages((prevPackages) => {
-      const updatedPackages = { ...prevPackages };
-      updatedPackages[selectedService] = "basic"; // Set the default package to basic
-      return updatedPackages;
-    });
-  };
-
-  const handlePackageSelect = (service, packageType) => {
-    setServicePackages((prevPackages) => ({
-      ...prevPackages,
-      [service]: packageType,
-    }));
-  };
-
-  const calculateTotalAdvance = () => {
-    let total = hallDetails.advanced;
-
-    selectedServices.forEach((service) => {
-      const basePrice = 0; // Replace with your base service price
-      const packagePriceMap = {
-        basic: 100, // Replace with your basic package price for the service
-        premium: 200, // Replace with your premium package price for the service
-        platinum: 300, // Replace with your platinum package price for the service
-      };
-
-      const selectedPackage = servicePackages[service] || "basic";
-      total += basePrice + packagePriceMap[selectedPackage];
-    });
-
-    setTotalAdvance(total);
-  };
   return (
     <>
       <Navbr />
@@ -279,11 +252,16 @@ const Checkout = () => {
                     onChange={handleTimeChange}
                   />
                 </div>
-                
+
                 <div>
-                  <p>Total Price: ${totalPrice}</p>
+                  <p>Total service Price: ${totalPrice}</p>
                 </div>
-                
+                <div>
+                  <p>Total Advance: ${totalAdvance}</p>
+                </div>
+                <div>
+                  <p>Final Price: ${finalPrice}</p>
+                </div>
               </div>
             </div>
             {/* <div className="col-md-6">
