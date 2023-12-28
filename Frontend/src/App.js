@@ -20,7 +20,7 @@ import AdminPanel from "./AdminPanel/AdminPanel";
 import VendorDashboard from "./Pages/VendorDashboard";
 import ProtectedRoutes from "./ProtectedRoute";
 import ServicesCheckout from "./Pages/ServicesCheckout";
-
+import EditVenue from "./Pages/EditVenue";
 function App() {
   const isAuth = localStorage.getItem("user") !== null;
   const isAuth2 = localStorage.getItem("vendor") !== null;
@@ -45,6 +45,7 @@ function App() {
           <Route path="/Thankyou" element={<ThankYouPage />} />
           <Route path="/servicecheckout" element={<ServicesCheckout/>}/>
           <Route path="/vendordashboard"element={isAuth2? <VendorDashboard /> :<Navigate to="/"/>}  />
+          <Route path="/edit-venue/:id" element={<EditVenue />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/success" element={<Success />} />
           <Route path="/AdminPanel" element={<AdminPanel />} />
