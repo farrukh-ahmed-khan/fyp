@@ -1,41 +1,36 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "../Assets/css/form.css";
-import "../Assets/css/vendorForm.css";
-import { Form, Button, Row, Col, Navbar } from "react-bootstrap";
-import Navbr from "../Components/CommonComponent/Nav";
-import Footer from "../Components/CommonComponent/Footer";
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import Navbr from '../Components/CommonComponent/Nav';
+import Footer from '../Components/CommonComponent/Footer';
 
-const HallVendorForm = () => {
-
-  const storedData = localStorage.getItem("vendor");
-
-
-  const data = storedData ? JSON.parse(storedData) : {};
-  const initialEmail = data.email || "";
-
-  const [vendorData, setVendorData] = useState({
-    name: "",
-    email:initialEmail,
-    hallName: "",
-    city: "",
-    area: "",
-    maxPrice: "",
-    price: "",
-    guests: "",
-    rating: "",
-    phone: "",
-    advanced:"",
-    additionalDetails: "",
-    
+const EditVenue = () => {
+  const { id } = useParams();
+  console.log(id);
+  const navigate = useNavigate(); 
+  const [venueData, setVenueData] = useState({
+    name: '',
+    hallName: '',
+    city: '',
+    area: '',
+    maxPrice: '',
+    price: '',
+    guests: '',
+    rating: '',
+    phone: '',
+    advanced: '',
+    additionalDetails: '',
   });
 
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedRequirements, setSelectedRequirements] = useState([]);
 
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setVendorData({ ...vendorData, [name]: value });
+    setVenueData({ ...venueData, [name]: value });
   };
 
   const handleServiceChange = (e) => {
@@ -53,46 +48,67 @@ const HallVendorForm = () => {
         : prevRequirements.filter((requirement) => requirement !== requirementName)
     );
   };
+  
+  useEffect(() => {
+    const vendorData = JSON.parse(localStorage.getItem('vendor'));
 
+    if (vendorData) {
+      axios
+        .get(`http://localhost:8081/vendor-venues?email=${vendorData.email}`)
+        .then((response) => {
+          setVenues(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching vendor venues:', error);
+        });
+    }
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const requestOptions = {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        ...vendorData,
+        name: venueData.name,
+        hallName: venueData.hallName,
+        city: venueData.city,
+        area: venueData.area,
+        maxPrice: venueData.maxPrice,
+        price: venueData.price,
+        guests: venueData.guests,
+        rating: venueData.rating,
+        phone: venueData.phone,
+        advanced: venueData.advanced,
+        additionalDetails: venueData.additionalDetails,
         services: selectedServices,
         requirements: selectedRequirements,
       }),
     };
-
+  
     try {
-
-      const response = await fetch('http://localhost:8081/vendorform', requestOptions);
-
-
+      const response = await fetch(`http://localhost:8081/edit-venue/${id}`, requestOptions);
+  
       if (response.ok) {
-        const result = await response.json();
-        console.log('Form submitted successfully! Vendor ID:', result.vendorId);
+        console.log('Venue updated successfully!');
+        navigate('/vendor-dashboard'); // Redirect to vendor dashboard after successful edit
       } else {
-        console.error('Error submitting form:', response.statusText);
+        console.error('Error updating venue:', response.statusText);
       }
     } catch (error) {
-      console.error('Error submitting form:', error.message);
+      console.error('Error updating venue:', error.message);
     }
   };
+  
 
   return (
     <>
       <Navbr />
-      <div class="hero-section">
-        <h1>Join as Vendor</h1>
-      </div>
       <div className="container my-5 d-flex justify-content-center align-item-center">
         <div className="banner-form">
           <Form onSubmit={handleSubmit}>
-            <h1 className="heading">Fill The Form</h1>
+            <h1 className="heading">Edit Venue</h1>
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
@@ -104,7 +120,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your name"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -132,7 +148,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your phone number"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -146,7 +162,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your Hall Name"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -160,7 +176,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your minimum price"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -174,7 +190,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your maximum price"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -189,7 +205,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your address"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -203,7 +219,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your address"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -217,7 +233,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your guests capacity"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -231,7 +247,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your google rating"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -245,7 +261,7 @@ const HallVendorForm = () => {
                     className="form-control"
                     placeholder="Enter your advance amount"
                     onChange={handleChange}
-                    required
+                    
                   />
                 </div>
               </div>
@@ -507,21 +523,18 @@ const HallVendorForm = () => {
                 </div>
               </div>
             </div>
-
             <div className="btn-wrapper">
               <Button variant="" type="submit">
-                Submit
+                Save Changes
               </Button>
+              <Link to="/vendor-dashboard">Cancel</Link>
             </div>
           </Form>
         </div>
-
-        {/* <Link to="/">Go back to home</Link> */}
       </div>
-
       <Footer />
     </>
   );
 };
 
-export default HallVendorForm;
+export default EditVenue;
