@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbr from '../Components/CommonComponent/Nav';
 import Footer from '../Components/CommonComponent/Footer';
 
 const VendorDashboard = () => {
   const [venues, setVenues] = useState([]);
-  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const vendorData = JSON.parse(localStorage.getItem('vendor'));
@@ -16,16 +17,18 @@ const VendorDashboard = () => {
         .get(`http://localhost:8081/vendor-venues?email=${vendorData.email}`)
         .then((response) => {
           setVenues(response.data);
-          console.log(response.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.error('Error fetching vendor venues:', error);
+          setLoading(false);
         });
     }
   }, []);
 
   const handleEditVenue = (venueId) => {
-    navigate(`/edit-venue/${venueId}`);
+    const selectedVenue = venues.find((venue) => venue.id === venueId);
+    navigate(`/edit-venue/${venueId}`, { state: { venueData: selectedVenue } });
   };
 
   const handleDeleteVenue = async (venueId) => {
@@ -34,7 +37,6 @@ const VendorDashboard = () => {
 
       if (response.status === 200) {
         console.log(`Venue with ID ${venueId} deleted successfully`);
-        
         const updatedVenues = venues.filter((venue) => venue.id !== venueId);
         setVenues(updatedVenues);
       } else {
@@ -49,26 +51,30 @@ const VendorDashboard = () => {
     <div>
       <Navbr />
       <h1>Vendor Dashboard</h1>
-      <div>
-        {venues.length > 0 ? (
-          <ul>
-            {venues.map((venue) => (
-              <li key={venue.id}>
-                <strong>{venue.hallName}</strong> - {venue.city}, {venue.area}
-                <br />
-                Services: {venue.services.join(', ')}
-                <br />
-                Requirements: {venue.requirements.join(', ')}
-                <br />
-                <button onClick={() => handleEditVenue(venue.id)}>Edit</button>
-                <button onClick={() => handleDeleteVenue(venue.id)}>Delete</button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No venues entered yet.</p>
-        )}
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          {venues.length > 0 ? (
+            <ul>
+              {venues.map((venue) => (
+                <li key={venue.id}>
+                  <strong>{venue.hallName}</strong> - {venue.city}, {venue.area}
+                  <br />
+                  Services: {venue.services.join(', ')}
+                  <br />
+                  Requirements: {venue.requirements.join(', ')}
+                  <br />
+                  <button onClick={() => handleEditVenue(venue.id)}>Edit</button>
+                  <button onClick={() => handleDeleteVenue(venue.id)}>Delete</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No venues entered yet.</p>
+          )}
+        </div>
+      )}
       <Link to="/">Go back to home</Link>
       <Footer />
     </div>

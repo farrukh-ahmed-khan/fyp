@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation  } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Navbr from '../Components/CommonComponent/Nav';
@@ -7,20 +7,26 @@ import Footer from '../Components/CommonComponent/Footer';
 
 const EditVenue = () => {
   const { id } = useParams();
-  console.log(id);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Retrieve venue data from location state
+  const { venueData: initialVenueData } = location.state || {};
+  console.log(initialVenueData)
+
+  // Set initial state with venue data if available
   const [venueData, setVenueData] = useState({
-    name: '',
-    hallName: '',
-    city: '',
-    area: '',
-    maxPrice: '',
-    price: '',
-    guests: '',
-    rating: '',
-    phone: '',
-    advanced: '',
-    additionalDetails: '',
+    name: initialVenueData?.name || '',
+    hallName: initialVenueData?.hallName || '',
+    city: initialVenueData?.city || '',
+    area: initialVenueData?.area || '',
+    maxPrice: initialVenueData?.maxPrice || '',
+    price: initialVenueData?.price || '',
+    guests: initialVenueData?.guests || '',
+    rating: initialVenueData?.rating || '',
+    phone: initialVenueData?.phone || '',
+    advanced: initialVenueData?.advanced || '',
+    additionalDetails: initialVenueData?.additionalDetails || '',
   });
 
   const [selectedServices, setSelectedServices] = useState([]);
@@ -49,21 +55,6 @@ const EditVenue = () => {
     );
   };
   
-  useEffect(() => {
-    const vendorData = JSON.parse(localStorage.getItem('vendor'));
-
-    if (vendorData) {
-      axios
-        .get(`http://localhost:8081/vendor-venues?email=${vendorData.email}`)
-        .then((response) => {
-          setVenues(response.data);
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error('Error fetching vendor venues:', error);
-        });
-    }
-  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
   
