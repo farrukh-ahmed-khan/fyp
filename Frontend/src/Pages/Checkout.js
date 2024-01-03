@@ -134,6 +134,7 @@ const Checkout = () => {
           date: selectedDate,
           time: selectedTime,
           hallName: hallDetails.hallName,
+
           items: selectedServices.map((service, index) => ({
             id: index + 1,
             price:
@@ -143,7 +144,7 @@ const Checkout = () => {
             quantity: 1,
           })),
           package: selectedPackage,
-          halladvance: hallDetails.advanced, // Include the final price in the request
+          halladvance: hallDetails.advanced,
         }),
       });
 

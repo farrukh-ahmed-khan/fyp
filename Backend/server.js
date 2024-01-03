@@ -33,10 +33,6 @@ app.post("/weddingspot", (req, res) => {
   });
 });
 
-
-
-
-
 app.post("/contact", (req, res) => {
   const sql =
     "INSERT INTO contact (`name`, `phone`, `email`, `message`) VALUES (?)";
@@ -72,10 +68,6 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.listen(8081, () => {
-  console.log("Server is running at port 8081");
-});
-
 // vendor-form api
 
 app.post("/vendors", (req, res) => {
@@ -95,8 +87,6 @@ app.post("/vendors", (req, res) => {
   });
 });
 
-
-
 app.post("/vendorlogin", (req, res) => {
   const sql = "SELECT * FROM vendorlogin WHERE `email` = ? AND `password` = ?";
 
@@ -111,7 +101,7 @@ app.post("/vendorlogin", (req, res) => {
     }
   });
 });
- 
+
 app.post("/vendorform", (req, res) => {
   const formData = req.body;
 
@@ -185,12 +175,9 @@ app.post("/vendorform", (req, res) => {
   });
 });
 
-
-
-
 app.get("/vendor-venues", (req, res) => {
   const vendorEmail = req.query.email;
- 
+
   const venuesSql = "SELECT * FROM vendorform WHERE email = ?";
   db.query(venuesSql, [vendorEmail], (err, venuesResult) => {
     if (err) {
@@ -199,8 +186,38 @@ app.get("/vendor-venues", (req, res) => {
     }
 
     const venues = venuesResult.map((venue) => {
-      const { id, hallName, city, area,maxPrice,price,	guests,rating,phone,	advanced,	createdAt,name,email,	additionalDetails } = venue;
-      return { id, hallName, city, area,maxPrice,price,	guests,rating,phone,	advanced,	createdAt,name,email,	additionalDetails};
+      const {
+        id,
+        hallName,
+        city,
+        area,
+        maxPrice,
+        price,
+        guests,
+        rating,
+        phone,
+        advanced,
+        createdAt,
+        name,
+        email,
+        additionalDetails,
+      } = venue;
+      return {
+        id,
+        hallName,
+        city,
+        area,
+        maxPrice,
+        price,
+        guests,
+        rating,
+        phone,
+        advanced,
+        createdAt,
+        name,
+        email,
+        additionalDetails,
+      };
     });
 
     // Fetch services and requirements for each venue
@@ -209,8 +226,10 @@ app.get("/vendor-venues", (req, res) => {
     const fetchDetailsPromises = venues.map(async (venue) => {
       const { id } = venue;
 
-      const servicesSql = "SELECT serviceName FROM vendor_services WHERE vendorId = ?";  
-      const requirementsSql = "SELECT requirementName FROM vendor_requirements WHERE vendorId = ?";
+      const servicesSql =
+        "SELECT serviceName FROM vendor_services WHERE vendorId = ?";
+      const requirementsSql =
+        "SELECT requirementName FROM vendor_requirements WHERE vendorId = ?";
 
       const [servicesResult, requirementsResult] = await Promise.all([
         new Promise((resolve) => {
@@ -229,7 +248,11 @@ app.get("/vendor-venues", (req, res) => {
               console.error("Error fetching requirements:", err);
               resolve([]);
             } else {
-              resolve(requirementsResult.map((requirement) => requirement.requirementName));
+              resolve(
+                requirementsResult.map(
+                  (requirement) => requirement.requirementName
+                )
+              );
             }
           });
         }),
@@ -248,14 +271,14 @@ app.get("/vendor-venues", (req, res) => {
   });
 });
 
-app.delete('/delete-venue/:id', (req, res) => {
+app.delete("/delete-venue/:id", (req, res) => {
   const venueId = req.params.id;
 
-  const deleteVenueSql = 'DELETE FROM vendorform WHERE id = ?';
+  const deleteVenueSql = "DELETE FROM vendorform WHERE id = ?";
   db.query(deleteVenueSql, [venueId], (err) => {
     if (err) {
-      console.error('Error deleting venue:', err);
-      return res.status(500).json({ error: 'Error deleting venue' });
+      console.error("Error deleting venue:", err);
+      return res.status(500).json({ error: "Error deleting venue" });
     }
 
     res.sendStatus(200);
@@ -302,7 +325,6 @@ app.put("/edit-venue/:id", (req, res) => {
   const setClause = [];
   const updateVendorFormValues = [];
 
-
   const addToSetClause = (field, value) => {
     if (value !== undefined) {
       setClause.push(`${field} = ?`);
@@ -310,7 +332,6 @@ app.put("/edit-venue/:id", (req, res) => {
     }
   };
 
-  
   addToSetClause("name", name);
   addToSetClause("email", email);
   addToSetClause("hallName", hallName);
@@ -324,13 +345,11 @@ app.put("/edit-venue/:id", (req, res) => {
   addToSetClause("advanced", advanced);
   addToSetClause("additionalDetails", additionalDetails);
 
-  
   const updateVendorFormSql =
     setClause.length > 0
       ? "UPDATE vendorform SET " + setClause.join(", ") + " WHERE id=?"
       : null;
 
-  
   if (updateVendorFormSql) {
     updateVendorFormValues.push(venueId);
 
@@ -340,7 +359,6 @@ app.put("/edit-venue/:id", (req, res) => {
         return res.status(500).json({ error: "Error updating vendorform" });
       }
 
-     
       const updateServicesSql = "DELETE FROM vendor_services WHERE vendorId=?";
       db.query(updateServicesSql, [venueId], (err) => {
         if (err) {
@@ -361,7 +379,6 @@ app.put("/edit-venue/:id", (req, res) => {
             return res.status(500).json({ error: "Error inserting services" });
           }
 
-          
           const updateRequirementsSql =
             "DELETE FROM vendor_requirements WHERE vendorId=?";
           db.query(updateRequirementsSql, [venueId], (err) => {
@@ -396,21 +413,12 @@ app.put("/edit-venue/:id", (req, res) => {
       });
     });
   } else {
-    
     res.json({
       success: true,
       message: "No fields to update",
     });
   }
 });
-
-
-
-
-
-
-
-
 
 app.get("/getvendorforms", (req, res) => {
   const getAllVendorFormsSql = "SELECT * FROM vendorform";
@@ -420,11 +428,9 @@ app.get("/getvendorforms", (req, res) => {
         "Error fetching all vendor form data from the database:",
         err
       );
-      return res
-        .status(500)
-        .json({
-          error: "Error fetching all vendor form data from the database",
-        });
+      return res.status(500).json({
+        error: "Error fetching all vendor form data from the database",
+      });
     }
 
     const getServicesSql = "SELECT vendorId, serviceName FROM vendor_services";
@@ -557,10 +563,173 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 //     }
 // });
 
+// app.post("/checkout", async (req, res) => {
+//   try {
+//     const { date, time, hallName, items, package, halladvance } = req.body;
+
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: items.map((item) => ({
+//         price_data: {
+//           currency: "pkr",
+//           product_data: {
+//             name: item.name,
+//             description: `Date: ${date}, Time: ${time}, Hall: ${hallName}`,
+//           },
+//           unit_amount: item.price * 100,
+//         },
+//         quantity: item.quantity,
+//       })),
+//       success_url: "http://localhost:3000/success",
+//       cancel_url: "http://localhost:3000/cancel",
+//       metadata: {
+//         date,
+//         time,
+//         hallName,
+//         package, // Add package to metadata
+//         halladvance, // Add finalPrice to metadata
+//       },
+//     });
+
+//     console.log("Received data:", req.body);
+//     console.log("Session URL:", session.url);
+
+//     res.json({ url: session.url });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+// Inside your server.js
+// app.post("/onlyservice", async (req, res) => {
+//   try {
+//     const {
+//       date,
+//       time,
+//       selectedServices,
+//       selectedPackage,
+//       totalPrice,
+//       address,
+//       name,
+//       email,
+//       phone,
+//     } = req.body;
+
+//     // Convert selectedServices array to a comma-separated string
+//     const servicesDescription = selectedServices.join(", ");
+
+//     // Modify this part based on your actual Stripe integration logic
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: selectedServices.map((service) => ({
+//         price_data: {
+//           currency: "pkr",
+//           product_data: {
+//             name: service,
+//             description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
+//           },
+//           unit_amount: prices[service][selectedPackage] * 100,
+//         },
+//         quantity: 1,
+//       })),
+//       success_url: "http://localhost:3000/success",
+//       cancel_url: "http://localhost:3000/cancel",
+//       metadata: {
+//         date,
+//         time,
+//         selectedServices: servicesDescription, // Use the string here
+//         totalPrice,
+//         address,
+//         name,
+//         email,
+//         phone,
+//       },
+//     });
+
+//     console.log("Received data:", req.body);
+//     console.log("Session URL:", session.url);
+
+//     res.json({ url: session.url });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+// app.post("/checkout", async (req, res) => {
+//   try {
+//     const { date, time, hallName, items, package, halladvance } = req.body;
+
+//     // Insert data into the checkout_orders table
+//     const checkoutInsertSql =
+//       "INSERT INTO checkout_orders (date, time, hallName,package,halladvance) VALUES (?, ?, ?,?,?)";
+//     const checkoutInsertValues = [date, time, hallName,package,halladvance];
+//     await db.query(checkoutInsertSql, checkoutInsertValues);
+
+//     // Create the Stripe session
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: items.map((item) => ({
+//         price_data: {
+//           currency: "pkr",
+//           product_data: {
+//             name: item.name,
+//             description: `Date: ${date}, Time: ${time}, Hall: ${hallName}`,
+//           },
+//           unit_amount: item.price * 100,
+//         },
+//         quantity: item.quantity,
+//       })),
+//       success_url: "http://localhost:3000/success",
+//       cancel_url: "http://localhost:3000/cancel",
+//       metadata: {
+//         date,
+//         time,
+//         hallName,
+//         package, // Add package to metadata
+//         halladvance, // Add finalPrice to metadata
+//       },
+//     });
+
+//     console.log("Received data:", req.body);
+//     console.log("Session URL:", session.url);
+
+//     res.json({ url: session.url });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
 app.post("/checkout", async (req, res) => {
   try {
     const { date, time, hallName, items, package, halladvance } = req.body;
 
+    // Insert data into the checkout_orders table
+    const checkoutInsertSql =
+      "INSERT INTO checkout_orders (date, time, hallName, package, halladvance) VALUES (?, ?, ?, ?, ?)";
+    const checkoutInsertValues = [date, time, hallName, package, halladvance];
+    const result = await db.query(checkoutInsertSql, checkoutInsertValues);
+
+    const orderId = result.insertId; // Get the generated order ID
+
+    // Insert selected services into the selected_services table
+    const selectedServicesInsertSql =
+      "INSERT INTO selected_services (order_id, service_id, service_name, quantity, price) VALUES (?, ?, ?, ?, ?)";
+    const selectedServicesInsertValues = items.flatMap((item) => [
+      orderId,
+      item.id, // Assuming each service has a unique ID
+      item.name,
+      item.quantity,
+      item.price,
+    ]);
+
+    await db.query(selectedServicesInsertSql, selectedServicesInsertValues);
+
+    // Create the Stripe session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -581,8 +750,9 @@ app.post("/checkout", async (req, res) => {
         date,
         time,
         hallName,
-        package, // Add package to metadata
-        halladvance, // Add finalPrice to metadata
+        package,
+        halladvance,
+        orderId, // Add orderId to metadata
       },
     });
 
@@ -596,8 +766,6 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-
-// Inside your server.js
 app.post("/onlyservice", async (req, res) => {
   try {
     const {
@@ -615,7 +783,23 @@ app.post("/onlyservice", async (req, res) => {
     // Convert selectedServices array to a comma-separated string
     const servicesDescription = selectedServices.join(", ");
 
-    // Modify this part based on your actual Stripe integration logic
+    // Insert data into the onlyservice_orders table
+    const onlyserviceInsertSql =
+      "INSERT INTO onlyservice_orders (date, time, selectedServices, selectedPackage, totalPrice, address, name, email, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const onlyserviceInsertValues = [
+      date,
+      time,
+      servicesDescription,
+      selectedPackage,
+      totalPrice,
+      address,
+      name,
+      email,
+      phone,
+    ];
+    await db.query(onlyserviceInsertSql, onlyserviceInsertValues);
+
+    // Create the Stripe session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -652,4 +836,33 @@ app.post("/onlyservice", async (req, res) => {
     console.log(error);
     res.status(500).json({ error: error.message });
   }
+});
+
+app.get("/serviceorders", (req, res) => {
+  const sql = "SELECT * FROM onlyservice_orders";
+
+  db.query(sql, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.json({ error: "Error retrieving data from the database" });
+    } else {
+      res.json(data);
+    }
+  });
+});
+app.get("/checkoutdata", (req, res) => {
+  const sql = "SELECT * FROM checkout_orders";
+
+  db.query(sql, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.json({ error: "Error retrieving data from the database" });
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+app.listen(8081, () => {
+  console.log("Server is running at port 8081");
 });

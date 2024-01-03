@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../Assets/css/admin.css";
 import DashboardImg from "../Assets/images/AdminPanel/dashboard.png";
 import ServiceImg from "../Assets/images/AdminPanel/service.png";
@@ -9,6 +9,41 @@ import ViewListImg from "../Assets/images/AdminPanel/view-list.png";
 import user from "../Assets/images/AdminPanel/user.png";
 
 const AdminPanel = () => {
+  const [bookingData, setBookingData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [bookinghalldata, setBookingHallData]= useState([])
+
+  useEffect(() => {
+    fetchBookingData();
+    // fetchBookingDatavenues();
+  }, []);
+
+  const fetchBookingData = async () => {
+    try {
+      const response = await fetch("http://localhost:8081/serviceorders");
+      const data = await response.json();
+      setBookingData(data);
+      setLoading(false);
+     
+    } catch (error) {
+      console.error("Error fetching booking data:", error);
+      setLoading(false);
+    }
+  };
+
+  const fetchBookingDatavenues = async () => {
+    try {
+      const response = await fetch("http://localhost:8081/checkoutdata");
+      const data = await response.json();
+      setBookingHallData(data);
+      setLoading(false);
+     
+    } catch (error) {
+      console.error("Error fetching booking hall data:", error);
+      setLoading(false);
+    }
+  };
+  console.log("hall data",bookinghalldata)
   return (
     <>
       <div>
@@ -21,6 +56,7 @@ const AdminPanel = () => {
         </div>
 
         <div className="middle-section">
+          {/* Sidebar section (You can uncomment the items you want to include) */}
           <div className="siderbar">
             <div>
               <ul>
@@ -29,7 +65,7 @@ const AdminPanel = () => {
                     <img src={DashboardImg} /> Dashboard
                   </a>
                 </li>
-                {/* <li>
+                <li>
                   <a href="#">
                     <img src={ServiceImg} />
                     Services
@@ -58,12 +94,17 @@ const AdminPanel = () => {
                     <img src={ViewListImg} />
                     Venue List
                   </a>
-                </li> */}
+                </li>
               </ul>
             </div>
           </div>
+
+          {/* Details section */}
           <div className="details">
             <div className="cards-section">
+              {/* Venue cards (You can customize this section based on your needs) */}
+              {/* ... (Your existing JSX for venue cards) ... */}
+
               <div className="venue-card">
                 <h3>TOTAL VENUES</h3>
                 <h1>72</h1>
@@ -97,16 +138,17 @@ const AdminPanel = () => {
               </div>
             </div>
 
+            {/* Booking details table */}
             <div
               className="container mt-5"
               style={{ width: "98%", margin: "auto" }}
             >
               <div className="row">
                 <div className="col-lg-8">
-                  <table class="table table-striped booking-table">
+                  <table className="table table-striped booking-table">
                     <thead>
                       <tr>
-                        <td colspan="5" className="B-details">
+                        <td colSpan="5" className="B-details">
                           Booking Details
                         </td>
                       </tr>
@@ -119,38 +161,26 @@ const AdminPanel = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td scope="row">12/12/2023</td>
-                        <td>Mark</td>
-                        <td>Al-Mehfil</td>
-                        <td>400</td>
-                        <td style={{ color: "green" }}>Recieved</td>
-                      </tr>
-                      <tr>
-                        <td scope="row">12/12/2023</td>
-                        <td>Jacob</td>
-                        <td>Al-Mehfil</td>
-                        <td>400</td>
-                        <td style={{ color: "green" }}>Recieved</td>
-                      </tr>
-                      <tr>
-                        <td scope="row">12/12/2023</td>
-                        <td>Larry</td>
-                        <td>Al-Mehfil</td>
-                        <td>400</td>
-                        <td style={{ color: "red" }}>Pending</td>
-                      </tr>
-                      <tr>
-                        <td scope="row">12/12/2023</td>
-                        <td>Smith</td>
-                        <td>Al-Mehfil</td>
-                        <td>600</td>
-                        <td style={{ color: "red" }}>Pending</td>
-                      </tr>
+                      {bookingData.map((booking) => (
+                        <tr key={booking.id}>
+                          <td>{booking.date}</td>
+                          <td>{booking.name}</td>
+                          <td>{booking.selectedServices}</td>
+                          <td>{booking.selectedPackage}</td>
+                          <td>{booking.totalPrice}</td>
+
+                          {/* <td>{booking.guest}</td>
+                          <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
+                            {booking.paymentStatus}
+                          </td> */}
+
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
 
+                {/* Upcoming events section */}
                 <div className="col-lg-4">
                   <div className="upcoming-events">
                     <div className="upcoming-event-card">
