@@ -23,8 +23,9 @@ const VendorDashboard = () => {
           console.error('Error fetching vendor venues:', error);
           setLoading(false);
         });
-    }
+    }  
   }, []);
+
 
   const handleEditVenue = (venueId) => {
     const selectedVenue = venues.find((venue) => venue.id === venueId);
