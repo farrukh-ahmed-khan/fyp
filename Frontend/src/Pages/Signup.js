@@ -6,6 +6,8 @@ import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
 import down from "../Assets/images/NicePng_rope-png_45489.png";
 import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/SignupValidation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const Signup = () => {
@@ -50,8 +52,13 @@ const Signup = () => {
         .post("http://localhost:8081/weddingspot", values)
         .then((res) => {
           console.log(res.data);
-          navigate("/login");
-          alert("Registration Successful");
+
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
+          // alert("Registration Successful");
+          toast.success("Registration Successful");
+          
         })
         .catch((err) => console.log(err));
     }
@@ -166,6 +173,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

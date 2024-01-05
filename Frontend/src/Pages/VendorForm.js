@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "../Assets/css/form.css";
 import "../Assets/css/vendorForm.css";
 import { Form, Button, Row, Col, Navbar } from "react-bootstrap";
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 
@@ -68,18 +70,37 @@ const HallVendorForm = () => {
     };
 
     try {
-
       const response = await fetch('http://localhost:8081/vendorform', requestOptions);
-
-
+  
       if (response.ok) {
         const result = await response.json();
         console.log('Form submitted successfully! Vendor ID:', result.vendorId);
+  
+        // Show toast and clear the form
+        toast.success("Form submitted successfully!");
+        setVendorData({
+          name: "",
+          email: initialEmail,
+          hallName: "",
+          city: "",
+          area: "",
+          maxPrice: "",
+          price: "",
+          guests: "",
+          rating: "",
+          phone: "",
+          advanced: "",
+          additionalDetails: "",
+        });
+        setSelectedServices([]);
+        setSelectedRequirements([]);
       } else {
         console.error('Error submitting form:', response.statusText);
+        toast.error('Error submitting form. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting form:', error.message);
+      toast.error('Error submitting form. Please try again.');
     }
   };
 
@@ -517,6 +538,7 @@ const HallVendorForm = () => {
         </div>
 
         {/* <Link to="/">Go back to home</Link> */}
+        <ToastContainer/>
       </div>
 
       <Footer />

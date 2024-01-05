@@ -4,6 +4,8 @@ import logo from "../Assets/images/The-Wedding-Spot1.png";
 import sidePanel from "../Assets/images/side-panel-img.png";
 import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/LoginVendorValidation";
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const Login = () => {
@@ -40,9 +42,11 @@ const Login = () => {
           if (res.data === "Login Successful") {
             navigate("/");
             localStorage.setItem("vendor", JSON.stringify(values));
-            alert("Login Successful");
+            // alert("Login Successful");
+            toast.success("Login Successful");
           } else {
-            alert("no record existed");
+            // alert("no record existed");
+            toast.error("No Record Existed!");
           }
         })
         .catch((err) => console.log(err));
@@ -129,6 +133,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

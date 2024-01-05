@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, useLocation  } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 import Navbr from '../Components/CommonComponent/Nav';
 import Footer from '../Components/CommonComponent/Footer';
@@ -83,12 +85,14 @@ const EditVenue = () => {
   
       if (response.ok) {
         console.log('Venue updated successfully!');
-        navigate('/vendor-dashboard'); // Redirect to vendor dashboard after successful edit
+        navigate('/vendor-dashboard');
       } else {
         console.error('Error updating venue:', response.statusText);
+        toast.error('Error submitting form. Please try again.');
       }
     } catch (error) {
       console.error('Error updating venue:', error.message);
+      toast.error('Error submitting form. Please try again.');
     }
   };
   
@@ -522,6 +526,7 @@ const EditVenue = () => {
             </div>
           </Form>
         </div>
+        <ToastContainer/>
       </div>
       <Footer />
     </>

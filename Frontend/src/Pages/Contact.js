@@ -8,6 +8,9 @@ import img from "../Assets/images/contact.png";
 import Navbar from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import axios from "axios";
 const Contact = () => {
   const [values, setValues] = useState({
@@ -37,7 +40,7 @@ const Contact = () => {
         })
         .catch((err) => {
           console.error(err);
-          alert("Data not sent");
+          toast.error("Message not sent successfully!");
         });
     }
   };

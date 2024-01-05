@@ -6,6 +6,8 @@ import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
 import down from "../Assets/images/NicePng_rope-png_45489.png";
 import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/SignupVendorValidation";
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const Signup = () => {
@@ -51,7 +53,8 @@ const Signup = () => {
         .then((res) => {
           console.log(res.data);
           navigate("/Vendorlogin");
-          alert("Registration Successful");
+          // alert("Registration Successful");
+          toast.success("Registration Successful");
         })
         .catch((err) => console.log(err));
     }
@@ -167,6 +170,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
