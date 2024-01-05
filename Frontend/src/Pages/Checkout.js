@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import Navbr from '../Components/CommonComponent/Nav';
-import Footer from '../Components/CommonComponent/Footer';
-import '../Assets/css/checkout.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Navbr from "../Components/CommonComponent/Nav";
+import Footer from "../Components/CommonComponent/Footer";
+import "../Assets/css/checkout.css";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const Checkout = () => {
   const location = useLocation();
   const hallDetails = location.state.hallDetails;
@@ -10,11 +10,11 @@ const Checkout = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState('silver');
+  const [selectedPackage, setSelectedPackage] = useState("silver");
   const [totalPrice, setTotalPrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
   const prices = {
     photography: {
@@ -140,12 +140,12 @@ const Checkout = () => {
     console.log(selectedTime);
 
     try {
-      const res = await fetch('http://localhost:8081/checkout', {
-        method: 'POST',
+      const res = await fetch("http://localhost:8081/checkout", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        mode: 'cors',
+        mode: "cors",
         body: JSON.stringify({
           date: selectedDate,
           time: selectedTime,
@@ -170,23 +170,23 @@ const Checkout = () => {
       const data = await res.json();
 
       if (data.error) {
-        console.error('Error in server response:', data.error);
+        console.error("Error in server response:", data.error);
         // Handle the error, show a message to the user, etc.
         return;
       }
 
       // Log the session.url and orderId
-      console.log('Session URL:', data.url);
-      console.log('Received orderId:', data.orderId);
+      console.log("Session URL:", data.url);
+      console.log("Received orderId:", data.orderId);
 
       // Check if session.url is not undefined before redirecting
       if (data.url) {
         window.location = data.url;
       } else {
-        console.error('Session URL is undefined.');
+        console.error("Session URL is undefined.");
       }
     } catch (err) {
-      console.error('Error during checkout:', err);
+      console.error("Error during checkout:", err);
       // Handle the error, show a message to the user, etc.
     }
   };
@@ -251,18 +251,18 @@ const Checkout = () => {
                     </select>
                     <ul
                       style={{
-                        border: '1px solid #ccc',
-                        padding: '10px',
-                        marginTop: '10px',
+                        border: "1px solid #ccc",
+                        padding: "10px",
+                        marginTop: "10px",
                       }}
                     >
                       {selectedServices.map((service) => (
                         <li
                           key={service}
                           className="mt-2 service-list"
-                          style={{ width: '100%' }}
+                          style={{ width: "100%" }}
                         >
-                          {service}{' '}
+                          {service}{" "}
                           <button
                             className="btn-danger"
                             onClick={() => handleRemoveService(service)}
@@ -286,7 +286,7 @@ const Checkout = () => {
                       <option value="gold">Gold</option>
                       <option value="platinum">Platinum</option>
                     </select>
-                  </div>{' '}
+                  </div>{" "}
                   <br />
                   <div>
                     <label>Date</label>
@@ -311,7 +311,7 @@ const Checkout = () => {
                   </div>
                 </div>
                 <br />
-                <div className="container d-flex justify-content-between flex-wrap">
+                <div className=" d-flex justify-content-between flex-wrap mb-3">
                   <div>
                     <label>Name</label>
                     <br />

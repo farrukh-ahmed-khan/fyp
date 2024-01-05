@@ -2,22 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Assets/css/form.css";
 import "../Assets/css/vendorForm.css";
-import { toast,ToastContainer } from "react-toastify";
+import img from "../Assets/images/Home_images/vendor-form.png";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 
 const HallVendorForm = () => {
-
   const storedData = localStorage.getItem("vendor");
-
 
   const data = storedData ? JSON.parse(storedData) : {};
   const initialEmail = data.email || "";
 
   const [vendorData, setVendorData] = useState({
     name: "",
-    email:initialEmail,
+    email: initialEmail,
     hallName: "",
     city: "",
     area: "",
@@ -26,9 +25,8 @@ const HallVendorForm = () => {
     guests: "",
     rating: "",
     phone: "",
-    advanced:"",
+    advanced: "",
     additionalDetails: "",
-    
   });
 
   const [selectedServices, setSelectedServices] = useState([]);
@@ -42,7 +40,9 @@ const HallVendorForm = () => {
   const handleServiceChange = (e) => {
     const serviceName = e.target.value;
     setSelectedServices((prevServices) =>
-      e.target.checked ? [...prevServices, serviceName] : prevServices.filter((service) => service !== serviceName)
+      e.target.checked
+        ? [...prevServices, serviceName]
+        : prevServices.filter((service) => service !== serviceName)
     );
   };
 
@@ -51,7 +51,9 @@ const HallVendorForm = () => {
     setSelectedRequirements((prevRequirements) =>
       e.target.checked
         ? [...prevRequirements, requirementName]
-        : prevRequirements.filter((requirement) => requirement !== requirementName)
+        : prevRequirements.filter(
+            (requirement) => requirement !== requirementName
+          )
     );
   };
 
@@ -59,8 +61,8 @@ const HallVendorForm = () => {
     e.preventDefault();
 
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...vendorData,
         services: selectedServices,
@@ -69,12 +71,15 @@ const HallVendorForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8081/vendorform', requestOptions);
-  
+      const response = await fetch(
+        "http://localhost:8081/vendorform",
+        requestOptions
+      );
+
       if (response.ok) {
         const result = await response.json();
-        console.log('Form submitted successfully! Vendor ID:', result.vendorId);
-  
+        console.log("Form submitted successfully! Vendor ID:", result.vendorId);
+
         // Show toast and clear the form
         toast.success("Form submitted successfully!");
         setVendorData({
@@ -94,20 +99,46 @@ const HallVendorForm = () => {
         setSelectedServices([]);
         setSelectedRequirements([]);
       } else {
-        console.error('Error submitting form:', response.statusText);
-        toast.error('Error submitting form. Please try again.');
+        console.error("Error submitting form:", response.statusText);
+        toast.error("Error submitting form. Please try again.");
       }
     } catch (error) {
-      console.error('Error submitting form:', error.message);
-      toast.error('Error submitting form. Please try again.');
+      console.error("Error submitting form:", error.message);
+      toast.error("Error submitting form. Please try again.");
     }
   };
 
   return (
     <>
       <Navbr />
-      <div class="hero-section">
+      {/* <div class="hero-section">
         <h1>Join as Vendor</h1>
+      </div> */}
+      <div className="container">
+        <div className="service-wrapper">
+          <div className="row">
+            <div className="col-lg-6 mt-5">
+              <h3>
+                <span>| </span>JOIN AS VENDOR
+              </h3>
+              <p>
+                The "Join as Vendor" page is a crucial portal for wedding hall
+                providers. Registering grants vendors access to a dynamic
+                platform, enabling them to showcase venues, connect with
+                couples, and stay competitive in the evolving wedding landscape.
+                The user-friendly interface simplifies the booking process,
+                offering engaged couples an efficient way to explore and secure
+                their ideal wedding venue. With features like virtual tours and
+                detailed information, vendors can effectively communicate the
+                unique offerings of their spaces, fostering lasting connections
+                and sustained success in the industry.
+              </p>
+            </div>
+            <div className="col-lg-6 ml-1">
+              <img src={img} alt="" />
+            </div>
+          </div>
+        </div>
       </div>
       <div className="container my-5 d-flex justify-content-center align-item-center">
         <div className="banner-form">
@@ -198,7 +229,7 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
-              
+
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="area">Area</label>
@@ -269,7 +300,7 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
-              
+
               {/* <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="type">Image</label>
@@ -537,7 +568,7 @@ const HallVendorForm = () => {
         </div>
 
         {/* <Link to="/">Go back to home</Link> */}
-        <ToastContainer/>
+        <ToastContainer />
       </div>
 
       <Footer />

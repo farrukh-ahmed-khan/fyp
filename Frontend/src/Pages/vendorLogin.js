@@ -4,7 +4,7 @@ import logo from "../Assets/images/The-Wedding-Spot1.png";
 import sidePanel from "../Assets/images/side-panel-img.png";
 import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/LoginVendorValidation";
-import { toast,ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
@@ -42,7 +42,7 @@ const Login = () => {
           if (res.data === "Login Successful") {
             localStorage.setItem("vendor", JSON.stringify(values));
             // alert("Login Successful");
-            toast.success("Login Successful");
+            toast.success("Login Successfully!!");
             setTimeout(() => {
               navigate("/");
             }, 1000);

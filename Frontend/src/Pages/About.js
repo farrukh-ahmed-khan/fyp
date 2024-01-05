@@ -11,7 +11,7 @@ const About = () => {
       <div>
         <Navbr />
       </div>
-      {/* About Section */}    
+      {/* About Section */}
       <div
         className=" mt-5"
         style={{ marginLeft: "85px", marginRight: "85px" }}
@@ -21,14 +21,14 @@ const About = () => {
             <div className="col-lg-6">
               <h1>ABOUT US</h1>
               <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eveniet nam consectetur veritatis id rem nobis, voluptate
-                possimus tenetur tempore dolor exercitationem, at similique
-                neque corporis, officia quos aliquam facilis et Lorem, ipsum
-                dolor sit amet consectetur adipisicing elit. Similique nulla
-                repudiandae recusandae quia omnis quod enim, cumque vitae aut
-                doloribus totam inventore iste officia eaque dolorum corporis
-                ullam, eum maiores.
+                Wedding Spot is a user-friendly online platform revolutionizing
+                wedding planning by offering a seamless booking experience for
+                venues. With an extensive database of diverse wedding locations,
+                couples can explore and visualize potential venues through the
+                website, making the decision-making process efficient and
+                convenient. The platform provides detailed information, pricing,
+                and virtual tours, enabling couples to plan their dream wedding
+                with ease while enjoying the flexibility of online bookings.
               </p>
             </div>
 

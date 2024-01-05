@@ -6,7 +6,7 @@ import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
 import down from "../Assets/images/NicePng_rope-png_45489.png";
 import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/SignupVendorValidation";
-import { toast,ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
@@ -55,9 +55,9 @@ const Signup = () => {
           setTimeout(() => {
             navigate("/Vendorlogin");
           }, 1000);
-          
+
           // alert("Registration Successful");
-          toast.success("Registration Successful");
+          toast.success("Signup Successfully!!");
         })
         .catch((err) => console.log(err));
     }

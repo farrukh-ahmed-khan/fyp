@@ -241,7 +241,7 @@ const ServicesCheckout = () => {
         <hr />
       </div>
 
-      <div className="container d-flex justify-content-between flex-wrap">
+      <div className=" container d-flex justify-content-between flex-wrap mb-3">
         <div>
           <label>Address</label>
           <br />

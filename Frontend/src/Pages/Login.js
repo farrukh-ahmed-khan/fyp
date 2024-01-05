@@ -37,7 +37,7 @@ const Login = () => {
           if (res.data === "Login Successful") {
             // Save user information to local storage
             localStorage.setItem("user", JSON.stringify(values));
-            toast.success("Message sent successfully!");
+            toast.success("Login successfully!!");
 
             setTimeout(() => {
               navigate("/");

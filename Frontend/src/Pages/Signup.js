@@ -51,12 +51,11 @@ const Signup = () => {
         .then((res) => {
           console.log(res.data);
 
-            setTimeout(() => {
-              navigate("/");
-            }, 1000);
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
           // alert("Registration Successful");
-          toast.success("Registration Successful");
-          
+          toast.success("Signup Successfully!!");
         })
         .catch((err) => console.log(err));
     }

@@ -1,0 +1,65 @@
+.dashboard-heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #6443A9;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: "Roboto", sans-serif;
+    margin-top: 2.5rem;
+  }
+
+  .vendorInfoSection {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    align-items: center;
+  }
+
+  
+
+
+.vendorInfoList {
+    text-align: center;
+    border: 1px solid #a588e4;
+    padding:30px 60px;
+    margin-bottom: 20px;
+    background-color:#6443A9;
+    color: #fff;
+   
+  }
+
+  .vendorBtnSection {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    align-items: center;
+  }
+
+  .vendonrEditBtn {
+    outline: none;
+    border: none;
+    padding: 5px 40px;
+    color: #fff;
+    margin-right: 10px;
+    /* background: linear-gradient(140deg, #348d59 0%, #2c7441 100%) */
+    background-color: #42a76c;
+  }
+
+  .vendonrEditBtn:hover {
+    background-color: #2c7441;
+  }
+
+  .vendonrDelBtn {
+    outline: none;
+    border: none;
+    padding: 5px 40px;
+    color: #fff;
+    /* background: linear-gradient(140deg, #c50b0b 0%, #7e0e0b 100%) */
+    background-color:rgb(221, 52, 52);
+  }
+
+  .vendonrDelBtn:hover {
+    background-color: #7e0e0b;
+  }

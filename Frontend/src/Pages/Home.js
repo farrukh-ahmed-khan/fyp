@@ -100,11 +100,12 @@ const Home = () => {
                       <img src={photography} />
                       <div className="overlay"></div>
                       <div className="service-desc">
-                        <h3>Al-Mehfil Banquet</h3>
+                        <h3>Al-Masaad Banquet</h3>
                         <hr />
                         <p>
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Est rerum quaerat odio officia? Deleniti at
+                          A wedding hall is a venue for ceremonies and
+                          celebrations, designed for couples to share their
+                          special day with loved ones.
                         </p>
                       </div>
                     </div>
@@ -117,8 +118,9 @@ const Home = () => {
                         <h3>Al-Mehfil Banquet</h3>
                         <hr />
                         <p>
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Est rerum quaerat odio officia? Deleniti at
+                          A wedding hall is a venue for ceremonies and
+                          celebrations, designed for couples to share their
+                          special day with loved ones.
                         </p>
                       </div>
                     </div>
@@ -128,11 +130,12 @@ const Home = () => {
                       <img src={photography} />
                       <div className="overlay"></div>
                       <div className="service-desc">
-                        <h3>Al-Mehfil Banquet</h3>
+                        <h3>City Banquet</h3>
                         <hr />
                         <p>
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Est rerum quaerat odio officia? Deleniti at
+                          A wedding hall is a venue for ceremonies and
+                          celebrations, designed for couples to share their
+                          special day with loved ones.
                         </p>
                       </div>
                     </div>
@@ -142,11 +145,12 @@ const Home = () => {
                       <img src={photography} />
                       <div className="overlay"></div>
                       <div className="service-desc">
-                        <h3>Al-Mehfil Banquet</h3>
+                        <h3>Rose Banquet</h3>
                         <hr />
                         <p>
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Est rerum quaerat odio officia? Deleniti at
+                          A wedding hall is a venue for ceremonies and
+                          celebrations, designed for couples to share their
+                          special day with loved ones.
                         </p>
                       </div>
                     </div>

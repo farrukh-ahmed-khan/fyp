@@ -27,6 +27,10 @@
   width: 50%;
   padding: 15px;
   font-size: 15px;
+  
+}
+.email-field:focus, .name-field:focus, .phone-field:focus, textarea:focus{
+  outline: none;
 }
 textarea {
   width: 50%;

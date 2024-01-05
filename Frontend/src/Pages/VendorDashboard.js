@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Navbr from '../Components/CommonComponent/Nav';
-import Footer from '../Components/CommonComponent/Footer';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Navbr from "../Components/CommonComponent/Nav";
+import Footer from "../Components/CommonComponent/Footer";
+import "../Assets/css/vendor-dashboard.css";
 
 const VendorDashboard = () => {
   const [venues, setVenues] = useState([]);
@@ -10,7 +11,7 @@ const VendorDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const vendorData = JSON.parse(localStorage.getItem('vendor'));
+    const vendorData = JSON.parse(localStorage.getItem("vendor"));
 
     if (vendorData) {
       axios
@@ -20,12 +21,11 @@ const VendorDashboard = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error('Error fetching vendor venues:', error);
+          console.error("Error fetching vendor venues:", error);
           setLoading(false);
         });
-    }  
+    }
   }, []);
-
 
   const handleEditVenue = (venueId) => {
     const selectedVenue = venues.find((venue) => venue.id === venueId);
@@ -34,7 +34,9 @@ const VendorDashboard = () => {
 
   const handleDeleteVenue = async (venueId) => {
     try {
-      const response = await axios.delete(`http://localhost:8081/delete-venue/${venueId}`);
+      const response = await axios.delete(
+        `http://localhost:8081/delete-venue/${venueId}`
+      );
 
       if (response.status === 200) {
         console.log(`Venue with ID ${venueId} deleted successfully`);
@@ -44,30 +46,42 @@ const VendorDashboard = () => {
         console.error(`Failed to delete venue with ID ${venueId}`);
       }
     } catch (error) {
-      console.error('Error deleting venue:', error);
+      console.error("Error deleting venue:", error);
     }
   };
 
   return (
     <div>
       <Navbr />
-      <h1>Vendor Dashboard</h1>
+      <h1 className="dashboard-heading">Vendor Dashboard</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div>
+        <div className="vendorInfoSection">
           {venues.length > 0 ? (
-            <ul>
+            <ul className="venue-list-section">
               {venues.map((venue) => (
-                <li key={venue.id}>
+                <li key={venue.id} className="vendorInfoList">
                   <strong>{venue.hallName}</strong> - {venue.city}, {venue.area}
                   <br />
-                  Services: {venue.services.join(', ')}
+                  <b>Services:</b> {venue.services.join(", ")}
                   <br />
-                  Requirements: {venue.requirements.join(', ')}
+                  <b>Requirements:</b> {venue.requirements.join(", ")}
                   <br />
-                  <button onClick={() => handleEditVenue(venue.id)}>Edit</button>
-                  <button onClick={() => handleDeleteVenue(venue.id)}>Delete</button>
+                  <div className="vendorBtnSection">
+                    <button
+                      className="vendonrEditBtn"
+                      onClick={() => handleEditVenue(venue.id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="vendonrDelBtn"
+                      onClick={() => handleDeleteVenue(venue.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -76,7 +90,19 @@ const VendorDashboard = () => {
           )}
         </div>
       )}
-      <Link to="/">Go back to home</Link>
+      <Link to="/">
+        <p
+          style={{
+            textTransform: "uppercase",
+            textAlign: "center",
+            fontWeight: "600",
+            color: "#6443A9",
+            fontSize: "20px",
+          }}
+        >
+          Go back to home
+        </p>
+      </Link>
       <Footer />
     </div>
   );
