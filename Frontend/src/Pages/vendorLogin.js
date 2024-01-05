@@ -40,10 +40,12 @@ const Login = () => {
         .post("http://localhost:8081/vendorlogin", values)
         .then((res) => {
           if (res.data === "Login Successful") {
-            navigate("/");
             localStorage.setItem("vendor", JSON.stringify(values));
             // alert("Login Successful");
             toast.success("Login Successful");
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
           } else {
             // alert("no record existed");
             toast.error("No Record Existed!");

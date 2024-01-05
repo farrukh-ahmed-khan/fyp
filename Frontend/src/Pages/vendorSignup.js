@@ -52,7 +52,10 @@ const Signup = () => {
         .post("http://localhost:8081/vendors", values)
         .then((res) => {
           console.log(res.data);
-          navigate("/Vendorlogin");
+          setTimeout(() => {
+            navigate("/Vendorlogin");
+          }, 1000);
+          
           // alert("Registration Successful");
           toast.success("Registration Successful");
         })

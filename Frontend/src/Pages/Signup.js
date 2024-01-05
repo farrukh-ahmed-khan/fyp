@@ -2,8 +2,6 @@ import { React, useState } from "react";
 import "../Assets/css/form.css";
 import logo from "../Assets/images/The-Wedding-Spot1.png";
 import sidePanel from "../Assets/images/side-panel-img.png";
-import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
-import down from "../Assets/images/NicePng_rope-png_45489.png";
 import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/SignupValidation";
 import { ToastContainer, toast } from "react-toastify";
