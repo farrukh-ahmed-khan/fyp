@@ -74,27 +74,27 @@ const AdminPanel = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="adminnotify">
+                  <Link to="/adminnotify">
                     <img src={NotiImg} />
                     Notifications
                   </Link>
                   
                 </li>
                 <li>
-                  <Link to="messages">
+                  <Link to="/adminmessage">
                     <img src={MsgImg} />
                     Messages
                   </Link>
                   
                 </li>
                 <li>
-                  <Link to="adminpayments">
+                  <Link to="/adminpayments">
                     <img src={PaymentImg} />
                     Payments
                   </Link>
                 </li>
                 <li>
-                  <Link to="adminvenuelist">
+                  <Link to="/adminvenuelist">
                     <img src={ViewListImg} />
                     Venue List
                   </Link>
