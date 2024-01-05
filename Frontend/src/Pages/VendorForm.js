@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Assets/css/form.css";
 import "../Assets/css/vendorForm.css";
-import { Form, Button, Row, Col, Navbar } from "react-bootstrap";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbr from "../Components/CommonComponent/Nav";
@@ -112,7 +111,7 @@ const HallVendorForm = () => {
       </div>
       <div className="container my-5 d-flex justify-content-center align-item-center">
         <div className="banner-form">
-          <Form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <h1 className="heading">Fill The Form</h1>
             <div className="row">
               <div className="col-md-6">
@@ -530,11 +529,11 @@ const HallVendorForm = () => {
             </div>
 
             <div className="btn-wrapper">
-              <Button variant="" type="submit">
+              <button variant="" type="submit">
                 Submit
-              </Button>
+              </button>
             </div>
-          </Form>
+          </form>
         </div>
 
         {/* <Link to="/">Go back to home</Link> */}
