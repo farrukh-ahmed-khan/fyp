@@ -9,21 +9,19 @@ import ViewListImg from "../Assets/images/AdminPanel/view-list.png";
 import user from "../Assets/images/AdminPanel/user.png";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 
-const AdminPanel = () => {
-  const [bookingData, setBookingData] = useState([]);
+const AdminMessages = () => {
+    const [messageData, setMessageData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [bookinghalldata, setBookingHallData]= useState([])
 
   useEffect(() => {
-    fetchBookingData();
-    fetchBookingDatavenues();
+    fetchContactData();
   }, []);
 
-  const fetchBookingData = async () => {
+  const fetchContactData = async () => {
     try {
-      const response = await fetch("http://localhost:8081/serviceorders");
+      const response = await fetch("http://localhost:8081/getcontactform");
       const data = await response.json();
-      setBookingData(data);
+      setMessageData(data);
       setLoading(false);
      
     } catch (error) {
@@ -32,19 +30,7 @@ const AdminPanel = () => {
     }
   };
 
-  const fetchBookingDatavenues = async () => {
-    try {
-      const response = await fetch("http://localhost:8081/checkoutdata");
-      const data = await response.json();
-      setBookingHallData(data);
-      setLoading(false);
-     
-    } catch (error) {
-      console.error("Error fetching booking hall data:", error);
-      setLoading(false);
-    }
-  };
-  console.log("hall data",bookinghalldata)
+ console.log(messageData)
   return (
     <>
       <div>
@@ -81,7 +67,7 @@ const AdminPanel = () => {
                   
                 </li>
                 <li>
-                  <Link to="messages">
+                  <Link to="adminmessages">
                     <img src={MsgImg} />
                     Messages
                   </Link>
@@ -105,42 +91,7 @@ const AdminPanel = () => {
 
           {/* Details section */}
           <div className="details">
-            <div className="cards-section">
-              {/* Venue cards (You can customize this section based on your needs) */}
-              {/* ... (Your existing JSX for venue cards) ... */}
-
-              <div className="venue-card">
-                <h3>TOTAL VENUES</h3>
-                <h1>72</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
-
-              <div className="venue-card">
-                <h3>BOOKED VENUES</h3>
-                <h1>{bookinghalldata.length}</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
-
-              <div className="venue-card">
-                <h3>Service Request</h3>
-                <h1>{bookinghalldata.length}</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
-
-              <div className="venue-card">
-                <h3>PAYMENTS</h3>
-                <h1>{bookinghalldata.length+bookingData.length}</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
-            </div>
+            
 
             {/* Booking details table */}
             <div
@@ -153,25 +104,23 @@ const AdminPanel = () => {
                     <thead>
                       <tr>
                         <td colSpan="5" className="B-details">
-                         Service Booking Details
+                         Messages
                         </td>
                       </tr>
                       <tr>
-                        <th scope="col">Booking Date</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Selected Service</th>
-                        <th scope="col">Package</th>
-                        <th scope="col">Payment</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Messages</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {bookingData.map((booking) => (
+                      {messageData.map((booking) => (
                         <tr key={booking.id}>
-                          <td>{booking.date}</td>
                           <td>{booking.name}</td>
-                          <td>{booking.selectedServices}</td>
-                          <td>{booking.selectedPackage}</td>
-                          <td>{booking.totalPrice}</td>
+                          <td>{booking.phone}</td>
+                          <td>{booking.email}</td>
+                          <td>{booking.message}</td>
 
                           {/* <td>{booking.guest}</td>
                           <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
@@ -184,42 +133,7 @@ const AdminPanel = () => {
                   </table>
 
 
-                  <table className="table table-striped booking-table">
-                    <thead>
-                      <tr>
-                        <td colSpan="7" className="B-details">
-                         Service Booking Details
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="col">Booking Date</th>
-                        <th scope="col">Booking time</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Hall Name</th>
-                        <th scope="col">Capacity</th>
-                        <th scope="col">Payment</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {bookinghalldata.map((booking) => (
-                        <tr key={booking.id}>
-                          <td>{booking.date}</td>
-                          <td>{booking.time}</td>
-                          <td>{booking.name}</td>
-                          <td>{booking.hallName}</td>
-                          <td>{booking.halladvance}</td>
-                          
-                          <td>{booking.finalPrice}</td>
-
-                          {/* <td>{booking.guest}</td>
-                          <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
-                            {booking.paymentStatus}
-                          </td> */}
-
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  
                 </div>
 
                 {/* Upcoming events section */}
@@ -254,7 +168,7 @@ const AdminPanel = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AdminPanel;
+export default AdminMessages

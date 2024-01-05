@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import Navbr from "../Components/CommonComponent/Nav";
-import Footer from "../Components/CommonComponent/Footer";
-import "../Assets/css/checkout.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import Navbr from '../Components/CommonComponent/Nav';
+import Footer from '../Components/CommonComponent/Footer';
+import '../Assets/css/checkout.css';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 const Checkout = () => {
   const location = useLocation();
   const hallDetails = location.state.hallDetails;
-
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState("silver");
+  const [selectedPackage, setSelectedPackage] = useState('silver');
   const [totalPrice, setTotalPrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
   const prices = {
     photography: {
@@ -76,6 +78,18 @@ const Checkout = () => {
     setTotalAdvance(totalAdvance);
   };
 
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+  };
+
   // const checkout = async () => {
   //   console.log(selectedDate);
   //   console.log(selectedTime);
@@ -119,22 +133,23 @@ const Checkout = () => {
   //   }
   // };
 
+  // ... (your other component code)
+
   const checkout = async () => {
     console.log(selectedDate);
     console.log(selectedTime);
 
     try {
-      const res = await fetch("http://localhost:8081/checkout", {
-        method: "POST",
+      const res = await fetch('http://localhost:8081/checkout', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        mode: "cors",
+        mode: 'cors',
         body: JSON.stringify({
           date: selectedDate,
           time: selectedTime,
           hallName: hallDetails.hallName,
-
           items: selectedServices.map((service, index) => ({
             id: index + 1,
             price:
@@ -145,24 +160,38 @@ const Checkout = () => {
           })),
           package: selectedPackage,
           halladvance: hallDetails.advanced,
+          finalPrice: finalPrice,
+          name: name,
+          email: email,
+          phone: phone,
         }),
       });
 
       const data = await res.json();
 
-      // Log the session.url to check if it's set properly
-      console.log("Session URL:", data.url);
+      if (data.error) {
+        console.error('Error in server response:', data.error);
+        // Handle the error, show a message to the user, etc.
+        return;
+      }
+
+      // Log the session.url and orderId
+      console.log('Session URL:', data.url);
+      console.log('Received orderId:', data.orderId);
 
       // Check if session.url is not undefined before redirecting
       if (data.url) {
         window.location = data.url;
       } else {
-        console.error("Session URL is undefined.");
+        console.error('Session URL is undefined.');
       }
     } catch (err) {
-      console.log(err);
+      console.error('Error during checkout:', err);
+      // Handle the error, show a message to the user, etc.
     }
   };
+
+  // ... (your other component code)
 
   return (
     <>
@@ -205,7 +234,7 @@ const Checkout = () => {
 
               <div>
                 <h1 className="service-checkout-heading">Services Checkout</h1>
-                
+
                 <div className="d-flex justify-content-between flex-wrap">
                   <div>
                     <label>Select Services </label>
@@ -220,14 +249,23 @@ const Checkout = () => {
                       <option value="makeup">Makeup</option>
                       <option value="decoration">Decoration</option>
                     </select>
-                    <ul  style={{border:"1px solid #ccc", padding:"10px", marginTop:"10px"}}>
+                    <ul
+                      style={{
+                        border: '1px solid #ccc',
+                        padding: '10px',
+                        marginTop: '10px',
+                      }}
+                    >
                       {selectedServices.map((service) => (
-                        <li key={service} className="mt-2 service-list" style={{width:"100%"}}>
-                          {service}{" "}
+                        <li
+                          key={service}
+                          className="mt-2 service-list"
+                          style={{ width: '100%' }}
+                        >
+                          {service}{' '}
                           <button
                             className="btn-danger"
                             onClick={() => handleRemoveService(service)}
-                           
                           >
                             X
                           </button>
@@ -248,7 +286,7 @@ const Checkout = () => {
                       <option value="gold">Gold</option>
                       <option value="platinum">Platinum</option>
                     </select>
-                  </div>{" "}
+                  </div>{' '}
                   <br />
                   <div>
                     <label>Date</label>
@@ -273,24 +311,54 @@ const Checkout = () => {
                   </div>
                 </div>
                 <br />
+                <div className="container d-flex justify-content-between flex-wrap">
+                  <div>
+                    <label>Name</label>
+                    <br />
+                    <input
+                      className="inputField"
+                      type="text"
+                      value={name}
+                      onChange={handleNameChange}
+                    />
+                  </div>
+                  <div>
+                    <label>Email</label> <br />
+                    <input
+                      className="inputField"
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                    />
+                  </div>
+                  <div>
+                    <label>Phone</label>
+                    <br />
+                    <input
+                      className="inputField"
+                      type="tel"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                    />
+                  </div>
+                </div>
 
-              
                 <div className="service-price">
-                <div>
-                  <p>
-                    <b>Total service Price:</b> ${totalPrice}
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    <b>Total Advance:</b> ${totalAdvance}
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    <b>Final Price:</b> ${finalPrice}
-                  </p>
-                </div>
+                  <div>
+                    <p>
+                      <b>Total service Price:</b> ${totalPrice}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Total Advance:</b> ${totalAdvance}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Final Price:</b> ${finalPrice}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

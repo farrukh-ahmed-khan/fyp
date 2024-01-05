@@ -704,19 +704,81 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 //   }
 // });
 
+// app.post("/checkout", async (req, res) => {
+//   try {
+//     const { date, time, hallName, items, package, halladvance } = req.body;
+
+//     // Insert data into the checkout_orders table
+//     const checkoutInsertSql =
+//       "INSERT INTO checkout_orders (date, time, hallName, package, halladvance) VALUES (?, ?, ?, ?, ?)";
+//     const checkoutInsertValues = [date, time, hallName, package, halladvance];
+//     const result = await db.query(checkoutInsertSql, checkoutInsertValues);
+
+//     const orderId = result.insertId; // Get the generated order ID
+
+//     // Insert selected services into the selected_services table
+//     const selectedServicesInsertSql =
+//       "INSERT INTO selected_services (order_id, service_id, service_name, quantity, price) VALUES (?, ?, ?, ?, ?)";
+//     const selectedServicesInsertValues = items.flatMap((item) => [
+//       orderId,
+//       item.id, // Assuming each service has a unique ID
+//       item.name,
+//       item.quantity,
+//       item.price,
+//     ]);
+
+//     await db.query(selectedServicesInsertSql, selectedServicesInsertValues);
+
+//     // Create the Stripe session
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: items.map((item) => ({
+//         price_data: {
+//           currency: "pkr",
+//           product_data: {
+//             name: item.name,
+//             description: `Date: ${date}, Time: ${time}, Hall: ${hallName}`,
+//           },
+//           unit_amount: item.price * 100,
+//         },
+//         quantity: item.quantity,
+//       })),
+//       success_url: "http://localhost:3000/success",
+//       cancel_url: "http://localhost:3000/cancel",
+//       metadata: {
+//         date,
+//         time,
+//         hallName,
+//         package,
+//         halladvance,
+//         orderId, // Add orderId to metadata
+//       },
+//     });
+
+//     console.log("Received data:", req.body);
+//     console.log("Session URL:", session.url);
+
+//     res.json({ url: session.url });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+
 app.post("/checkout", async (req, res) => {
   try {
-    const { date, time, hallName, items, package, halladvance } = req.body;
+    const { date, time, hallName, items, package, halladvance,finalPrice,name,email,phone  } = req.body;
 
     // Insert data into the checkout_orders table
     const checkoutInsertSql =
-      "INSERT INTO checkout_orders (date, time, hallName, package, halladvance) VALUES (?, ?, ?, ?, ?)";
-    const checkoutInsertValues = [date, time, hallName, package, halladvance];
+      "INSERT INTO checkout_orders (date, time, hallName, package, halladvance,finalPrice,name, email,phone) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
+    const checkoutInsertValues = [date, time, hallName, package, halladvance,finalPrice,name, email,phone];
     const result = await db.query(checkoutInsertSql, checkoutInsertValues);
+    console.log(result)
+    const orderId = result.id;
 
-    const orderId = result.insertId; // Get the generated order ID
-
-    // Insert selected services into the selected_services table
     const selectedServicesInsertSql =
       "INSERT INTO selected_services (order_id, service_id, service_name, quantity, price) VALUES (?, ?, ?, ?, ?)";
     const selectedServicesInsertValues = items.flatMap((item) => [
@@ -752,19 +814,22 @@ app.post("/checkout", async (req, res) => {
         hallName,
         package,
         halladvance,
-        orderId, // Add orderId to metadata
+        orderId,
       },
     });
 
     console.log("Received data:", req.body);
     console.log("Session URL:", session.url);
 
-    res.json({ url: session.url });
+    // Send orderId along with the URL in the response
+    res.json({ url: session.url, orderId });
   } catch (error) {
-    console.log(error);
+    console.log("Error during checkout:", error);
     res.status(500).json({ error: error.message });
   }
 });
+
+
 
 app.post("/onlyservice", async (req, res) => {
   try {
@@ -863,6 +928,20 @@ app.get("/checkoutdata", (req, res) => {
   });
 });
 
+app.get("/getcontactform", (req, res) => {
+  const sql = "SELECT * FROM contact";
+
+  db.query(sql, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.json({ error: "Error retrieving data from the database" });
+    } else {
+      res.json(data);
+    }
+  });
+});
+
 app.listen(8081, () => {
   console.log("Server is running at port 8081");
 });
+

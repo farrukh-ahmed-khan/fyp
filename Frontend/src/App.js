@@ -21,6 +21,7 @@ import VendorDashboard from "./Pages/VendorDashboard";
 import ProtectedRoutes from "./ProtectedRoute";
 import ServicesCheckout from "./Pages/ServicesCheckout";
 import EditVenue from "./Pages/EditVenue";
+import AdminMessages from "./AdminPanel/AdminMessages";
 function App() {
   const isAuth = localStorage.getItem("user") !== null;
   const isAuth2 = localStorage.getItem("vendor") !== null;
@@ -49,6 +50,8 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/success" element={<Success />} />
           <Route path="/AdminPanel" element={<AdminPanel />} />
+          <Route path="/adminmessage" element={<AdminMessages />} />
+
         </Routes>
       </BrowserRouter>
     </>
