@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import "../Assets/css/form.css";
 import "../Assets/css/vendorForm.css";
 import img from "../Assets/images/Home_images/vendor-form.png";
@@ -10,7 +11,7 @@ import Footer from "../Components/CommonComponent/Footer";
 
 const HallVendorForm = () => {
   const storedData = localStorage.getItem("vendor");
-
+  const navigate = useNavigate();
   const data = storedData ? JSON.parse(storedData) : {};
   const initialEmail = data.email || "";
 
@@ -98,6 +99,8 @@ const HallVendorForm = () => {
         });
         setSelectedServices([]);
         setSelectedRequirements([]);
+        
+        navigate('/vendordashboard');
       } else {
         console.error("Error submitting form:", response.statusText);
         toast.error("Error submitting form. Please try again.");
