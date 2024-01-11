@@ -24,6 +24,7 @@ const AdminPanel = () => {
       const response = await fetch("http://localhost:8081/serviceorders");
       const data = await response.json();
       setBookingData(data);
+      
       setLoading(false);
      
     } catch (error) {

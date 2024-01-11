@@ -17,18 +17,18 @@ const db = mysql.createConnection({
 });
 
 app.post("/weddingspot", (req, res) => {
-  const sql =
-    "INSERT INTO login (`firstname`, `lastname`, `email`, `password`) VALUES (?)";
-  const values = [
-    req.body.fname,
-    req.body.lname,
-    req.body.email,
-    req.body.password,
-  ];
-  db.query(sql, [values], (err, data) => {
+  const insertSql = "INSERT INTO users (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)";
+  const values = [req.body.fname, req.body.lname, req.body.email, req.body.password];
+
+  db.query(insertSql, values, (err, data) => {
     if (err) {
-      res.json("Error");
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(400).json({ error: "Email already exists" });
+      } else {
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
     }
+
     return res.json(data);
   });
 });

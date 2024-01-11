@@ -35,7 +35,6 @@ const Login = () => {
         .post("http://localhost:8081/login", values)
         .then((res) => {
           if (res.data === "Login Successful") {
-            // Save user information to local storage
             localStorage.setItem("user", JSON.stringify(values));
             toast.success("Login successfully!!");
 
@@ -43,7 +42,6 @@ const Login = () => {
               navigate("/");
             }, 1000);
           } else {
-            // alert("No record existed");
             toast.error("No record existed");
           }
         })

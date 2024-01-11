@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../Assets/css/checkout.css";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const ServicesCheckout = () => {
@@ -73,11 +75,25 @@ const ServicesCheckout = () => {
   };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    const emailValue = e.target.value;
+    validateEmail(emailValue);
+    setEmail(emailValue);
   };
 
   const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
+    const phoneValue = e.target.value;
+    validatePhone(phoneValue);
+    setPhone(phoneValue);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\d{10}$/; // Assuming a 10-digit phone number
+    return phoneRegex.test(phone);
   };
 
   const updateTotalPrice = (services, packageType) => {
@@ -89,80 +105,53 @@ const ServicesCheckout = () => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await axios.post("http://localhost:8081/onlyservice", {
-        date: selectedDate,
-        time: selectedTime,
-        selectedServices: selectedServices,
-        selectedPackage: selectedPackage,
-        totalPrice: totalPrice,
-        address: address,
-        name: name,
-        email: email,
-        phone: phone,
-      });
+    let isValid = true;
 
-      const data = response.data;
+    if (!validateEmail(email)) {
+      toast.error("Invalid email format");
+      isValid = false;
+    }
 
-      console.log("Session URL:", data.url);
+    if (!validatePhone(phone)) {
+      toast.error("Invalid phone number format");
+      isValid = false;
+    }
 
-      if (data.url) {
-        window.location = data.url;
-      } else {
-        console.error("Session URL is undefined.");
+    if (isValid) {
+      try {
+        const response = await axios.post("http://localhost:8081/onlyservice", {
+          date: selectedDate,
+          time: selectedTime,
+          selectedServices: selectedServices,
+          selectedPackage: selectedPackage,
+          totalPrice: totalPrice,
+          address: address,
+          name: name,
+          email: email,
+          phone: phone,
+        });
+
+        const data = response.data;
+
+        console.log("Session URL:", data.url);
+
+        if (data.url) {
+          window.location = data.url;
+        } else {
+          console.error("Session URL is undefined.");
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("An error occurred while submitting the form");
       }
-    } catch (err) {
-      console.error(err);
     }
   };
+
 
   return (
     <div>
       <Navbr />
 
-      {/* <div>
-        <label>Select Services:</label>
-        <select
-          //multiple
-          value={selectedServices}
-          onChange={(e) => handleServiceChange(e.target.value)}
-          className="service-drop-down"
-        >
-          <option value="photography">Photography</option>
-          <option value="makeup">Makeup</option>
-          <option value="decoration">Decoration</option>
-        </select>
-        <ul>
-          {selectedServices.map((service) => (
-            <li key={service}>
-              {service}{" "}
-              <button onClick={() => handleRemoveService(service)}>
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <label>Select Package:</label>
-        <select
-          value={selectedPackage}
-          onChange={(e) => handlePackageChange(e.target.value)}
-        >
-          <option value="silver">Silver</option>
-          <option value="gold">Gold</option>
-          <option value="platinum">Platinum</option>
-        </select>
-      </div>
-      <div>
-        <label>Date:</label>
-        <input type="date" value={selectedDate} onChange={handleDateChange} />
-      </div>
-      <div>
-        <label>Time:</label>
-        <input type="time" value={selectedTime} onChange={handleTimeChange} />
-      </div>
-       */}
       <h1 className="service-checkout-heading mt-4">Services Checkout</h1>
       <div className="d-flex justify-content-between flex-wrap container ">
         <div>
@@ -293,7 +282,7 @@ const ServicesCheckout = () => {
           Submit
         </button>
       </div>
-
+      <ToastContainer />
       <Footer />
     </div>
   );

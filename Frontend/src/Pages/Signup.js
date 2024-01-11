@@ -34,18 +34,11 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setErrors(validate(values));
+
     const err = validate(values);
     setErrors(err);
 
-    if (
-      !err.fname &&
-      !err.lname &&
-      !err.email &&
-      !err.password &&
-      !err.confirmPassword
-    ) {
-      console.log("values", values);
+    if (!err.fname && !err.lname && !err.email && !err.password && !err.confirmPassword) {
       axios
         .post("http://localhost:8081/weddingspot", values)
         .then((res) => {
@@ -54,10 +47,15 @@ const Signup = () => {
           setTimeout(() => {
             navigate("/");
           }, 1000);
-          // alert("Registration Successful");
           toast.success("Signup Successfully!!");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.response && err.response.status === 400) {
+            toast.error("Email already exists. Please use a different email.");
+          } else {
+            console.log(err);
+          }
+        });
     }
   };
 
