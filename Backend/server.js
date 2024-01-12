@@ -29,6 +29,7 @@ app.post("/weddingspot", (req, res) => {
       }
     }
 
+    // Successful insertion
     return res.json(data);
   });
 });
@@ -71,18 +72,19 @@ app.post("/login", (req, res) => {
 // vendor-form api
 
 app.post("/vendors", (req, res) => {
-  const sql =
-    "INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?)";
-  const values = [
-    req.body.fname,
-    req.body.lname,
-    req.body.email,
-    req.body.password,
-  ];
-  db.query(sql, [values], (err, data) => {
+  const insertSql = "INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)";
+  const values = [req.body.fname, req.body.lname, req.body.email, req.body.password];
+
+  db.query(insertSql, values, (err, data) => {
     if (err) {
-      res.json("Error");
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(400).json({ error: "Email already exists" });
+      } else {
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
     }
+
+    // Successful insertion
     return res.json(data);
   });
 });
