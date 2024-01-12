@@ -82,7 +82,7 @@ const ServicesCheckout = () => {
 
   const handlePhoneChange = (e) => {
     const phoneValue = e.target.value;
-    validatePhone(phoneValue);
+    // validatePhone(phoneValue);
     setPhone(phoneValue);
   };
 
@@ -91,10 +91,10 @@ const ServicesCheckout = () => {
     return emailRegex.test(email);
   };
 
-  const validatePhone = (phone) => {
-    const phoneRegex = /^\d{10}$/; // Assuming a 10-digit phone number
-    return phoneRegex.test(phone);
-  };
+  // const validatePhone = (phone) => {
+  //   const phoneRegex = /^\d{10}$/; // Assuming a 10-digit phone number
+  //   return phoneRegex.test(phone);
+  // };
 
   const updateTotalPrice = (services, packageType) => {
     const totalPrice = services.reduce(
@@ -112,10 +112,10 @@ const ServicesCheckout = () => {
       isValid = false;
     }
 
-    if (!validatePhone(phone)) {
-      toast.error("Invalid phone number format");
-      isValid = false;
-    }
+    // if (!validatePhone(phone)) {
+    //   toast.error("Invalid phone number format");
+    //   isValid = false;
+    // }
 
     if (isValid) {
       try {

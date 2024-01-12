@@ -941,6 +941,108 @@ app.get("/getcontactform", (req, res) => {
   });
 });
 
+app.get("/all-vendor-venues", (req, res) => {
+  const venuesSql = "SELECT * FROM vendorform";
+
+  db.query(venuesSql, (err, venuesResult) => {
+    if (err) {
+      console.error("Error fetching vendor venues:", err);
+      return res.status(500).json({ error: "Error fetching vendor venues" });
+    }
+
+    const venues = venuesResult.map((venue) => {
+      const {
+        id,
+        hallName,
+        city,
+        area,
+        maxPrice,
+        price,
+        guests,
+        rating,
+        phone,
+        advanced,
+        createdAt,
+        name,
+        email,
+        additionalDetails,
+      } = venue;
+      return {
+        id,
+        hallName,
+        city,
+        area,
+        maxPrice,
+        price,
+        guests,
+        rating,
+        phone,
+        advanced,
+        createdAt,
+        name,
+        email,
+        additionalDetails,
+      };
+    });
+
+    // Fetch services and requirements for each venue
+    const venuesWithDetails = [];
+
+    const fetchDetailsPromises = venues.map(async (venue) => {
+      const { id } = venue;
+
+      const servicesSql =
+        "SELECT serviceName FROM vendor_services WHERE vendorId = ?";
+      const requirementsSql =
+        "SELECT requirementName FROM vendor_requirements WHERE vendorId = ?";
+
+      const [servicesResult, requirementsResult] = await Promise.all([
+        new Promise((resolve) => {
+          db.query(servicesSql, [id], (err, servicesResult) => {
+            if (err) {
+              console.error("Error fetching services:", err);
+              resolve([]);
+            } else {
+              resolve(servicesResult.map((service) => service.serviceName));
+            }
+          });
+        }),
+        new Promise((resolve) => {
+          db.query(requirementsSql, [id], (err, requirementsResult) => {
+            if (err) {
+              console.error("Error fetching requirements:", err);
+              resolve([]);
+            } else {
+              resolve(
+                requirementsResult.map(
+                  (requirement) => requirement.requirementName
+                )
+              );
+            }
+          });
+        }),
+      ]);
+
+      venuesWithDetails.push({
+        ...venue,
+        services: servicesResult,
+        requirements: requirementsResult,
+      });
+    });
+
+    // Resolve all promises and send the response
+    Promise.all(fetchDetailsPromises)
+      .then(() => {
+        res.json(venuesWithDetails);
+      })
+      .catch((error) => {
+        console.error("Error fetching details:", error);
+        res.status(500).json({ error: "Error fetching details" });
+      });
+  });
+});
+
+
 app.listen(8081, () => {
   console.log("Server is running at port 8081");
 });

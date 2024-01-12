@@ -71,7 +71,9 @@ function App() {
           <Route path="/success" element={<Success />} />
           <Route path="/AdminPanel" element={<AdminPanel />} />
           <Route path="/adminmessage" element={<AdminMessages />} />
-          <Route path="/adminnotify" element={<AdminVenue />} />
+          {/* <Route path="/adminnotify" element={<AdminVenue />} /> */}
+          <Route path="/adminservice" element={<AdminService />} />
+          <Route path="/adminpayments" element={<AdminPayment />} />
         </Routes>
       </BrowserRouter>
     </>

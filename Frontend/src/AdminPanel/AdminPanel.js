@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../Assets/css/admin.css";
 import DashboardImg from "../Assets/images/AdminPanel/dashboard.png";
 import ServiceImg from "../Assets/images/AdminPanel/service.png";
-import NotiImg from "../Assets/images/AdminPanel/notification.png";
 import MsgImg from "../Assets/images/AdminPanel/messages.png";
 import PaymentImg from "../Assets/images/AdminPanel/payment.png";
 import ViewListImg from "../Assets/images/AdminPanel/view-list.png";
@@ -13,10 +12,12 @@ const AdminPanel = () => {
   const [bookingData, setBookingData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [bookinghalldata, setBookingHallData]= useState([])
+  const [venues, setVenues]= useState([])
 
   useEffect(() => {
     fetchBookingData();
     fetchBookingDatavenues();
+    venuesList();
   }, []);
 
   const fetchBookingData = async () => {
@@ -33,6 +34,20 @@ const AdminPanel = () => {
     }
   };
 
+  const venuesList = async () => {
+    try {
+      const response = await fetch("http://localhost:8081/all-vendor-venues");
+      const data = await response.json();
+      setVenues(data); // Use data instead of response.data
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching booking data:", error);
+      setLoading(false);
+    }
+  };
+
+ 
+
   const fetchBookingDatavenues = async () => {
     try {
       const response = await fetch("http://localhost:8081/checkoutdata");
@@ -46,6 +61,11 @@ const AdminPanel = () => {
     }
   };
   console.log("hall data",bookinghalldata)
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
   return (
     <>
       <div>
@@ -74,13 +94,13 @@ const AdminPanel = () => {
                     Services
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/adminnotify">
                     <img src={NotiImg} />
                     Notifications
                   </Link>
                   
-                </li>
+                </li> */}
                 <li>
                   <Link to="/adminmessage">
                     <img src={MsgImg} />
@@ -112,7 +132,7 @@ const AdminPanel = () => {
 
               <div className="venue-card">
                 <h3>TOTAL VENUES</h3>
-                <h1>72</h1>
+                <h1>{venues.length}</h1>
                 <div>
                   <p>View Details</p>
                 </div>
@@ -168,7 +188,7 @@ const AdminPanel = () => {
                     <tbody>
                       {bookingData.map((booking) => (
                         <tr key={booking.id}>
-                          <td>{booking.date}</td>
+                          <td>{formatDate(booking.date)}</td>
                           <td>{booking.name}</td>
                           <td>{booking.selectedServices}</td>
                           <td>{booking.selectedPackage}</td>
@@ -204,7 +224,7 @@ const AdminPanel = () => {
                     <tbody>
                       {bookinghalldata.map((booking) => (
                         <tr key={booking.id}>
-                          <td>{booking.date}</td>
+                          <td>{formatDate(booking.date)}</td>
                           <td>{booking.time}</td>
                           <td>{booking.name}</td>
                           <td>{booking.hallName}</td>

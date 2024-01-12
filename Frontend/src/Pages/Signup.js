@@ -45,7 +45,7 @@ const Signup = () => {
           console.log(res.data);
 
           setTimeout(() => {
-            navigate("/");
+            navigate("/login");
           }, 1000);
           toast.success("Signup Successfully!!");
         })

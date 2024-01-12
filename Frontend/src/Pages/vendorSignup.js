@@ -2,8 +2,6 @@ import { React, useState } from "react";
 import "../Assets/css/form.css";
 import logo from "../Assets/images/The-Wedding-Spot1.png";
 import sidePanel from "../Assets/images/side-panel-img.png";
-import sides from "../Assets/images/NicePng_rope-png_45489 (1).png";
-import down from "../Assets/images/NicePng_rope-png_45489.png";
 import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/SignupVendorValidation";
 import { toast, ToastContainer } from "react-toastify";
@@ -59,7 +57,13 @@ const Signup = () => {
           // alert("Registration Successful");
           toast.success("Signup Successfully!!");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.response && err.response.status === 400) {
+            toast.error("Email already exists. Please use a different email.");
+          } else {
+            console.log(err);
+          }
+        });
     }
   };
 
