@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
+
 const ServicesCheckout = () => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState("silver");
@@ -18,7 +19,6 @@ const ServicesCheckout = () => {
   const [phone, setPhone] = useState("");
   const [servicePrices, setServicePrices] = useState({});
 
-
   useEffect(() => {
     axios
       .get("http://localhost:8081/services-prices")
@@ -30,21 +30,23 @@ const ServicesCheckout = () => {
         console.error("Error fetching service prices:", error);
       });
   }, []);
-  
 
-  const handleServiceChange = (service) => {
-    const isSelected = selectedServices.includes(service);
+  const handleServiceChange = (service, selectedPackage) => {
+    const isSelected = selectedServices.some(
+      (selected) => selected.service === service
+    );
+
     const updatedServices = isSelected
-      ? selectedServices.filter((selected) => selected !== service)
-      : [...selectedServices, service];
-  
+      ? selectedServices.filter((selected) => selected.service !== service)
+      : [...selectedServices, { service, package: selectedPackage }];
+
     setSelectedServices(updatedServices);
-    updateTotalPrice(updatedServices, selectedPackage);
+    updateTotalPrice(updatedServices);
   };
 
   const handlePackageChange = (packageType) => {
     setSelectedPackage(packageType);
-    updateTotalPrice(selectedServices, packageType);
+    updateTotalPrice(selectedServices);
   };
 
   const handleRemoveService = (service) => {
@@ -92,31 +94,82 @@ const ServicesCheckout = () => {
   //   return phoneRegex.test(phone);
   // };
 
-  const updateTotalPrice = (services, packageType) => {
+  // const updateTotalPrice = (services) => {
+  //   let totalPrice = 0;
+
+  //   services.forEach(({ service, package: selectedPackage }) => {
+  //     if (servicePrices[service] && servicePrices[service][selectedPackage]) {
+  //       totalPrice += servicePrices[service][selectedPackage];
+  //     }
+  //   });
+
+  //   setTotalPrice(totalPrice);
+  // };
+
+  const updateTotalPrice = (services) => {
     let totalPrice = 0;
   
-    services.forEach((service) => {
-      if (servicePrices[service] && servicePrices[service][packageType]) {
-        totalPrice += servicePrices[service][packageType];
+    services.forEach(({ service, package: selectedPackage }) => {
+      if (servicePrices[service] && servicePrices[service][selectedPackage]) {
+        totalPrice += servicePrices[service][selectedPackage];
       }
     });
   
     setTotalPrice(totalPrice);
   };
+  
+// if (!validatePhone(phone)) {
+    //   toast.error("Invalid phone number format");
+    //   isValid = false;
+    // }
+  // const handleSubmit = async () => {
+  //   let isValid = true;
+
+  //   if (!validateEmail(email)) {
+  //     toast.error("Invalid email format");
+  //     isValid = false;
+  //   }
+
+    
+
+  //   if (isValid) {
+  //     try {
+  //       const response = await axios.post("http://localhost:8081/onlyservice", {
+  //         date: selectedDate,
+  //         time: selectedTime,
+  //         selectedServices: selectedServices,
+  //         selectedPackage: selectedPackage,
+  //         totalPrice: totalPrice,
+  //         address: address,
+  //         name: name,
+  //         email: email,
+  //         phone: phone,
+  //       });
+
+  //       const data = response.data;
+
+  //       console.log("Session URL:", data.url);
+
+  //       if (data.url) {
+  //         window.location = data.url;
+  //       } else {
+  //         console.error("Session URL is undefined.");
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //       toast.error("An error occurred while submitting the form");
+  //     }
+  //   }
+  // };
 
   const handleSubmit = async () => {
     let isValid = true;
-
+  
     if (!validateEmail(email)) {
       toast.error("Invalid email format");
       isValid = false;
     }
-
-    // if (!validatePhone(phone)) {
-    //   toast.error("Invalid phone number format");
-    //   isValid = false;
-    // }
-
+  
     if (isValid) {
       try {
         const response = await axios.post("http://localhost:8081/onlyservice", {
@@ -130,11 +183,11 @@ const ServicesCheckout = () => {
           email: email,
           phone: phone,
         });
-
+  
         const data = response.data;
-
+  
         console.log("Session URL:", data.url);
-
+  
         if (data.url) {
           window.location = data.url;
         } else {
@@ -146,6 +199,7 @@ const ServicesCheckout = () => {
       }
     }
   };
+  
 
   return (
     <div>
@@ -158,8 +212,10 @@ const ServicesCheckout = () => {
           <br />
           <select
             multiple
-            value={selectedServices}
-            onChange={(e) => handleServiceChange(e.target.value)}
+            value={selectedServices.map((service) => service.service)}
+            onChange={(e) =>
+              handleServiceChange(e.target.value, selectedPackage)
+            }
             className="service-drop-down"
           >
             <option value="photography">Photography</option>
@@ -175,11 +231,11 @@ const ServicesCheckout = () => {
           >
             {selectedServices.map((service) => (
               <li
-                key={service}
+                key={service.service} // Assuming 'service' has a unique identifier like 'id'
                 className="mt-2 service-list"
                 style={{ width: "100%" }}
               >
-                {service}{" "}
+                {service.service}{" "}
                 <button
                   className="btn-danger"
                   onClick={() => handleRemoveService(service)}

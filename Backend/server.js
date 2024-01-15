@@ -2,7 +2,8 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
 require("dotenv").config();
-const { prices } = require("./constant");
+const { getPrices, setPrices } = require("./constant");
+
 
 const app = express();
 app.use(cors());
@@ -833,6 +834,75 @@ app.post("/checkout", async (req, res) => {
 
 
 
+// app.post("/onlyservice", async (req, res) => {
+//   try {
+//     const {
+//       date,
+//       time,
+//       selectedServices,
+//       selectedPackage,
+//       totalPrice,
+//       address,
+//       name,
+//       email,
+//       phone,
+//     } = req.body;
+
+//     const servicesDescription = selectedServices.join(", ");
+
+//     const onlyserviceInsertSql =
+//       "INSERT INTO onlyservice_orders (date, time, selectedServices, selectedPackage, totalPrice, address, name, email, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//     const onlyserviceInsertValues = [
+//       date,
+//       time,
+//       servicesDescription,
+//       selectedPackage,
+//       totalPrice,
+//       address,
+//       name,
+//       email,
+//       phone,
+//     ];
+//     await db.query(onlyserviceInsertSql, onlyserviceInsertValues);
+
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: selectedServices.map((service) => ({
+//         price_data: {
+//           currency: "pkr",
+//           product_data: {
+//             name: service,
+//             description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
+//           },
+//           unit_amount: prices[service][selectedPackage] * 100,
+//         },
+//         quantity: 1,
+//       })),
+//       success_url: "http://localhost:3000/success",
+//       cancel_url: "http://localhost:3000/cancel",
+//       metadata: {
+//         date,
+//         time,
+//         selectedServices: servicesDescription, // Use the string here
+//         totalPrice,
+//         address,
+//         name,
+//         email,
+//         phone,
+//       },
+//     });
+
+//     console.log("Received data:", req.body);
+//     console.log("Session URL:", session.url);
+
+//     res.json({ url: session.url });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
 app.post("/onlyservice", async (req, res) => {
   try {
     const {
@@ -847,24 +917,9 @@ app.post("/onlyservice", async (req, res) => {
       phone,
     } = req.body;
 
-    // Convert selectedServices array to a comma-separated string
-    const servicesDescription = selectedServices.join(", ");
+    const frontendPrices = req.app.get('servicePrices');
 
-    // Insert data into the onlyservice_orders table
-    const onlyserviceInsertSql =
-      "INSERT INTO onlyservice_orders (date, time, selectedServices, selectedPackage, totalPrice, address, name, email, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const onlyserviceInsertValues = [
-      date,
-      time,
-      servicesDescription,
-      selectedPackage,
-      totalPrice,
-      address,
-      name,
-      email,
-      phone,
-    ];
-    await db.query(onlyserviceInsertSql, onlyserviceInsertValues);
+    const servicesDescription = selectedServices.map((service) => service.service).join(", ");
 
     // Create the Stripe session
     const session = await stripe.checkout.sessions.create({
@@ -874,10 +929,10 @@ app.post("/onlyservice", async (req, res) => {
         price_data: {
           currency: "pkr",
           product_data: {
-            name: service,
+            name: service.service,
             description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
           },
-          unit_amount: prices[service][selectedPackage] * 100,
+          unit_amount: frontendPrices[service.service][selectedPackage] * 100,
         },
         quantity: 1,
       })),
@@ -886,7 +941,7 @@ app.post("/onlyservice", async (req, res) => {
       metadata: {
         date,
         time,
-        selectedServices: servicesDescription, // Use the string here
+        selectedServices: servicesDescription,
         totalPrice,
         address,
         name,
@@ -904,6 +959,11 @@ app.post("/onlyservice", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+
+
+
 
 app.get("/serviceorders", (req, res) => {
   const sql = "SELECT * FROM onlyservice_orders";
