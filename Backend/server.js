@@ -168,7 +168,7 @@ app.post("/vendorform", (req, res) => {
           console.error("Error inserting requirements into the database:", err);
           return res
             .status(500)
-            .json({ error: "Error inserting requirements into the database" });
+            .json({ error: "Error inserting requirements into the database" }); 
         }
       });
     }
@@ -917,6 +917,30 @@ app.get("/serviceorders", (req, res) => {
     }
   });
 });
+
+app.get("/services-prices", (req, res) => {
+  const query = "SELECT * FROM prices_configuration";
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      const prices = {};
+
+      results.forEach((row) => {
+        if (!prices[row.service]) {
+          prices[row.service] = {};
+        }
+
+        prices[row.service][row.package] = row.price;
+      });
+
+      res.json(prices);
+    }
+  });
+});
+
 app.get("/checkoutdata", (req, res) => {
   const sql = "SELECT * FROM checkout_orders";
 
@@ -1043,6 +1067,8 @@ app.get("/all-vendor-venues", (req, res) => {
       });
   });
 });
+
+
 
 
 app.listen(8081, () => {

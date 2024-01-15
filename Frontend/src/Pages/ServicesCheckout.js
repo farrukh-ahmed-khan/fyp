@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Assets/css/checkout.css";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
@@ -16,31 +16,28 @@ const ServicesCheckout = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [servicePrices, setServicePrices] = useState({});
 
-  const prices = {
-    photography: {
-      silver: 3000,
-      gold: 5000,
-      platinum: 7000,
-    },
-    makeup: {
-      silver: 4000,
-      gold: 6000,
-      platinum: 8000,
-    },
-    decoration: {
-      silver: 2000,
-      gold: 3000,
-      platinum: 4000,
-    },
-  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/services-prices")
+      .then((response) => {
+        console.log("Response Data:", response.data);
+        setServicePrices(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching service prices:", error);
+      });
+  }, []);
+  
 
   const handleServiceChange = (service) => {
     const isSelected = selectedServices.includes(service);
     const updatedServices = isSelected
       ? selectedServices.filter((selected) => selected !== service)
       : [...selectedServices, service];
-
+  
     setSelectedServices(updatedServices);
     updateTotalPrice(updatedServices, selectedPackage);
   };
@@ -82,7 +79,6 @@ const ServicesCheckout = () => {
 
   const handlePhoneChange = (e) => {
     const phoneValue = e.target.value;
-    // validatePhone(phoneValue);
     setPhone(phoneValue);
   };
 
@@ -97,10 +93,14 @@ const ServicesCheckout = () => {
   // };
 
   const updateTotalPrice = (services, packageType) => {
-    const totalPrice = services.reduce(
-      (sum, service) => sum + prices[service][packageType],
-      0
-    );
+    let totalPrice = 0;
+  
+    services.forEach((service) => {
+      if (servicePrices[service] && servicePrices[service][packageType]) {
+        totalPrice += servicePrices[service][packageType];
+      }
+    });
+  
     setTotalPrice(totalPrice);
   };
 
@@ -147,7 +147,6 @@ const ServicesCheckout = () => {
     }
   };
 
-
   return (
     <div>
       <Navbr />
@@ -158,7 +157,7 @@ const ServicesCheckout = () => {
           <label>Select Services </label>
           <br />
           <select
-            //multiple
+            multiple
             value={selectedServices}
             onChange={(e) => handleServiceChange(e.target.value)}
             className="service-drop-down"
