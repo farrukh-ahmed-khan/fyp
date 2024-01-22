@@ -5,7 +5,7 @@ import Footer from "../Components/CommonComponent/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+import { loadStripe } from '@stripe/stripe-js';
 
 const ServicesCheckout = () => {
   const [selectedServices, setSelectedServices] = useState([]);
@@ -89,78 +89,17 @@ const ServicesCheckout = () => {
     return emailRegex.test(email);
   };
 
-  // const validatePhone = (phone) => {
-  //   const phoneRegex = /^\d{10}$/; // Assuming a 10-digit phone number
-  //   return phoneRegex.test(phone);
-  // };
-
-  // const updateTotalPrice = (services) => {
-  //   let totalPrice = 0;
-
-  //   services.forEach(({ service, package: selectedPackage }) => {
-  //     if (servicePrices[service] && servicePrices[service][selectedPackage]) {
-  //       totalPrice += servicePrices[service][selectedPackage];
-  //     }
-  //   });
-
-  //   setTotalPrice(totalPrice);
-  // };
-
   const updateTotalPrice = (services) => {
     let totalPrice = 0;
-  
+
     services.forEach(({ service, package: selectedPackage }) => {
       if (servicePrices[service] && servicePrices[service][selectedPackage]) {
         totalPrice += servicePrices[service][selectedPackage];
       }
     });
-  
+
     setTotalPrice(totalPrice);
   };
-  
-// if (!validatePhone(phone)) {
-    //   toast.error("Invalid phone number format");
-    //   isValid = false;
-    // }
-  // const handleSubmit = async () => {
-  //   let isValid = true;
-
-  //   if (!validateEmail(email)) {
-  //     toast.error("Invalid email format");
-  //     isValid = false;
-  //   }
-
-    
-
-  //   if (isValid) {
-  //     try {
-  //       const response = await axios.post("http://localhost:8081/onlyservice", {
-  //         date: selectedDate,
-  //         time: selectedTime,
-  //         selectedServices: selectedServices,
-  //         selectedPackage: selectedPackage,
-  //         totalPrice: totalPrice,
-  //         address: address,
-  //         name: name,
-  //         email: email,
-  //         phone: phone,
-  //       });
-
-  //       const data = response.data;
-
-  //       console.log("Session URL:", data.url);
-
-  //       if (data.url) {
-  //         window.location = data.url;
-  //       } else {
-  //         console.error("Session URL is undefined.");
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //       toast.error("An error occurred while submitting the form");
-  //     }
-  //   }
-  // };
 
   const handleSubmit = async () => {
     let isValid = true;
@@ -184,21 +123,17 @@ const ServicesCheckout = () => {
           phone: phone,
         });
   
-        const data = response.data;
-  
-        console.log("Session URL:", data.url);
-  
-        if (data.url) {
-          window.location = data.url;
-        } else {
-          console.error("Session URL is undefined.");
-        }
+        const sessionId = response.data.url; 
+
+
+        window.location.href = sessionId; 
       } catch (err) {
         console.error(err);
-        toast.error("An error occurred while submitting the form");
+        toast.error("An error occurred while processing the payment");
       }
     }
   };
+  
   
 
   return (
