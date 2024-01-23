@@ -4,7 +4,6 @@ const cors = require("cors");
 require("dotenv").config();
 // const { getPrices, setPrices } = require("./constant");
 
-
 const app = express();
 app.use(cors());
 
@@ -18,12 +17,18 @@ const db = mysql.createConnection({
 });
 
 app.post("/weddingspot", (req, res) => {
-  const insertSql = "INSERT INTO users (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)";
-  const values = [req.body.fname, req.body.lname, req.body.email, req.body.password];
+  const insertSql =
+    "INSERT INTO users (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)";
+  const values = [
+    req.body.fname,
+    req.body.lname,
+    req.body.email,
+    req.body.password,
+  ];
 
   db.query(insertSql, values, (err, data) => {
     if (err) {
-      if (err.code === 'ER_DUP_ENTRY') {
+      if (err.code === "ER_DUP_ENTRY") {
         return res.status(400).json({ error: "Email already exists" });
       } else {
         return res.status(500).json({ error: "Internal Server Error" });
@@ -73,12 +78,18 @@ app.post("/login", (req, res) => {
 // vendor-form api
 
 app.post("/vendors", (req, res) => {
-  const insertSql = "INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)";
-  const values = [req.body.fname, req.body.lname, req.body.email, req.body.password];
+  const insertSql =
+    "INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)";
+  const values = [
+    req.body.fname,
+    req.body.lname,
+    req.body.email,
+    req.body.password,
+  ];
 
   db.query(insertSql, values, (err, data) => {
     if (err) {
-      if (err.code === 'ER_DUP_ENTRY') {
+      if (err.code === "ER_DUP_ENTRY") {
         return res.status(400).json({ error: "Email already exists" });
       } else {
         return res.status(500).json({ error: "Internal Server Error" });
@@ -169,7 +180,7 @@ app.post("/vendorform", (req, res) => {
           console.error("Error inserting requirements into the database:", err);
           return res
             .status(500)
-            .json({ error: "Error inserting requirements into the database" }); 
+            .json({ error: "Error inserting requirements into the database" });
         }
       });
     }
@@ -287,7 +298,6 @@ app.delete("/delete-venue/:id", (req, res) => {
     res.sendStatus(200);
   });
 });
-
 
 app.put("/edit-venue/:id", (req, res) => {
   const venueId = parseInt(req.params.id, 10);
@@ -465,21 +475,39 @@ app.get("/getvendorforms", (req, res) => {
   });
 });
 
-
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
-
 
 app.post("/checkout", async (req, res) => {
   try {
-    const { date, time, hallName, items, package, halladvance,finalPrice,name,email,phone  } = req.body;
+    const {
+      date,
+      time,
+      hallName,
+      items,
+      package,
+      halladvance,
+      finalPrice,
+      name,
+      email,
+      phone,
+    } = req.body;
 
     // Insert data into the checkout_orders table
     const checkoutInsertSql =
       "INSERT INTO checkout_orders (date, time, hallName, package, halladvance,finalPrice,name, email,phone) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
-    const checkoutInsertValues = [date, time, hallName, package, halladvance,finalPrice,name, email,phone];
+    const checkoutInsertValues = [
+      date,
+      time,
+      hallName,
+      package,
+      halladvance,
+      finalPrice,
+      name,
+      email,
+      phone,
+    ];
     const result = await db.query(checkoutInsertSql, checkoutInsertValues);
-    console.log(result)
+    console.log(result);
     const orderId = result.id;
 
     const selectedServicesInsertSql =
@@ -532,9 +560,6 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-
-
-
 // Example middleware to set service prices from the database
 app.use((req, res, next) => {
   const query = "SELECT * FROM prices_configuration";
@@ -554,10 +579,10 @@ app.use((req, res, next) => {
         prices[row.service][row.package] = row.price;
       });
 
-      console.log('Setting servicePrices from the database:', prices);
+      console.log("Setting servicePrices from the database:", prices);
 
       // Set the servicePrices in the app's local variables
-      req.app.set('servicePrices', prices);
+      req.app.set("servicePrices", prices);
 
       next(); // Move to the next middleware or route handler
     }
@@ -578,12 +603,13 @@ app.post("/onlyservice", async (req, res) => {
       phone,
     } = req.body;
 
-    const frontendPrices = req.app.get('servicePrices');
-    console.log('Frontend Prices:', frontendPrices);
+    const frontendPrices = req.app.get("servicePrices");
+    console.log("Frontend Prices:", frontendPrices);
 
-    const servicesDescription = selectedServices.map((service) => service.service).join(", ");
+    const servicesDescription = selectedServices
+      .map((service) => service.service)
+      .join(", ");
 
-    
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -616,12 +642,30 @@ app.post("/onlyservice", async (req, res) => {
     console.log("Session URL:", session.url);
 
     res.json({ url: session.url });
+    const insertQuery = `
+    INSERT INTO only_service_payment 
+    (date, time, services, package, total_price, address, name, email, phone) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+    await db.query(insertQuery, [
+      req.body.date,
+      req.body.time,
+      JSON.stringify(req.body.selectedServices),
+      req.body.selectedPackage,
+      req.body.totalPrice,
+      req.body.address,
+      req.body.name,
+      req.body.email,
+      req.body.phone,
+    ]);
+
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 app.get("/services-prices", (req, res) => {
   const query = "SELECT * FROM prices_configuration";
@@ -658,8 +702,6 @@ app.get("/serviceorders", (req, res) => {
     }
   });
 });
-
-
 
 app.get("/checkoutdata", (req, res) => {
   const sql = "SELECT * FROM checkout_orders";
@@ -788,10 +830,6 @@ app.get("/all-vendor-venues", (req, res) => {
   });
 });
 
-
-
-
 app.listen(8081, () => {
   console.log("Server is running at port 8081");
 });
-
