@@ -169,7 +169,7 @@ const AdminPanel = () => {
               style={{ width: "98%", margin: "auto" }}
             >
               <div className="row">
-                <div className="col-lg-8">
+                <div className="col-lg-12">
                   <table className="table table-striped booking-table">
                     <thead>
                       <tr>
@@ -180,19 +180,20 @@ const AdminPanel = () => {
                       <tr>
                         <th scope="col">Booking Date</th>
                         <th scope="col">Customer</th>
+                        <th scope="col">email</th>
                         <th scope="col">Selected Service</th>
-                        <th scope="col">Package</th>
                         <th scope="col">Payment</th>
                       </tr>
                     </thead>
                     <tbody>
                       {bookingData.map((booking) => (
+                        // console.log("booking data",booking),
                         <tr key={booking.id}>
                           <td>{formatDate(booking.date)}</td>
                           <td>{booking.name}</td>
-                          <td>{booking.selectedServices}</td>
-                          <td>{booking.selectedPackage}</td>
-                          <td>{booking.totalPrice}</td>
+                          <td>{booking.email}</td>
+                          <td>{booking.services}</td>
+                          <td>{booking.total_price}</td>
 
                           {/* <td>{booking.guest}</td>
                           <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
@@ -209,28 +210,31 @@ const AdminPanel = () => {
                     <thead>
                       <tr>
                         <td colSpan="7" className="B-details">
-                         Service Booking Details
+                         Service Hall Booking Details
                         </td>
                       </tr>
                       <tr>
                         <th scope="col">Booking Date</th>
                         <th scope="col">Booking time</th>
-                        <th scope="col">Customer</th>
+                        <th scope="col">Customer Email</th>
                         <th scope="col">Hall Name</th>
-                        <th scope="col">Capacity</th>
+                        <th scope="col">Hall Advance</th>
+                        <th scope="col">Selected services</th>
                         <th scope="col">Payment</th>
                       </tr>
                     </thead>
                     <tbody>
                       {bookinghalldata.map((booking) => (
+                         console.log("booking data",booking),
                         <tr key={booking.id}>
                           <td>{formatDate(booking.date)}</td>
                           <td>{booking.time}</td>
                           <td>{booking.name}</td>
                           <td>{booking.hallName}</td>
                           <td>{booking.halladvance}</td>
+                          <td>{booking.services}</td>
                           
-                          <td>{booking.finalPrice}</td>
+                          <td>{booking.total_price}</td>
 
                           {/* <td>{booking.guest}</td>
                           <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
@@ -244,7 +248,7 @@ const AdminPanel = () => {
                 </div>
 
                 {/* Upcoming events section */}
-                <div className="col-lg-4">
+                {/* <div className="col-lg-4">
                   <div className="upcoming-events">
                     <div className="upcoming-event-card">
                       <h4>UPCOMING EVENTS</h4>
@@ -268,7 +272,7 @@ const AdminPanel = () => {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

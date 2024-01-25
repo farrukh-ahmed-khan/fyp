@@ -477,90 +477,121 @@ app.get("/getvendorforms", (req, res) => {
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-app.post("/checkout", async (req, res) => {
-  try {
-    const {
-      date,
-      time,
-      hallName,
-      items,
-      package,
-      halladvance,
-      finalPrice,
-      name,
-      email,
-      phone,
-    } = req.body;
+// app.post("/checkout", async (req, res) => {
+//   try {
+//     const {
+//       date,
+//       time,
+//       hallName,
+//       items,
+//       package,
+//       halladvance,
+//       finalPrice,
+//       name,
+//       email,
+//       phone,
+//     } = req.body;
 
-    // Insert data into the checkout_orders table
-    const checkoutInsertSql =
-      "INSERT INTO checkout_orders (date, time, hallName, package, halladvance,finalPrice,name, email,phone) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
-    const checkoutInsertValues = [
-      date,
-      time,
-      hallName,
-      package,
-      halladvance,
-      finalPrice,
-      name,
-      email,
-      phone,
-    ];
-    const result = await db.query(checkoutInsertSql, checkoutInsertValues);
-    console.log(result);
-    const orderId = result.id;
+//     // Insert data into the checkout_orders table
+//     const checkoutInsertSql =
+//       "INSERT INTO checkout_orders (date, time, hallName, package, halladvance,finalPrice,name, email,phone) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
+//     const checkoutInsertValues = [
+//       date,
+//       time,
+//       hallName,
+//       package,
+//       halladvance,
+//       finalPrice,
+//       name,
+//       email,
+//       phone,
+//     ];
+//     const result = await db.query(checkoutInsertSql, checkoutInsertValues);
+//     console.log(result);
+//     const orderId = result.id;
 
-    const selectedServicesInsertSql =
-      "INSERT INTO selected_services (order_id, service_id, service_name, quantity, price) VALUES (?, ?, ?, ?, ?)";
-    const selectedServicesInsertValues = items.flatMap((item) => [
-      orderId,
-      item.id, // Assuming each service has a unique ID
-      item.name,
-      item.quantity,
-      item.price,
-    ]);
+//     const selectedServicesInsertSql =
+//       "INSERT INTO selected_services (order_id, service_id, service_name, quantity, price) VALUES (?, ?, ?, ?, ?)";
+//     const selectedServicesInsertValues = items.flatMap((item) => [
+//       orderId,
+//       item.id, // Assuming each service has a unique ID
+//       item.name,
+//       item.quantity,
+//       item.price,
+//     ]);
 
-    await db.query(selectedServicesInsertSql, selectedServicesInsertValues);
+//     await db.query(selectedServicesInsertSql, selectedServicesInsertValues);
 
-    // Create the Stripe session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: items.map((item) => ({
-        price_data: {
-          currency: "pkr",
-          product_data: {
-            name: item.name,
-            description: `Date: ${date}, Time: ${time}, Hall: ${hallName}`,
-          },
-          unit_amount: item.price * 100,
-        },
-        quantity: item.quantity,
-      })),
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
-      metadata: {
-        date,
-        time,
-        hallName,
-        package,
-        halladvance,
-        orderId,
-      },
-    });
+//     // Create the Stripe session
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: items.map((item) => ({
+//         price_data: {
+//           currency: "pkr",
+//           product_data: {
+//             name: item.name,
+//             description: `Date: ${date}, Time: ${time}, Hall: ${hallName}`,
+//           },
+//           unit_amount: item.price * 100,
+//         },
+//         quantity: item.quantity,
+//       })),
+//       success_url: "http://localhost:3000/success",
+//       cancel_url: "http://localhost:3000/cancel",
+//       metadata: {
+//         date,
+//         time,
+//         hallName,
+//         package,
+//         halladvance,
+//         orderId,
+//       },
+//     });
 
-    console.log("Received data:", req.body);
-    console.log("Session URL:", session.url);
+//     console.log("Received data:", req.body);
+//     console.log("Session URL:", session.url);
 
-    // Send orderId along with the URL in the response
-    res.json({ url: session.url, orderId });
-  } catch (error) {
-    console.log("Error during checkout:", error);
-    res.status(500).json({ error: error.message });
-  }
-});
+//     // Send orderId along with the URL in the response
+//     res.json({ url: session.url, orderId });
+//   } catch (error) {
+//     console.log("Error during checkout:", error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+
 
 // Example middleware to set service prices from the database
+app.put('/update-prices', async (req, res) => {
+  try {
+    const { service, packageType, price } = req.body;
+
+    // Validate input data
+    if (!service || !packageType || !price) {
+      return res.status(400).json({ error: 'Invalid data in the request' });
+    }
+
+    // Sanitize input to prevent SQL injection
+    const sanitizedService = mysql.escape(service);
+    const sanitizedPackageType = mysql.escape(packageType);
+    const sanitizedPrice = mysql.escape(price);
+
+    // Update the record in the database based on service and packageType
+    const updateQuery = `
+      UPDATE prices_configuration
+      SET price = ${sanitizedPrice}
+      WHERE service = ${sanitizedService} AND package = ${sanitizedPackageType}
+    `;
+
+    await db.query(updateQuery);
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Error processing request:', error);
+    res.status(500).json({ error: 'Internal Server Error', details: error.message });
+  }
+});
 app.use((req, res, next) => {
   const query = "SELECT * FROM prices_configuration";
 
@@ -588,6 +619,182 @@ app.use((req, res, next) => {
     }
   });
 });
+app.post("/checkout", async (req, res) => {
+  try {
+    const {
+      date,
+      time,
+      hallName,
+      hallId,
+      hallAdvance,
+      selectedServices,
+      selectedPackage,
+      totalPrice,
+      name,
+      email,
+      phone,
+    } = req.body;
+
+    const frontendPrices = req.app.get("servicePrices");
+    console.log("Frontend Prices:", frontendPrices);
+
+    const servicesDescription = selectedServices
+      .map((service) => service.service)
+      .join(", ");
+
+    const hallAdvanceLineItem = {
+      price_data: {
+        currency: "pkr",
+        product_data: {
+          name: "Hall Advance",
+          description: `Advance payment for the hall`,
+        },
+        unit_amount: hallAdvance * 100,
+      },
+      quantity: 1,
+    };
+
+    const serviceLineItems = selectedServices.map((service) => ({
+      price_data: {
+        currency: "pkr",
+        product_data: {
+          name: service.service,
+          description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
+        },
+        unit_amount: frontendPrices[service.service][selectedPackage] * 100,
+      },
+      quantity: 1,
+    }));
+
+    const line_items = [hallAdvanceLineItem, ...serviceLineItems];
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items,
+      success_url: "http://localhost:3000/success",
+      cancel_url: "http://localhost:3000/cancel",
+      metadata: {
+        date,
+        time,
+        selectedServices: servicesDescription,
+        totalPrice,
+        name,
+        email,
+        phone,
+        hallName,
+        hallId,
+        hallAdvance,
+      },
+    });
+
+    console.log("Received data:", req.body);
+    console.log("Session URL:", session.url);
+
+    const insertQuery = `
+      INSERT INTO successful_payments 
+      (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    await db.query(insertQuery, [
+      date,
+      time,
+      JSON.stringify(selectedServices),
+      selectedPackage,
+      totalPrice,
+      name,
+      email,
+      phone,
+      hallName,
+      hallId,
+      hallAdvance,
+    ]);
+
+    res.status(200).json({ url: session.url, success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+// app.post("/onlyservice", async (req, res) => {
+//   try {
+//     const {
+//       date,
+//       time,
+//       selectedServices,
+//       selectedPackage,
+//       totalPrice,
+//       address,
+//       name,
+//       email,
+//       phone,
+//     } = req.body;
+
+//     const frontendPrices = req.app.get("servicePrices");
+//     console.log("Frontend Prices:", frontendPrices);
+
+//     const servicesDescription = selectedServices
+//       .map((service) => service.service)
+//       .join(", ");
+
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: selectedServices.map((service) => ({
+//         price_data: {
+//           currency: "pkr",
+//           product_data: {
+//             name: service.service,
+//             description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
+//           },
+//           unit_amount: frontendPrices[service.service][selectedPackage] * 100, // Amount in cents
+//         },
+//         quantity: 1,
+//       })),
+//       success_url: "http://localhost:3000/success",
+//       cancel_url: "http://localhost:3000/cancel",
+//       metadata: {
+//         date,
+//         time,
+//         selectedServices: servicesDescription,
+//         totalPrice,
+//         address,
+//         name,
+//         email,
+//         phone,
+//       },
+//     });
+
+//     console.log("Received data:", req.body);
+//     console.log("Session URL:", session.url);
+
+//     res.json({ url: session.url });
+//     const insertQuery = `
+//     INSERT INTO only_service_payment 
+//     (date, time, services, package, total_price, address, name, email, phone) 
+//     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+//   `;
+
+//     await db.query(insertQuery, [
+//       req.body.date,
+//       req.body.time,
+//       JSON.stringify(req.body.selectedServices),
+//       req.body.selectedPackage,
+//       req.body.totalPrice,
+//       req.body.address,
+//       req.body.name,
+//       req.body.email,
+//       req.body.phone,
+//     ]);
+
+//     res.status(200).json({ success: true });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 
 app.post("/onlyservice", async (req, res) => {
   try {
@@ -641,26 +848,25 @@ app.post("/onlyservice", async (req, res) => {
     console.log("Received data:", req.body);
     console.log("Session URL:", session.url);
 
-    res.json({ url: session.url });
     const insertQuery = `
-    INSERT INTO only_service_payment 
-    (date, time, services, package, total_price, address, name, email, phone) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
+      INSERT INTO only_service_payment 
+      (date, time, services, package, total_price, address, name, email, phone) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
     await db.query(insertQuery, [
-      req.body.date,
-      req.body.time,
-      JSON.stringify(req.body.selectedServices),
-      req.body.selectedPackage,
-      req.body.totalPrice,
-      req.body.address,
-      req.body.name,
-      req.body.email,
-      req.body.phone,
+      date,
+      time,
+      JSON.stringify(selectedServices),
+      selectedPackage,
+      totalPrice,
+      address,
+      name,
+      email,
+      phone,
     ]);
 
-    res.status(200).json({ success: true });
+    res.status(200).json({ url: session.url, success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -691,7 +897,7 @@ app.get("/services-prices", (req, res) => {
 });
 
 app.get("/serviceorders", (req, res) => {
-  const sql = "SELECT * FROM onlyservice_orders";
+  const sql = "SELECT * FROM only_service_payment";
 
   db.query(sql, (err, data) => {
     if (err) {
@@ -703,8 +909,13 @@ app.get("/serviceorders", (req, res) => {
   });
 });
 
+
+
+
+
+
 app.get("/checkoutdata", (req, res) => {
-  const sql = "SELECT * FROM checkout_orders";
+  const sql = "SELECT * FROM successful_payments";
 
   db.query(sql, (err, data) => {
     if (err) {

@@ -59,28 +59,28 @@ const AdminMessages = () => {
                     Services
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="adminnotify">
                     <img src={NotiImg} />
                     Notifications
                   </Link>
                   
-                </li>
+                </li> */}
                 <li>
-                  <Link to="adminmessages">
+                  <Link to="/adminmessage">
                     <img src={MsgImg} />
                     Messages
                   </Link>
                   
                 </li>
                 <li>
-                  <Link to="adminpayments">
+                  <Link to="/adminpayments">
                     <img src={PaymentImg} />
                     Payments
                   </Link>
                 </li>
                 <li>
-                  <Link to="adminvenuelist">
+                  <Link to="/adminvenuelist">
                     <img src={ViewListImg} />
                     Venue List
                   </Link>

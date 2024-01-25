@@ -13,10 +13,12 @@ const AdminVenue = () => {
   const [bookingData, setBookingData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [bookinghalldata, setBookingHallData]= useState([])
+  const [venues, setVenues]= useState([])
 
   useEffect(() => {
     fetchBookingData();
     fetchBookingDatavenues();
+    venuesList();
   }, []);
 
   const fetchBookingData = async () => {
@@ -32,6 +34,20 @@ const AdminVenue = () => {
       setLoading(false);
     }
   };
+
+  const venuesList = async () => {
+    try {
+      const response = await fetch("http://localhost:8081/all-vendor-venues");
+      const data = await response.json();
+      setVenues(data); // Use data instead of response.data
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching booking data:", error);
+      setLoading(false);
+    }
+  };
+
+ 
 
   const fetchBookingDatavenues = async () => {
     try {
@@ -53,188 +69,214 @@ const AdminVenue = () => {
   };
   return (
     <>
-      <div>
-        <div className="navbar">
-          <div className="logo">
-            <p>
-              The <span>Wedding</span> Spot
-            </p>
+    <div>
+      <div className="navbar">
+        <div className="logo">
+          <p>
+            The <span>Wedding</span> Spot
+          </p>
+        </div>
+      </div>
+
+      <div className="middle-section">
+        {/* Sidebar section (You can uncomment the items you want to include) */}
+        <div className="siderbar">
+          <div>
+            <ul>
+              <li>
+                <Link to="/AdminPanel">
+                  <img src={DashboardImg} /> Dashboard
+          
+                </Link>
+              </li>
+              <li>
+                <Link to="/adminservice">
+                  <img src={ServiceImg} />
+                  Services
+                </Link>
+              </li>
+              {/* <li>
+                <Link to="/adminnotify">
+                  <img src={NotiImg} />
+                  Notifications
+                </Link>
+                
+              </li> */}
+              <li>
+                <Link to="/adminmessage">
+                  <img src={MsgImg} />
+                  Messages
+                </Link>
+                
+              </li>
+              <li>
+                <Link to="/adminpayments">
+                  <img src={PaymentImg} />
+                  Payments
+                </Link>
+              </li>
+              <li>
+                <Link to="/adminvenuelist">
+                  <img src={ViewListImg} />
+                  Venue List
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="middle-section">
-          {/* Sidebar section (You can uncomment the items you want to include) */}
-          <div className="siderbar">
-            <div>
-              <ul>
-                <li>
-                  <Link to="/AdminPanel">
-                    <img src={DashboardImg} /> Dashboard
-            
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/adminservice">
-                    <img src={ServiceImg} />
-                    Services
-                  </Link>
-                </li>
-                {/* <li>
-                  <Link to="/adminnotify">
-                    <img src={NotiImg} />
-                    Notifications
-                  </Link>
-                  
-                </li> */}
-                <li>
-                  <Link to="/adminmessage">
-                    <img src={MsgImg} />
-                    Messages
-                  </Link>
-                  
-                </li>
-                <li>
-                  <Link to="/adminpayments">
-                    <img src={PaymentImg} />
-                    Payments
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/adminvenuelist">
-                    <img src={ViewListImg} />
-                    Venue List
-                  </Link>
-                </li>
-              </ul>
+        {/* Details section */}
+        <div className="details">
+          <div className="cards-section">
+            {/* Venue cards (You can customize this section based on your needs) */}
+            {/* ... (Your existing JSX for venue cards) ... */}
+
+            <div className="venue-card">
+              <h3>TOTAL VENUES</h3>
+              <h1>{venues.length}</h1>
+              <div>
+                <p>View Details</p>
+              </div>
+            </div>
+
+            <div className="venue-card">
+              <h3>BOOKED VENUES</h3>
+              <h1>{bookinghalldata.length}</h1>
+              <div>
+                <p>View Details</p>
+              </div>
+            </div>
+
+            <div className="venue-card">
+              <h3>Service Request</h3>
+              <h1>{bookinghalldata.length}</h1>
+              <div>
+                <p>View Details</p>
+              </div>
+            </div>
+
+            <div className="venue-card">
+              <h3>PAYMENTS</h3>
+              <h1>{bookinghalldata.length+bookingData.length}</h1>
+              <div>
+                <p>View Details</p>
+              </div>
             </div>
           </div>
 
-          {/* Details section */}
-          <div className="details">
-            <div className="cards-section">
-              {/* Venue cards (You can customize this section based on your needs) */}
-              {/* ... (Your existing JSX for venue cards) ... */}
+          {/* Booking details table */}
+          <div
+            className="container mt-5"
+            style={{ width: "98%", margin: "auto" }}
+          >
+            <div className="row">
+              <div className="col-lg-12">
+                <table className="table table-striped booking-table">
+                  <thead>
+                    <tr>
+                      <td colSpan="5" className="B-details">
+                       Venues
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="col">Hall Name</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {venues.map((venue) => (
 
-              <div className="venue-card">
-                <h3>TOTAL VENUES</h3>
-                <h1>72</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
+                      console.log("venue",venues),
+                      <tr key={venue.id}>
+                        <td>{venue.hallName}</td>
+                        <td>{venue.name}</td>
+                        <td>{venue.email}</td>
+                        <td>{venue.phone}</td>
+                        <td>{venue.price}</td>
 
-              <div className="venue-card">
-                <h3>BOOKED VENUES</h3>
-                <h1>{bookinghalldata.length}</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
+                        {/* <td>{booking.guest}</td>
+                        <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
+                          {booking.paymentStatus}
+                        </td> */}
 
-              <div className="venue-card">
-                <h3>Service Request</h3>
-                <h1>{bookinghalldata.length}</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
-
-              <div className="venue-card">
-                <h3>PAYMENTS</h3>
-                <h1>{bookinghalldata.length+bookingData.length}</h1>
-                <div>
-                  <p>View Details</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Booking details table */}
-            <div
-              className="container mt-5"
-              style={{ width: "98%", margin: "auto" }}
-            >
-              <div className="row">
-                <div className="col-lg-8">
-                  <table className="table table-striped booking-table">
-                    <thead>
-                      <tr>
-                        <td colSpan="5" className="B-details">
-                         Service Booking Details
-                        </td>
                       </tr>
-                      <tr>
-                        <th scope="col">Booking Date</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Selected Service</th>
-                        <th scope="col">Package</th>
-                        <th scope="col">Payment</th>
+                    ))}
+                  </tbody>
+                </table>
+
+
+                {/* <table className="table table-striped booking-table">
+                  <thead>
+                    <tr>
+                      <td colSpan="7" className="B-details">
+                       Service Booking Details
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="col">Booking Date</th>
+                      <th scope="col">Booking time</th>
+                      <th scope="col">Customer Email</th>
+                      <th scope="col">Hall Name</th>
+                      <th scope="col">Hall Advance</th>
+                      <th scope="col">Selected services</th>
+                      <th scope="col">Payment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bookinghalldata.map((booking) => (
+                       console.log("booking data",booking),
+                      <tr key={booking.id}>
+                        <td>{formatDate(booking.date)}</td>
+                        <td>{booking.time}</td>
+                        <td>{booking.name}</td>
+                        <td>{booking.hallName}</td>
+                        <td>{booking.halladvance}</td>
+                        <td>{booking.services}</td>
+                        
+                        <td>{booking.total_price}</td>
+
+
                       </tr>
-                    </thead>
-                    <tbody>
-                      {bookingData.map((booking) => (
-                        <tr key={booking.id}>
-                          <td>{formatDate(booking.date)}</td>
-                          <td>{booking.name}</td>
-                          <td>{booking.selectedServices}</td>
-                          <td>{booking.selectedPackage}</td>
-                          <td>{booking.totalPrice}</td>
-
-                          {/* <td>{booking.guest}</td>
-                          <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
-                            {booking.paymentStatus}
-                          </td> */}
-
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-
-
-                  <table className="table table-striped booking-table">
-                    <thead>
-                      <tr>
-                        <td colSpan="7" className="B-details">
-                         Service Booking Details
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="col">Booking Date</th>
-                        <th scope="col">Booking time</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Hall Name</th>
-                        <th scope="col">Capacity</th>
-                        <th scope="col">Payment</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {bookinghalldata.map((booking) => (
-                        <tr key={booking.id}>
-                          <td>{formatDate(booking.date)}</td>
-                          <td>{booking.time}</td>
-                          <td>{booking.name}</td>
-                          <td>{booking.hallName}</td>
-                          <td>{booking.halladvance}</td>
-                          
-                          <td>{booking.finalPrice}</td>
-
-                          {/* <td>{booking.guest}</td>
-                          <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
-                            {booking.paymentStatus}
-                          </td> */}
-
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-              
+                    ))}
+                  </tbody>
+                </table> */}
               </div>
+
+              {/* Upcoming events section */}
+              {/* <div className="col-lg-4">
+                <div className="upcoming-events">
+                  <div className="upcoming-event-card">
+                    <h4>UPCOMING EVENTS</h4>
+                    <ul>
+                      <li>
+                        <img src={user} /> <span>Sarim</span> <br />
+                        <p>Al-Mehfil Banquet</p>
+                      </li>
+                      <li>
+                        <img src={user} /> <span>Farrukh</span>
+                        <p>Al-Mehfil Banquet</p>
+                      </li>
+                      <li>
+                        <img src={user} /> <span>Danish</span>
+                        <p>Al-Mehfil Banquet</p>
+                      </li>
+                      <li>
+                        <img src={user} /> <span>Taimoor</span>
+                        <p>Al-Mehfil Banquet</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
+  </>
   );
 };
 

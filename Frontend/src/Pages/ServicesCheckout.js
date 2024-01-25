@@ -35,13 +35,13 @@ const ServicesCheckout = () => {
     const isSelected = selectedServices.some(
       (selected) => selected.service === service
     );
-
+  
     const updatedServices = isSelected
       ? selectedServices.filter((selected) => selected.service !== service)
       : [...selectedServices, { service, package: selectedPackage }];
-
+  
     setSelectedServices(updatedServices);
-    updateTotalPrice(updatedServices);
+    updateTotalPrice(updatedServices); // Update total price with updated services and the correct package
   };
 
   const handlePackageChange = (packageType) => {

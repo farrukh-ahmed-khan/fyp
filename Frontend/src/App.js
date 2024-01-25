@@ -70,6 +70,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/success" element={<Success />} />
           <Route path="/AdminPanel" element={<AdminPanel />} />
+          <Route path="/adminvenuelist" element={<AdminVenue />} />
           <Route path="/adminmessage" element={<AdminMessages />} />
           {/* <Route path="/adminnotify" element={<AdminVenue />} /> */}
           <Route path="/adminservice" element={<AdminService />} />

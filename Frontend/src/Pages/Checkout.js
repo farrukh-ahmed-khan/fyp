@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 import "../Assets/css/checkout.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 const Checkout = () => {
@@ -97,14 +99,15 @@ const Checkout = () => {
     const isSelected = selectedServices.some(
       (selected) => selected.service === service
     );
-
+  
     const updatedServices = isSelected
       ? selectedServices.filter((selected) => selected.service !== service)
       : [...selectedServices, { service, package: selectedPackage }];
-
+  
     setSelectedServices(updatedServices);
-    updateTotalPrice(updatedServices);
+    updateTotalPrice(updatedServices); // Update total price with updated services and the correct package
   };
+  
 
   const handlePackageChange = (packageType) => {
     setSelectedPackage(packageType);
@@ -127,9 +130,9 @@ const Checkout = () => {
     setSelectedTime(e.target.value);
   };
 
-  const handleAddressChange = (e) => {
-    setAddress(e.target.value);
-  };
+  // const handleAddressChange = (e) => {
+  //   setAddress(e.target.value);
+  // };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -169,6 +172,42 @@ const Checkout = () => {
     console.log(selectedTime);
 
     
+  };
+
+  const handleSubmit = async () => {
+    let isValid = true;
+  
+    if (!validateEmail(email)) {
+      toast.error("Invalid email format");
+      isValid = false;
+    }
+  
+    if (isValid) {
+      try {
+        const response = await axios.post("http://localhost:8081/checkout", {
+          
+          date: selectedDate,
+          time: selectedTime,
+          hallName: hallDetails.hallName,
+          hallId: hallDetails.id,
+          hallAdvance: hallDetails.advanced,
+          selectedServices: selectedServices,
+          selectedPackage: selectedPackage,
+          totalPrice: finalPrice,
+          name: name,
+          email: email,
+          phone: phone,
+        });
+  
+        const sessionId = response.data.url; 
+
+
+        window.location.href = sessionId; 
+      } catch (err) {
+        console.error(err);
+        toast.error("An error occurred while processing the payment");
+      }
+    }
   };
 
   // ... (your other component code)
@@ -350,13 +389,14 @@ const Checkout = () => {
           </div>
           <div className="row">
             <div>
-              <button className="payBtn" onClick={checkout}>
+              <button className="payBtn" onClick={handleSubmit}>
                 Pay Now
               </button>
             </div>
           </div>
         </div>
       </section>
+      <ToastContainer />
       <Footer />
     </>
   );
