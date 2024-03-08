@@ -61,7 +61,7 @@ app.post("/contact", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
+  const sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
 
   db.query(sql, [req.body.email, req.body.password], (err, data) => {
     if (err) {
