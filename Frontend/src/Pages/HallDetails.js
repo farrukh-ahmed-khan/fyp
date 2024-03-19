@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import "../Assets/css/halldetails.css";
 
 import Carosel from "../Components/CommonComponent/Carosel";
@@ -9,11 +9,40 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 function HallDetails() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isFavorite, setIsFavorite] = useState(false);
   const hallDetails = location.state.hallDetails;
   const handleDetailsClick = (hallDetails) => {
     navigate("/checkout", { state: { hallDetails } });
   };
 
+  const handleAddFavorite = () => {
+    // Send a request to the backend to add the venue to favorites
+    // You need to pass userId and venueId in the request body
+    // You can get userId from your authentication system or from the state
+    const userId = getUserIdFromAuthentication(); // Implement this function
+    const venueId = hallDetails.id; // Assuming there is an id property in hallDetails
+    fetch("/addFavorite", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, venueId }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Update state or show a success message to the user
+        setIsFavorite(true);
+      })
+      .catch((error) => {
+        console.error("Error adding favorite:", error);
+        // Handle error or show error message to the user
+      });
+  };
   return (
     <>
       <Navbr />
@@ -21,7 +50,7 @@ function HallDetails() {
         <Carosel />
       </div>
       <div className="container">
-        <div className="heading my-5">
+        <div className="heading " style={{marginTop: "150px",}}>
           <h1>{hallDetails.hallName}</h1>
           <p>
             {hallDetails.city} | {hallDetails.area} | {hallDetails.phone}
@@ -60,7 +89,9 @@ function HallDetails() {
             Book Now
           </button>
 
-          {/* <button className="btn2">Add to Favorite</button> */}
+          <button className="btn2" onClick={handleAddFavorite} disabled={isFavorite}>
+            {isFavorite ? "Added to Favorites" : "Add to Favorites"}
+          </button>
         </div>
 
         <div className="location-section mb-3">

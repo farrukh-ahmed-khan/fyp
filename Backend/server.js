@@ -16,7 +16,7 @@ const db = mysql.createConnection({
   database: "weddingspot",
 });
 
-app.post("/weddingspot", (req, res) => {
+app.post("/weddingspot", (req, res) => { 
   const insertSql =
     "INSERT INTO users (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)";
   const values = [
@@ -74,6 +74,37 @@ app.post("/login", (req, res) => {
     }
   });
 });
+
+app.post("/addFavorite", (req, res) => {
+  const { userId, venueId } = req.body;
+
+  // Check if the favorite already exists
+  const checkFavoriteSql = "SELECT * FROM user_favorites WHERE userId = ? AND venueId = ?";
+  db.query(checkFavoriteSql, [userId, venueId], (err, result) => {
+    if (err) {
+      console.error("Error checking favorite:", err);
+      return res.status(500).json({ error: "Error checking favorite" });
+    }
+
+    if (result.length > 0) {
+      // The favorite already exists, return an error or handle as appropriate
+      return res.status(400).json({ error: "Favorite already exists" });
+    }
+
+    // Insert the favorite into the database
+    const addFavoriteSql = "INSERT INTO user_favorites (userId, venueId) VALUES (?, ?)";
+    db.query(addFavoriteSql, [userId, venueId], (err, result) => {
+      if (err) {
+        console.error("Error adding favorite:", err);
+        return res.status(500).json({ error: "Error adding favorite" });
+      }
+      
+      // Favorite added successfully
+      res.status(200).json({ message: "Favorite added successfully" });
+    });
+  });
+});
+
 
 // vendor-form api
 
