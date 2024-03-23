@@ -150,7 +150,7 @@ const Checkout = () => {
   };
 
   const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+/;
     return emailRegex.test(email);
   };
 
@@ -367,17 +367,17 @@ const Checkout = () => {
                 <div className="service-price">
                   <div>
                     <p>
-                      <b>Total service Price:</b> ${totalPrice}
+                      <b>Total service Price:</b> {totalPrice}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Hall Advance:</b> ${totalAdvance}
+                      <b>Hall Advance:</b> {totalAdvance}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Final Price:</b> ${finalPrice}
+                      <b>Final Price:</b> {finalPrice}
                     </p>
                   </div>
                 </div>

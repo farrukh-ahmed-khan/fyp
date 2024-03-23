@@ -26,6 +26,7 @@ import AdminNotify from "./AdminPanel/AdminNotify";
 import AdminService from "./AdminPanel/AdminService";
 import AdminPayment from "./AdminPanel/AdminPayments";
 import AdminVenue from "./AdminPanel/AdminVenueList";
+import FavoritesPage from "./Pages/Favourite";
 
 function App() {
   const isAuth = localStorage.getItem("user") !== null;
@@ -75,6 +76,9 @@ function App() {
           {/* <Route path="/adminnotify" element={<AdminVenue />} /> */}
           <Route path="/adminservice" element={<AdminService />} />
           <Route path="/adminpayments" element={<AdminPayment />} />
+          <Route path="/fav" element={<FavoritesPage/>}/>
+          <Route path="*" element={<Navigate to="/" />} />
+
         </Routes>
       </BrowserRouter>
     </>

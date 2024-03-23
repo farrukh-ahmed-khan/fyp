@@ -61,19 +61,22 @@ app.post("/contact", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
+  const sql = "SELECT id FROM users WHERE `email` = ? AND `password` = ?";
 
   db.query(sql, [req.body.email, req.body.password], (err, data) => {
     if (err) {
-      res.json("Error");
-    }
-    if (data.length > 0) {
-      return res.json("Login Successful");
+      res.json({ error: "Error occurred during login" });
     } else {
-      return res.json("Invalid Email or Password");
+      if (data.length > 0) {
+        const userId = data[0].id; // Extract user ID from the result
+        return res.json({ message: "Login Successful", userId: userId });
+      } else {
+        return res.json({ error: "Invalid Email or Password" });
+      }
     }
   });
 });
+
 
 app.post("/addFavorite", (req, res) => {
   const { userId, venueId } = req.body;
@@ -104,6 +107,45 @@ app.post("/addFavorite", (req, res) => {
     });
   });
 });
+
+app.get('/favorites/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  // Fetch favorites along with hall information for the provided user ID
+  const sql = `
+    SELECT uf.*, h.* 
+    FROM user_favorites AS uf
+    JOIN vendorform AS h ON uf.venueId = h.id
+    WHERE uf.userId = ?
+  `;
+  db.query(sql, [userId], (err, favorites) => {
+    if (err) {
+      console.error('Error fetching favorites:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    res.json(favorites);
+  });
+});
+
+app.delete('/favorites/:userId/:venueId', (req, res) => {
+  const { userId, venueId } = req.params;
+
+  // Remove the favorite from the database
+  const deleteFavoriteSql = "DELETE FROM user_favorites WHERE userId = ? AND venueId = ?";
+  db.query(deleteFavoriteSql, [userId, venueId], (err, result) => {
+    if (err) {
+      console.error("Error removing favorite:", err);
+      return res.status(500).json({ error: "Error removing favorite" });
+    }
+    
+    // Favorite removed successfully
+    res.status(200).json({ message: "Favorite removed successfully" });
+  });
+});
+
+
+
 
 
 // vendor-form api

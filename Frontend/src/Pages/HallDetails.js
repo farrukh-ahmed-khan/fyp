@@ -1,27 +1,37 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import "../Assets/css/halldetails.css";
 
 import Carosel from "../Components/CommonComponent/Carosel";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from '../AuthContext';
 
 function HallDetails() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { getUserIdFromAuthentication } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
   const hallDetails = location.state.hallDetails;
   const handleDetailsClick = (hallDetails) => {
     navigate("/checkout", { state: { hallDetails } });
   };
-
+  const userId = getUserIdFromAuthentication(); 
+  useEffect(() => {
+    // Check if the venue is in the user's favorites when component mounts
+    checkFavoriteStatus();
+  }, []);
+  const checkFavoriteStatus = () => {
+    // Fetch the user's favorites from localStorage
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    // Check if the current venue is in the favorites list for the logged-in user
+    const isFavorited = favorites.some(venue => venue.userId === userId && venue.id === hallDetails.id);
+    // Update the state accordingly
+    setIsFavorite(isFavorited);
+  };
   const handleAddFavorite = () => {
-    // Send a request to the backend to add the venue to favorites
-    // You need to pass userId and venueId in the request body
-    // You can get userId from your authentication system or from the state
-    const userId = getUserIdFromAuthentication(); // Implement this function
-    const venueId = hallDetails.id; // Assuming there is an id property in hallDetails
-    fetch("/addFavorite", {
+    const venueId = hallDetails.id; 
+    fetch("http://localhost:8081/addFavorite", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,6 +52,20 @@ function HallDetails() {
         console.error("Error adding favorite:", error);
         // Handle error or show error message to the user
       });
+
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const existingFavoriteIndex = favorites.findIndex(venue => venue.userId === userId && venue.id === hallDetails.id);
+    if (existingFavoriteIndex !== -1) {
+      // Remove the venue from favorites
+      favorites.splice(existingFavoriteIndex, 1);
+    } else {
+      // Add the venue to favorites
+      favorites.push({ userId, ...hallDetails });
+    }
+    // Update the favorites in localStorage
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    // Update the state to reflect the change
+    setIsFavorite(!isFavorite);
   };
   return (
     <>
