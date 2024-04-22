@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "../Assets/css/form.css";
 import "../Assets/css/vendorForm.css";
 import img from "../Assets/images/Home_images/vendor-form.png";
@@ -11,18 +11,19 @@ import Footer from "../Components/CommonComponent/Footer";
 
 const HallVendorForm = () => {
   const storedData = localStorage.getItem("vendor");
-  const navigate = useNavigate();
-  const data = storedData ? JSON.parse(storedData) : {};
-  const initialEmail = data.email || "";
 
+  const navigate = useNavigate();
+
+  const initialEmail = storedData.email;
+ 
   const [vendorData, setVendorData] = useState({
     name: "",
     email: initialEmail,
     hallName: "",
     city: "",
     area: "",
+    minPrice: "",
     maxPrice: "",
-    price: "",
     guests: "",
     rating: "",
     phone: "",
@@ -89,8 +90,8 @@ const HallVendorForm = () => {
           hallName: "",
           city: "",
           area: "",
+          minPrice: "",
           maxPrice: "",
-          price: "",
           guests: "",
           rating: "",
           phone: "",
@@ -99,8 +100,8 @@ const HallVendorForm = () => {
         });
         setSelectedServices([]);
         setSelectedRequirements([]);
-        
-        navigate('/vendordashboard');
+
+        navigate("/vendordashboard");
       } else {
         console.error("Error submitting form:", response.statusText);
         toast.error("Error submitting form. Please try again.");
@@ -206,11 +207,11 @@ const HallVendorForm = () => {
               </div>
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="price">Minimum Price</label>
+                  <label htmlFor="minPrice">Minimum Price</label>
                   <input
                     type="number"
-                    name="price"
-                    id="price"
+                    name="minPrice"
+                    id="minPrice"
                     className="form-control"
                     placeholder="Enter your minimum price"
                     onChange={handleChange}
