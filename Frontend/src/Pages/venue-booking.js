@@ -2,8 +2,6 @@ import React from "react";
 import "../Assets/css/home.css";
 import "../Assets/css/venue-booking.css";
 import { useState, useEffect } from "react";
-
-import Carosel from "../Components/CommonComponent/Carosel";
 import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
