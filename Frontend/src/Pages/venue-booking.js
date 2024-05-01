@@ -139,7 +139,9 @@ const VenueBooking = () => {
     <div className="home-page">
       {modalOpen && (
         <Modal>
-          <h2>Enter Price Range</h2>
+          <h2 style={{ textAlign: "center", fontWeight: "bold" }}>
+            Enter Price Range
+          </h2>
           <div className="input-group">
             <label htmlFor="minPrice">Min Price:</label>
             <input
@@ -158,7 +160,9 @@ const VenueBooking = () => {
               onChange={(e) => setMaxPrice(e.target.value)}
             />
           </div>
-          <button onClick={handleModalSubmit}>Submit</button>
+          <button className="modal-submit-btn" onClick={handleModalSubmit}>
+            Submit
+          </button>
         </Modal>
       )}
       <Navbr />
@@ -362,95 +366,93 @@ const VenueBooking = () => {
                     </div>
                     <div className="body">
                       {recommendFilteredData.map((item) => (
-                    <div className="col-md-12 mb-3">
-                    <div className="banq-cards-wrapper">
-                      <div className="banq-card">
-                        <div className="row">
-                          <div className="col-lg-4">
-                            <div className="hall-img-wrapper">
-                              <img src="https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg" />
-                            </div>
-                          </div>
-                          <div className="col-lg-8">
-                            <div className=" banq-card-content">
-                              <div className="row d-flex align-items-center">
-                                <div className="col-lg-8">
-                                  <div className="hall-heading">
-                                    <h4>{item.hallName}</h4>
-                                  </div>
-                                </div>
-                                <div className="col-lg-4 d-flex justify-content-end">
-                                  <div className="rating">
-                                    <p>{item.rating}</p>
-                                  </div>
-                                </div>
-                              </div>
+                        <div className="col-md-12 mb-3">
+                          <div className="banq-cards-wrapper">
+                            <div className="banq-card">
                               <div className="row">
-                                <div className="col-lg-5">
-                                  <div className="hall-address">
-                                    <div className="icon-wrapper">
-                                      <FontAwesomeIcon
-                                        icon={faLocationDot}
-                                        style={{
-                                          color: "#5C3D9E",
-                                          fontSize: "20px",
-                                        }}
-                                      />
-                                      <span>
-                                        {item.city}, {item.area}
-                                      </span>
+                                <div className="col-lg-4">
+                                  <div className="hall-img-wrapper">
+                                    <img src="https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg" />
+                                  </div>
+                                </div>
+                                <div className="col-lg-8">
+                                  <div className=" banq-card-content">
+                                    <div className="row d-flex align-items-center">
+                                      <div className="col-lg-8">
+                                        <div className="hall-heading">
+                                          <h4>{item.hallName}</h4>
+                                        </div>
+                                      </div>
+                                      <div className="col-lg-4 d-flex justify-content-end">
+                                        <div className="rating">
+                                          <p>{item.rating}</p>
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div className="icon-wrapper">
-                                      <FontAwesomeIcon
-                                        icon={faPhone}
-                                        style={{
-                                          color: "#5C3D9E",
-                                          fontSize: "20px",
-                                        }}
-                                      />
-                                      <span>{item.phone}</span>
+                                    <div className="row">
+                                      <div className="col-lg-5">
+                                        <div className="hall-address">
+                                          <div className="icon-wrapper">
+                                            <FontAwesomeIcon
+                                              icon={faLocationDot}
+                                              style={{
+                                                color: "#5C3D9E",
+                                                fontSize: "20px",
+                                              }}
+                                            />
+                                            <span>
+                                              {item.city}, {item.area}
+                                            </span>
+                                          </div>
+                                          <div className="icon-wrapper">
+                                            <FontAwesomeIcon
+                                              icon={faPhone}
+                                              style={{
+                                                color: "#5C3D9E",
+                                                fontSize: "20px",
+                                              }}
+                                            />
+                                            <span>{item.phone}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="col-lg-7">
+                                        <div className="hall-price">
+                                          <p>
+                                            <span>Price Range:</span>
+                                            {item.minPrice} - {item.maxPrice}
+                                          </p>
+                                        </div>
+                                        <div className="guest-cap">
+                                          <p>
+                                            <span>Guests Capacity:</span>
+                                            {item.guests}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-12">
+                                      <div className="short-desc">
+                                        <p>{item.shotDesc}</p>
+                                      </div>
+                                    </div>
+                                    <div className="banq-card-btn">
+                                      <button
+                                        className="det-btn"
+                                        onClick={() => handleDetailsClick(item)}
+                                      >
+                                        View Details
+                                      </button>
                                     </div>
                                   </div>
                                 </div>
-                                <div className="col-lg-7">
-                                  <div className="hall-price">
-                                    <p>
-                                      <span>Price Range:</span>
-                                      {item.minPrice} - {item.maxPrice}
-                                    </p>
-                                  </div>
-                                  <div className="guest-cap">
-                                    <p>
-                                      <span>Guests Capacity:</span>
-                                      {item.guests}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="short-desc">
-                                  <p>{item.shotDesc}</p>
-                                </div>
-                              </div>
-                              <div className="banq-card-btn">
-                                <button
-                                  className="det-btn"
-                                  onClick={() => handleDetailsClick(item)}
-                                >
-                                  View Details
-                                </button>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
-                    ))  
-                      }
-                    </div>
-                  </div>
-
                 </div>
               </div>
             </div>
