@@ -23,16 +23,14 @@ const VenueBooking = () => {
   // const [MaxPrice, setMaxPrice] = useState('');
   const [Guests, setGuests] = useState("");
 
+ 
   useEffect(() => {
-    if (minPrice && maxPrice) {
-      fetchRecommendations(minPrice, maxPrice);
+    if (maxPrice) {
+      fetchRecommendations(maxPrice);
     }
-  }, [minPrice, maxPrice]);
-
-  const fetchRecommendations = (min, max) => {
-    fetch(
-      `http://localhost:8081/recommendations?minPrice=${min}&maxPrice=${max}`
-    )
+  }, [maxPrice])
+  const fetchRecommendations = (maxPrice) => {
+    fetch(`http://localhost:8081/recommendations?maxPrice=${maxPrice}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -46,6 +44,7 @@ const VenueBooking = () => {
         console.error("Error fetching data from the API:", error);
       });
   };
+  
 
   useEffect(() => {
     fetch("http://localhost:8081/getvendorforms")
@@ -72,6 +71,7 @@ const VenueBooking = () => {
       });
   }, []);
 
+  
   const handleModalSubmit = () => {
     setModalOpen(false);
   };
@@ -139,18 +139,7 @@ const VenueBooking = () => {
     <div className="home-page">
       {modalOpen && (
         <Modal>
-          <h2 style={{ textAlign: "center", fontWeight: "bold" }}>
-            Enter Price Range
-          </h2>
-          <div className="input-group">
-            <label htmlFor="minPrice">Min Price:</label>
-            <input
-              type="number"
-              id="minPrice"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-            />
-          </div>
+          <h2>Enter Maximum Price</h2>
           <div className="input-group">
             <label htmlFor="maxPrice">Max Price:</label>
             <input
@@ -160,9 +149,7 @@ const VenueBooking = () => {
               onChange={(e) => setMaxPrice(e.target.value)}
             />
           </div>
-          <button className="modal-submit-btn" onClick={handleModalSubmit}>
-            Submit
-          </button>
+          <button onClick={handleModalSubmit}>Submit</button>
         </Modal>
       )}
       <Navbr />
