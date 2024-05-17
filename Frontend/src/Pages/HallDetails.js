@@ -6,6 +6,8 @@ import Navbr from "../Components/CommonComponent/Nav";
 import Footer from "../Components/CommonComponent/Footer";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from '../AuthContext';
+import { Pannellum } from "pannellum-react";
+import pn1 from "../Assets/images/pn1.jpeg";
 
 function HallDetails() {
   const location = useLocation();
@@ -71,7 +73,19 @@ function HallDetails() {
     <>
       <Navbr />
       <div className="image-slider">
-        <Carosel />
+        {/* <Carosel /> */}
+
+        <Pannellum
+          width="100%"
+          height="500px"
+          image={pn1}
+          pitch={10}
+          yaw={180}
+          hfov={110}
+          autoLoad
+          author="Your Author"
+          title="Your Title"
+        />
       </div>
       <div className="container">
         <div className="heading " style={{marginTop: "150px",}}>
