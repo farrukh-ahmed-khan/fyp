@@ -58,7 +58,7 @@ function App() {
           <Route path="/Service" element={<Service />} />
           <Route path="/venue-booking" element={<VenueBooking />} />
           <Route path="/HallDetails" element={<HallDetails />} />
-          <Route path="/VendorForm" element={<VendorForm />} />
+          <Route path="/Add-Venue" element={<VendorForm />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
           <Route path="/Thankyou" element={<ThankYouPage />} />
@@ -76,9 +76,8 @@ function App() {
           {/* <Route path="/adminnotify" element={<AdminVenue />} /> */}
           <Route path="/adminservice" element={<AdminService />} />
           <Route path="/adminpayments" element={<AdminPayment />} />
-          <Route path="/fav" element={<FavoritesPage/>}/>
+          <Route path="/fav" element={<FavoritesPage />} />
           <Route path="*" element={<Navigate to="/" />} />
-
         </Routes>
       </BrowserRouter>
     </>

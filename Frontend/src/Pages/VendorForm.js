@@ -15,7 +15,7 @@ const HallVendorForm = () => {
   const navigate = useNavigate();
 
   const initialEmail = storedData.email;
- 
+
   const [vendorData, setVendorData] = useState({
     name: "",
     email: initialEmail,
@@ -36,8 +36,34 @@ const HallVendorForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setVendorData({ ...vendorData, [name]: value });
   };
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   // Handle phone number input (same as before)
+  //   if (name === "phone") {
+  //     // Remove any non-numeric characters
+  //     const newValue = value.replace(/\D/g, "");
+
+  //     // Limit to 11 digits
+  //     if (newValue.length > 11) {
+  //       return;
+  //     }
+
+  //     // Update the state
+  //     setVendorData({ ...vendorData, [name]: newValue });
+  //   } else {
+  //     // Handle other input fields (including minPrice, maxPrice, and advanced)
+  //     // Remove any non-numeric characters
+  //     const newValue = value.replace(/[^\d]/g, "");
+
+  //     // Update the state
+  //     setVendorData({ ...vendorData, [name]: newValue });
+  //   }
+  // };
 
   const handleServiceChange = (e) => {
     const serviceName = e.target.value;
@@ -115,39 +141,11 @@ const HallVendorForm = () => {
   return (
     <>
       <Navbr />
-      {/* <div class="hero-section">
-        <h1>Join as Vendor</h1>
-      </div> */}
-      <div className="container">
-        <div className="service-wrapper">
-          <div className="row">
-            <div className="col-lg-6 mt-5">
-              <h3>
-                <span>| </span>JOIN AS VENDOR
-              </h3>
-              <p>
-                The "Join as Vendor" page is a crucial portal for wedding hall
-                providers. Registering grants vendors access to a dynamic
-                platform, enabling them to showcase venues, connect with
-                couples, and stay competitive in the evolving wedding landscape.
-                The user-friendly interface simplifies the booking process,
-                offering engaged couples an efficient way to explore and secure
-                their ideal wedding venue. With features like virtual tours and
-                detailed information, vendors can effectively communicate the
-                unique offerings of their spaces, fostering lasting connections
-                and sustained success in the industry.
-              </p>
-            </div>
-            <div className="col-lg-6 ml-1">
-              <img src={img} alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div className="container my-5 d-flex justify-content-center align-item-center">
         <div className="banner-form">
           <form onSubmit={handleSubmit}>
-            <h1 className="heading">Fill The Form</h1>
+            <h1 className="heading">Add Venue</h1>
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
@@ -160,6 +158,7 @@ const HallVendorForm = () => {
                     placeholder="Enter your name"
                     onChange={handleChange}
                     required
+                    maxLength={30}
                   />
                 </div>
               </div>
@@ -181,7 +180,7 @@ const HallVendorForm = () => {
                 <div className="form-group">
                   <label htmlFor="phone">Phone Number</label>
                   <input
-                    type="tel"
+                    type="number"
                     name="phone"
                     id="phone"
                     className="form-control"
@@ -202,6 +201,7 @@ const HallVendorForm = () => {
                     placeholder="Enter your Hall Name"
                     onChange={handleChange}
                     required
+                    maxLength={30}
                   />
                 </div>
               </div>
@@ -242,9 +242,10 @@ const HallVendorForm = () => {
                     name="area"
                     id="area"
                     className="form-control"
-                    placeholder="Enter your address"
+                    placeholder="Enter your area"
                     onChange={handleChange}
                     required
+                    maxLength={10}
                   />
                 </div>
               </div>
@@ -256,9 +257,10 @@ const HallVendorForm = () => {
                     name="city"
                     id="city"
                     className="form-control"
-                    placeholder="Enter your address"
+                    placeholder="Enter your City"
                     onChange={handleChange}
                     required
+                    maxLength={10}
                   />
                 </div>
               </div>
@@ -287,6 +289,7 @@ const HallVendorForm = () => {
                     placeholder="Enter your google rating"
                     onChange={handleChange}
                     required
+                    maxLength={6}
                   />
                 </div>
               </div>
@@ -326,10 +329,11 @@ const HallVendorForm = () => {
                     id="additionalDetails"
                     placeholder="Enter Short Description"
                     onChange={handleChange}
+                    maxLength={150}
                   ></textarea>
                 </div>
               </div>
-              <div className="col-md-12">
+              {/* <div className="col-md-12">
                 <div className="form-group">
                   <label htmlFor="additionalDetails">Overview</label>
                   <textarea
@@ -338,7 +342,7 @@ const HallVendorForm = () => {
                     placeholder="Enter Short Description"
                   ></textarea>
                 </div>
-              </div>
+              </div> */}
               <div className="col-md-12">
                 <div className="form-group">
                   <div className="service-wrapper">
@@ -408,7 +412,7 @@ const HallVendorForm = () => {
                             className="form-check-label"
                             htmlFor="TablesChairsProvide"
                           >
-                            Tables & Chairs Provided
+                            Tables & Chairs
                           </label>
                         </div>
                       </div>
@@ -425,7 +429,7 @@ const HallVendorForm = () => {
                             className="form-check-label"
                             htmlFor="Kitchenforserveonly"
                           >
-                            Kitchen's for serve only
+                            Kitchen Service
                           </label>
                         </div>
                       </div>
@@ -502,11 +506,11 @@ const HallVendorForm = () => {
                             className="form-check-label"
                             htmlFor="AmplifiedmusicOKindoorsonly"
                           >
-                            Amplified music OK indoors only
+                            Amplified music
                           </label>
                         </div>
                       </div>
-                      <div className="col-md-4">
+                      {/* <div className="col-md-4">
                         <div className="form-check">
                           <input
                             className="form-check-input"
@@ -522,7 +526,7 @@ const HallVendorForm = () => {
                             Approved outside caterer allowed
                           </label>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-md-4">
                         <div className="form-check">
                           <input

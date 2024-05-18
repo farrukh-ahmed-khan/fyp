@@ -79,7 +79,7 @@ const Contact = () => {
       {/* <div class="banner-section">
         <h1>Welcome To Contact Page</h1>
       </div> */}
-      <h1 className="text-center contact-heading">Contact US</h1>
+      <h1 className="text-center contact-heading">Contact us</h1>
       <div className="contact-us">
         <center>
           <div className="form">

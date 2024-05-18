@@ -47,7 +47,7 @@ const Footer = () => {
             <div class="col-md-3">
               <div class="ftr-md1">
                 <div class="m4-h">
-                  <h5>Menus</h5>
+                  <h5>Helpful Links</h5>
                 </div>
                 <ul class="footerLinks">
                   <li>
@@ -62,7 +62,7 @@ const Footer = () => {
                     <Link to="/Service">Services</Link>
                   </li>
                   <li>
-                    <Link to="/venue-booking">Hall Details</Link>
+                    <Link to="/venue-booking">Venue Booking</Link>
                   </li>
                   <li>
                     <Link to="/Contact">Contact</Link>
@@ -78,14 +78,14 @@ const Footer = () => {
                 <ul class="footerLinks">
                   <li>
                     <Link class="active" href="./">
-                      Photoshoot
+                      Photography
                     </Link>
                   </li>
                   <li>
                     <Link href="#">Makeup</Link>
                   </li>
                   <li>
-                    <Link href="#">Venue Finding</Link>
+                    <Link href="#">Decoration</Link>
                   </li>
                 </ul>
               </div>
@@ -99,12 +99,12 @@ const Footer = () => {
                 <ul class="footerLinks">
                   <li>
                     <Link class="active" to="tel:8552247575">
-                      +123 1213 21345
+                      +92 3151115974
                     </Link>
                   </li>
                   <li>
                     <Link to="mailto:Theweddingspot@gmail.com">
-                      Theweddingspot@gmail.com
+                      theweddingspot@gmail.com
                     </Link>
                   </li>
                 </ul>
@@ -118,7 +118,7 @@ const Footer = () => {
           <div class="row">
             <div class="col-md-12">
               <p className="copyright-footer">
-                Copyright © 2020 site name All rights reserved.
+                Copyright © 2024 site name All rights reserved.
               </p>
             </div>
           </div>

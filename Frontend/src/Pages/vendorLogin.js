@@ -86,6 +86,7 @@ const Login = () => {
                     name="email"
                     placeholder="Email"
                     onChange={handleInput}
+                    maxLength={30}
                   />
                   {errors.email && (
                     <span className="error text-danger">{errors.email}</span>

@@ -29,7 +29,7 @@ const Login = () => {
     e.preventDefault();
     const err = validate(values);
     setErrors(err);
-  
+
     if (!err.email && !err.password) {
       axios
         .post("http://localhost:8081/login", values)
@@ -38,10 +38,10 @@ const Login = () => {
             const userId = res.data.userId; // Extract user ID from the response
             // localStorage.setItem("user", JSON.stringify(values));
             toast.success("Login successfully!!");
-  
+
             // Now you can use userId as needed, for example, store it in localStorage
             localStorage.setItem("userId", userId);
-  
+
             setTimeout(() => {
               navigate("/");
             }, 1000);
@@ -52,7 +52,6 @@ const Login = () => {
         .catch((err) => console.log(err));
     }
   };
-  
 
   return (
     <div className="forms">
@@ -85,6 +84,7 @@ const Login = () => {
                     name="email"
                     placeholder="Email"
                     onChange={handleInput}
+                    maxLength={30}
                   />
                   {errors.email && (
                     <span className="error text-danger">{errors.email}</span>

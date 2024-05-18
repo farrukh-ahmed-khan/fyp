@@ -5,7 +5,7 @@ import Footer from "../Components/CommonComponent/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
 
 const ServicesCheckout = () => {
   const [selectedServices, setSelectedServices] = useState([]);
@@ -35,11 +35,11 @@ const ServicesCheckout = () => {
     const isSelected = selectedServices.some(
       (selected) => selected.service === service
     );
-  
+
     const updatedServices = isSelected
       ? selectedServices.filter((selected) => selected.service !== service)
       : [...selectedServices, { service, package: selectedPackage }];
-  
+
     setSelectedServices(updatedServices);
     updateTotalPrice(updatedServices); // Update total price with updated services and the correct package
   };
@@ -80,8 +80,12 @@ const ServicesCheckout = () => {
   };
 
   const handlePhoneChange = (e) => {
-    const phoneValue = e.target.value;
-    setPhone(phoneValue);
+    // user can only input 11 numbers
+    if (e.target.value.length > 11) return;
+    setPhone(e.target.value);
+
+    // const phoneValue = e.target.value;
+    // setPhone(phoneValue);
   };
 
   const validateEmail = (email) => {
@@ -103,12 +107,12 @@ const ServicesCheckout = () => {
 
   const handleSubmit = async () => {
     let isValid = true;
-  
+
     if (!validateEmail(email)) {
       toast.error("Invalid email format");
       isValid = false;
     }
-  
+
     if (isValid) {
       try {
         const response = await axios.post("http://localhost:8081/onlyservice", {
@@ -122,19 +126,16 @@ const ServicesCheckout = () => {
           email: email,
           phone: phone,
         });
-  
-        const sessionId = response.data.url; 
 
+        const sessionId = response.data.url;
 
-        window.location.href = sessionId; 
+        window.location.href = sessionId;
       } catch (err) {
         console.error(err);
         toast.error("An error occurred while processing the payment");
       }
     }
   };
-  
-  
 
   return (
     <div>
@@ -229,6 +230,7 @@ const ServicesCheckout = () => {
             type="text"
             value={address}
             onChange={handleAddressChange}
+            maxlength="40"
           />
         </div>
         <div>
@@ -239,6 +241,7 @@ const ServicesCheckout = () => {
             type="text"
             value={name}
             onChange={handleNameChange}
+            maxlength="30"
           />
         </div>
         <div>
@@ -248,6 +251,7 @@ const ServicesCheckout = () => {
             type="email"
             value={email}
             onChange={handleEmailChange}
+            maxlength="30"
           />
         </div>
         <div>
@@ -255,7 +259,7 @@ const ServicesCheckout = () => {
           <br />
           <input
             className="inputField"
-            type="tel"
+            type="number"
             value={phone}
             onChange={handlePhoneChange}
           />
@@ -265,7 +269,7 @@ const ServicesCheckout = () => {
       <div className="container">
         <div className="mt-3">
           <p style={{ fontSize: "17px" }}>
-            <b>Total Price: </b>${totalPrice}
+            <b>Total Price: </b>PKR {totalPrice}
           </p>
         </div>
         <button className="payBtn" onClick={handleSubmit}>

@@ -99,6 +99,7 @@ const Signup = () => {
                     className="first-name"
                     name="fname"
                     onChange={handleInput}
+                    maxLength={30}
                   />
                   {errors.fname && (
                     <span className="error text-danger">{errors.fname}</span>
@@ -111,6 +112,7 @@ const Signup = () => {
                     className="first-name"
                     name="lname"
                     onChange={handleInput}
+                    maxLength={30}
                   />
                   {errors.lname && (
                     <span className="error text-danger">{errors.lname}</span>
@@ -122,6 +124,7 @@ const Signup = () => {
                     placeholder="Email"
                     name="email"
                     onChange={handleInput}
+                    maxLength={30}
                   />
                   {errors.email && (
                     <span className="error text-danger">{errors.email}</span>
