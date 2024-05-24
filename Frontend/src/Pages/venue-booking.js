@@ -61,7 +61,7 @@ const VenueBooking = () => {
     if (recommendFilteredData.length === 0) {
       fetchRecommendations(hallDetails.maxPrice);
     }
-    navigate("/HallDetails", { state: { hallDetails } });
+    navigate("/HallDetails", { state: { hallDetails, vendorId: hallDetails.vendorId } });
   };
 
   const handleChange = (event) => {

@@ -1,0 +1,12 @@
+.vendororderwrapper{
+    margin: 100px 0;
+}
+.vendororderwrapper h2{
+   text-align: center;
+}
+.vendororderwrapper .order{
+    padding: 10px 0;
+    font-size: 18px;
+    line-height: 28px;
+    border: 1px solid #333;
+}

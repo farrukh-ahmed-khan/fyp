@@ -1,8 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const multer = require('multer');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 // const { getPrices, setPrices } = require("./constant");
 
 const app = express();
@@ -16,8 +18,6 @@ const db = mysql.createConnection({
   password: '',
   database: 'weddingspot',
 });
-
-
 
 // Create a transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
@@ -199,14 +199,26 @@ app.post('/vendorlogin', (req, res) => {
   });
 });
 
-app.post('/vendorform', (req, res) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/vendorform', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'panoramaImage', maxCount: 1 }]), (req, res) => {
   const formData = req.body;
 
-  const selectedServices = req.body.services || [];
-  const selectedRequirements = req.body.requirements || [];
+  const selectedServices = JSON.parse(req.body.services) || [];
+const selectedRequirements = JSON.parse(req.body.requirements) || [];
+
 
   const vendorFormSql =
-    'INSERT INTO vendorform (name, email,hallName,city,area,maxPrice,price,guests,rating,phone,advanced,additionalDetails) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)';
+    'INSERT INTO vendorform (name, email, hallName, city, area, maxPrice, minPrice, guests, rating, phone, advanced, additionalDetails, img, panoramaImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   const vendorFormValues = [
     formData.name,
     formData.email,
@@ -214,12 +226,14 @@ app.post('/vendorform', (req, res) => {
     formData.city,
     formData.area,
     formData.maxPrice,
-    formData.price,
+    formData.minPrice,
     formData.guests,
     formData.rating,
     formData.phone,
     formData.advanced,
     formData.additionalDetails,
+    req.files['image'][0].path, // Image path
+    req.files['panoramaImage'][0].path // Panorama image path
   ];
 
   db.query(vendorFormSql, vendorFormValues, (err, vendorFormResult) => {
@@ -271,6 +285,79 @@ app.post('/vendorform', (req, res) => {
     res.json({ success: true, vendorId });
   });
 });
+
+// app.post('/vendorform', (req, res) => {
+//   const formData = req.body;
+
+//   const selectedServices = req.body.services || [];
+//   const selectedRequirements = req.body.requirements || [];
+
+//   const vendorFormSql =
+//     'INSERT INTO vendorform (name, email,hallName,city,area,maxPrice,minPrice,guests,rating,phone,advanced,additionalDetails) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)';
+//   const vendorFormValues = [
+//     formData.name,
+//     formData.email,
+//     formData.hallName,
+//     formData.city,
+//     formData.area,
+//     formData.maxPrice,
+//     formData.minPrice,
+//     formData.guests,
+//     formData.rating,
+//     formData.phone,
+//     formData.advanced,
+//     formData.additionalDetails,
+//   ];
+
+//   db.query(vendorFormSql, vendorFormValues, (err, vendorFormResult) => {
+//     if (err) {
+//       console.error('Error inserting data into the database:', err);
+//       return res
+//         .status(500)
+//         .json({ error: 'Error inserting data into the database' });
+//     }
+
+//     const vendorId = vendorFormResult.insertId;
+
+//     if (selectedServices.length > 0) {
+//       const servicesSql =
+//         'INSERT INTO vendor_services (vendorId, serviceName) VALUES ?';
+//       const servicesValues = selectedServices.map((service) => [
+//         vendorId,
+//         service,
+//       ]);
+
+//       db.query(servicesSql, [servicesValues], (err) => {
+//         if (err) {
+//           console.error('Error inserting services into the database:', err);
+//           return res
+//             .status(500)
+//             .json({ error: 'Error inserting services into the database' });
+//         }
+//       });
+//     }
+
+//     if (selectedRequirements.length > 0) {
+//       const requirementsSql =
+//         'INSERT INTO vendor_requirements (vendorId, requirementName) VALUES ?';
+//       const requirementsValues = selectedRequirements.map((requirement) => [
+//         vendorId,
+//         requirement,
+//       ]);
+
+//       db.query(requirementsSql, [requirementsValues], (err) => {
+//         if (err) {
+//           console.error('Error inserting requirements into the database:', err);
+//           return res
+//             .status(500)
+//             .json({ error: 'Error inserting requirements into the database' });
+//         }
+//       });
+//     }
+
+//     res.json({ success: true, vendorId });
+//   });
+// });
 
 app.get('/vendor-venues', (req, res) => {
   const vendorEmail = req.query.email;
@@ -367,6 +454,41 @@ app.get('/vendor-venues', (req, res) => {
     });
   });
 });
+
+app.post('/vendor-orders', async (req, res) => {
+  try {
+    const vendoremail = req.body.email;
+
+    if (!vendoremail) {
+      return res.status(400).json({ error: 'Vendor email is required' });
+    }
+
+    const selectQuery = `
+      SELECT date, time, name, email, phone, hallName
+      FROM successful_payments 
+      WHERE vendoremail = ?
+    `;
+
+    // Execute the query
+    db.query(selectQuery, [vendoremail], (err, rows) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      // Check if rows exist and is not empty
+      if (rows && rows.length > 0) {
+        res.status(200).json({ success: true, orders: rows });
+      } else {
+        res.status(404).json({ error: 'No orders found for this vendor' });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 app.delete('/delete-venue/:id', (req, res) => {
   const venueId = req.params.id;
@@ -702,6 +824,127 @@ app.use((req, res, next) => {
     }
   });
 });
+// app.post('/checkout', async (req, res) => {
+//   try {
+//     const {
+//       date,
+//       time,
+//       hallName,
+//       hallId,
+//       hallAdvance,
+//       selectedServices,
+//       selectedPackage,
+//       totalPrice,
+//       name,
+//       email,
+//       phone,
+//       vendoremail
+//     } = req.body;
+
+//     const frontendPrices = req.app.get('servicePrices');
+//     console.log('Frontend Prices:', frontendPrices);
+
+//     const servicesDescription = selectedServices
+//       .map((service) => service.service)
+//       .join(', ');
+
+//     const hallAdvanceLineItem = {
+//       price_data: {
+//         currency: 'pkr',
+//         product_data: {
+//           name: 'Hall Advance',
+//           description: `Advance payment for the hall`,
+//         },
+//         unit_amount: hallAdvance * 100,
+//       },
+//       quantity: 1,
+//     };
+
+//     const serviceLineItems = selectedServices.map((service) => ({
+//       price_data: {
+//         currency: 'pkr',
+//         product_data: {
+//           name: service.service,
+//           description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
+//         },
+//         unit_amount: frontendPrices[service.service][selectedPackage] * 100,
+//       },
+//       quantity: 1,
+//     }));
+
+//     const line_items = [hallAdvanceLineItem, ...serviceLineItems];
+
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ['card'],
+//       mode: 'payment',
+//       line_items,
+//       success_url: 'http://localhost:3000/success',
+//       cancel_url: 'http://localhost:3000/cancel',
+//       metadata: {
+//         date,
+//         time,
+//         selectedServices: servicesDescription,
+//         totalPrice,
+//         name,
+//         email,
+//         phone,
+//         hallName,
+//         hallId,
+//         hallAdvance,
+//       },
+//     });
+
+//     console.log('Received data:', req.body);
+//     console.log('Session URL:', session.url);
+
+//     const insertQuery = `
+//       INSERT INTO successful_payments
+//       (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance,vendoremail)
+//       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+//     `;
+
+//     await db.query(insertQuery, [
+//       date,
+//       time,
+//       JSON.stringify(selectedServices),
+//       selectedPackage,
+//       totalPrice,
+//       name,
+//       email,
+//       phone,
+//       hallName,
+//       hallId,
+//       hallAdvance,
+//       vendoremail
+//     ]);
+
+//     res.status(200).json({ url: session.url, success: true });
+//     // Inside your API code after successful payment
+//     const recipientEmail = req.body.email;
+//     const hallname= req.body.hallName;
+//     const recipent = req.body.name;
+
+//     const mailOptions = {
+//       from: 'khanfarrukh200@gmail.com',
+//       to: recipientEmail,
+//       subject: 'Hall Advance has been paid',
+//       text: 'Congratulations'+recipent+'Ammount has been recieved,'+hallname,
+//     };
+
+//     // Send email
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.log('Error occurred while sending email:', error);
+//       } else {
+//         console.log('Email sent successfully:', info.response);
+//       }
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
 app.post('/checkout', async (req, res) => {
   try {
     const {
@@ -716,6 +959,7 @@ app.post('/checkout', async (req, res) => {
       name,
       email,
       phone,
+      vendoremail,
     } = req.body;
 
     const frontendPrices = req.app.get('servicePrices');
@@ -768,6 +1012,7 @@ app.post('/checkout', async (req, res) => {
         hallName,
         hallId,
         hallAdvance,
+        vendoremail,
       },
     });
 
@@ -776,8 +1021,8 @@ app.post('/checkout', async (req, res) => {
 
     const insertQuery = `
       INSERT INTO successful_payments 
-      (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance, vendoremail) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     await db.query(insertQuery, [
@@ -792,20 +1037,21 @@ app.post('/checkout', async (req, res) => {
       hallName,
       hallId,
       hallAdvance,
+      vendoremail,
     ]);
 
     res.status(200).json({ url: session.url, success: true });
-    // Inside your API code after successful payment
-    const recipientEmail = req.body.email; 
-    const hallname= req.body.hallName;
-    const recipent = req.body.name;
 
+    // Sending email notification
+    const recipientEmail = req.body.email;
+    const hallname = req.body.hallName;
+    const recipient = req.body.name;
 
     const mailOptions = {
       from: 'khanfarrukh200@gmail.com',
       to: recipientEmail,
       subject: 'Hall Advance has been paid',
-      text: 'Congratulations'+recipent+'Ammount has been recieved,'+hallname,
+      text: `Congratulations ${recipient}, amount has been received for ${hallname}.`,
     };
 
     // Send email
@@ -821,6 +1067,7 @@ app.post('/checkout', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 // app.post("/onlyservice", async (req, res) => {
 //   try {
 //     const {
@@ -1200,6 +1447,9 @@ app.get('/recommendations', (req, res) => {
     });
   });
 });
+
+// Add this to your backend API (e.g., in your Express.js routes)
+
 
 app.listen(8081, () => {
   console.log('Server is running at port 8081');

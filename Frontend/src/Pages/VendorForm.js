@@ -11,24 +11,27 @@ import Footer from "../Components/CommonComponent/Footer";
 
 const HallVendorForm = () => {
   const storedData = localStorage.getItem("vendor");
+  console.log(storedData)
 
   const navigate = useNavigate();
 
-  const initialEmail = storedData.email;
+  const initialEmail = storedData;
 
   const [vendorData, setVendorData] = useState({
     name: "",
-    email: initialEmail,
+    email: storedData,
     hallName: "",
     city: "",
     area: "",
-    minPrice: "",
     maxPrice: "",
+    minPrice: "",
     guests: "",
     rating: "",
     phone: "",
     advanced: "",
     additionalDetails: "",
+    image: null, // Added field for image
+    panoramaImage: null // Added field for panorama image
   });
 
   const [selectedServices, setSelectedServices] = useState([]);
@@ -40,30 +43,7 @@ const HallVendorForm = () => {
     setVendorData({ ...vendorData, [name]: value });
   };
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
 
-  //   // Handle phone number input (same as before)
-  //   if (name === "phone") {
-  //     // Remove any non-numeric characters
-  //     const newValue = value.replace(/\D/g, "");
-
-  //     // Limit to 11 digits
-  //     if (newValue.length > 11) {
-  //       return;
-  //     }
-
-  //     // Update the state
-  //     setVendorData({ ...vendorData, [name]: newValue });
-  //   } else {
-  //     // Handle other input fields (including minPrice, maxPrice, and advanced)
-  //     // Remove any non-numeric characters
-  //     const newValue = value.replace(/[^\d]/g, "");
-
-  //     // Update the state
-  //     setVendorData({ ...vendorData, [name]: newValue });
-  //   }
-  // };
 
   const handleServiceChange = (e) => {
     const serviceName = e.target.value;
@@ -72,7 +52,9 @@ const HallVendorForm = () => {
         ? [...prevServices, serviceName]
         : prevServices.filter((service) => service !== serviceName)
     );
+    console.log(selectedServices); // Add this line to check the value of selectedServices
   };
+  
 
   const handleRequirementChange = (e) => {
     const requirementName = e.target.value;
@@ -85,23 +67,99 @@ const HallVendorForm = () => {
     );
   };
 
+  const handleImageChange = (e) => {
+    setVendorData({ ...vendorData, image: e.target.files[0] });
+  };
+
+  const handlePanoramaImageChange = (e) => {
+    setVendorData({ ...vendorData, panoramaImage: e.target.files[0] });
+  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       ...vendorData,
+  //       services: selectedServices,
+  //       requirements: selectedRequirements,
+  //     }),
+  //   };
+
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:8081/vendorform",
+  //       requestOptions
+  //     );
+
+  //     if (response.ok) {
+  //       const result = await response.json();
+  //       console.log("Form submitted successfully! Vendor ID:", result.vendorId);
+
+  //       // Show toast and clear the form
+  //       toast.success("Form submitted successfully!");
+  //       setVendorData({
+  //         name: "",
+  //         email: initialEmail,
+  //         hallName: "",
+  //         city: "",
+  //         area: "",
+  //         maxPrice: "",
+  //         minPrice: "",
+  //         guests: "",
+  //         rating: "",
+  //         phone: "",
+  //         advanced: "",
+  //         additionalDetails: "",
+  //       });
+  //       setSelectedServices([]);
+  //       setSelectedRequirements([]);
+
+  //       navigate("/vendordashboard");
+  //     } else {
+  //       console.error("Error submitting form:", response.statusText);
+  //       toast.error("Error submitting form. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error.message);
+  //     toast.error("Error submitting form. Please try again.");
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...vendorData,
-        services: selectedServices,
-        requirements: selectedRequirements,
-      }),
-    };
+    // Create FormData object to send files
+    const formData = new FormData();
+    formData.append('image', vendorData.image);
+    formData.append('panoramaImage', vendorData.panoramaImage);
+
+    // Add other form data
+    formData.append('name', vendorData.name);
+    formData.append('email', vendorData.email);
+    formData.append('hallName', vendorData.hallName);
+    formData.append('city', vendorData.city);
+    formData.append('area', vendorData.area);
+    formData.append('maxPrice', vendorData.maxPrice);
+    formData.append('minPrice', vendorData.minPrice);
+    formData.append('guests', vendorData.guests);
+    formData.append('rating', vendorData.rating);
+    formData.append('phone', vendorData.phone);
+    formData.append('advanced', vendorData.advanced);
+    formData.append('additionalDetails', vendorData.additionalDetails);
+    formData.append('services', JSON.stringify(selectedServices));
+    formData.append('requirements', JSON.stringify(selectedRequirements));
 
     try {
       const response = await fetch(
         "http://localhost:8081/vendorform",
-        requestOptions
+        {
+          method: "POST",
+          body: formData
+        }
       );
 
       if (response.ok) {
@@ -116,13 +174,15 @@ const HallVendorForm = () => {
           hallName: "",
           city: "",
           area: "",
-          minPrice: "",
           maxPrice: "",
+          minPrice: "",
           guests: "",
           rating: "",
           phone: "",
           advanced: "",
           additionalDetails: "",
+          image: null,
+          panoramaImage: null
         });
         setSelectedServices([]);
         setSelectedRequirements([]);
@@ -137,7 +197,6 @@ const HallVendorForm = () => {
       toast.error("Error submitting form. Please try again.");
     }
   };
-
   return (
     <>
       <Navbr />
@@ -190,6 +249,36 @@ const HallVendorForm = () => {
                   />
                 </div>
               </div>
+
+              <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="image">Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  className="form-control"
+                  onChange={handleImageChange}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="panoramaImage">Panorama Image</label>
+                <input
+                  type="file"
+                  name="panoramaImage"
+                  id="panoramaImage"
+                  className="form-control"
+                  onChange={handlePanoramaImageChange}
+                  required
+                />
+              </div>
+            </div>
+
+
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="hallName">Hall Name</label>
@@ -213,7 +302,7 @@ const HallVendorForm = () => {
                     name="minPrice"
                     id="minPrice"
                     className="form-control"
-                    placeholder="Enter your minimum price"
+                    placeholder="Enter your minimum minPrice"
                     onChange={handleChange}
                     required
                   />
@@ -227,7 +316,7 @@ const HallVendorForm = () => {
                     name="maxPrice"
                     id="maxPrice"
                     className="form-control"
-                    placeholder="Enter your maximum price"
+                    placeholder="Enter your maximum minPrice"
                     onChange={handleChange}
                     required
                   />
@@ -354,6 +443,7 @@ const HallVendorForm = () => {
                             className="form-check-input"
                             type="checkbox"
                             value="Bride Dressing Area"
+                            name="brideDressingArea" 
                             id="brideDressingArea"
                             onChange={handleServiceChange}
                           />

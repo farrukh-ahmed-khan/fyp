@@ -11,11 +11,11 @@ const VendorDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const vendorData = JSON.parse(localStorage.getItem("vendor"));
+    const vendorData = localStorage.getItem("vendor");
 
     if (vendorData) {
       axios
-        .get(`http://localhost:8081/vendor-venues?email=${vendorData.email}`)
+        .get(`http://localhost:8081/vendor-venues?email=${vendorData}`)
         .then((response) => {
           setVenues(response.data);
           setLoading(false);

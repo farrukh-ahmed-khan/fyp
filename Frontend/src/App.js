@@ -27,6 +27,7 @@ import AdminService from "./AdminPanel/AdminService";
 import AdminPayment from "./AdminPanel/AdminPayments";
 import AdminVenue from "./AdminPanel/AdminVenueList";
 import FavoritesPage from "./Pages/Favourite";
+import VendorOrders from "./Pages/vendorOrder";
 
 function App() {
   const isAuth = localStorage.getItem("user") !== null;
@@ -59,6 +60,7 @@ function App() {
           <Route path="/venue-booking" element={<VenueBooking />} />
           <Route path="/HallDetails" element={<HallDetails />} />
           <Route path="/Add-Venue" element={<VendorForm />} />
+          <Route path="/vendororder" element={<VendorOrders/>}/>
           <Route path="/Contact" element={<Contact />} />
           <Route path="/About" element={<About />} />
           <Route path="/Thankyou" element={<ThankYouPage />} />

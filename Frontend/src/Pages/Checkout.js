@@ -21,6 +21,7 @@ const Checkout = () => {
   const [selectedTime, setSelectedTime] = useState("");
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
   const [servicePrices, setServicePrices] = useState({});
+  console.log(hallDetails)
   // const prices = {
   //   photography: {
   //     silver: 3000,
@@ -185,7 +186,6 @@ const Checkout = () => {
     if (isValid) {
       try {
         const response = await axios.post("http://localhost:8081/checkout", {
-          
           date: selectedDate,
           time: selectedTime,
           hallName: hallDetails.hallName,
@@ -197,11 +197,10 @@ const Checkout = () => {
           name: name,
           email: email,
           phone: phone,
+          vendoremail: hallDetails.email,  // Pass vendor email
         });
   
         const sessionId = response.data.url; 
-
-
         window.location.href = sessionId; 
       } catch (err) {
         console.error(err);
@@ -209,6 +208,7 @@ const Checkout = () => {
       }
     }
   };
+  
 
   // ... (your other component code)
 

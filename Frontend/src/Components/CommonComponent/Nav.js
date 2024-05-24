@@ -66,6 +66,11 @@ const Navbr = () => {
                     Dashboard
                   </Nav.Link>
                 </LinkContainer>
+                <LinkContainer to="/vendororder">
+                  <Nav.Link href="/vendororder" className="link">
+                    Orders
+                  </Nav.Link>
+                </LinkContainer>
               </>
             ) : (
               <>

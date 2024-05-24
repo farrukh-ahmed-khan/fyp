@@ -40,7 +40,7 @@ const Login = () => {
         .post("http://localhost:8081/vendorlogin", values)
         .then((res) => {
           if (res.data === "Login Successful") {
-            localStorage.setItem("vendor", JSON.stringify(values));
+            localStorage.setItem("vendor", values.email);
             // alert("Login Successful");
             toast.success("Login Successfully!!");
             setTimeout(() => {
