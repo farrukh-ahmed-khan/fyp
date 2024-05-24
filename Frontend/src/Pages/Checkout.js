@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
-import Navbr from "../Components/CommonComponent/Nav";
-import Footer from "../Components/CommonComponent/Footer";
-import "../Assets/css/checkout.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import Navbr from '../Components/CommonComponent/Nav';
+import Footer from '../Components/CommonComponent/Footer';
+import '../Assets/css/checkout.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
 const Checkout = () => {
   const location = useLocation();
   const hallDetails = location.state.hallDetails;
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState("silver");
+  const [selectedPackage, setSelectedPackage] = useState('silver');
   const [totalPrice, setTotalPrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
   const [totalAdvance, setTotalAdvance] = useState(hallDetails.advanced);
   const [servicePrices, setServicePrices] = useState({});
-  console.log(hallDetails)
+  console.log(hallDetails);
   // const prices = {
   //   photography: {
   //     silver: 3000,
@@ -40,75 +43,74 @@ const Checkout = () => {
   //   },
   // };
   // try {
-    //   const res = await fetch("http://localhost:8081/checkout", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     mode: "cors",
-    //     body: JSON.stringify({
-    //       date: selectedDate,
-    //       time: selectedTime,
-    //       hallName: hallDetails.hallName,
-    //       items: selectedServices.map((service, index) => ({
-    //         id: index + 1,
-    //         price:
-    //           prices[service][selectedPackage] +
-    //           (index === 0 ? hallDetails.advanced : 0),
-    //         name: service,
-    //         quantity: 1,
-    //       })),
-    //       package: selectedPackage,
-    //       halladvance: hallDetails.advanced,
-    //       finalPrice: finalPrice,
-    //       name: name,
-    //       email: email,
-    //       phone: phone,
-    //     }),
-    //   });
+  //   const res = await fetch("http://localhost:8081/checkout", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     mode: "cors",
+  //     body: JSON.stringify({
+  //       date: selectedDate,
+  //       time: selectedTime,
+  //       hallName: hallDetails.hallName,
+  //       items: selectedServices.map((service, index) => ({
+  //         id: index + 1,
+  //         price:
+  //           prices[service][selectedPackage] +
+  //           (index === 0 ? hallDetails.advanced : 0),
+  //         name: service,
+  //         quantity: 1,
+  //       })),
+  //       package: selectedPackage,
+  //       halladvance: hallDetails.advanced,
+  //       finalPrice: finalPrice,
+  //       name: name,
+  //       email: email,
+  //       phone: phone,
+  //     }),
+  //   });
 
-    //   const data = await res.json();
+  //   const data = await res.json();
 
-    //   if (data.error) {
-    //     console.error("Error in server response:", data.error);
-    //     return;
-    //   }
+  //   if (data.error) {
+  //     console.error("Error in server response:", data.error);
+  //     return;
+  //   }
 
-    //   console.log("Session URL:", data.url);
-    //   console.log("Received orderId:", data.orderId);
+  //   console.log("Session URL:", data.url);
+  //   console.log("Received orderId:", data.orderId);
 
-    //   if (data.url) {
-    //     window.location = data.url;
-    //   } else {
-    //     console.error("Session URL is undefined.");
-    //   }
-    // } catch (err) {
-    //   console.error("Error during checkout:", err);
-    // }
+  //   if (data.url) {
+  //     window.location = data.url;
+  //   } else {
+  //     console.error("Session URL is undefined.");
+  //   }
+  // } catch (err) {
+  //   console.error("Error during checkout:", err);
+  // }
   useEffect(() => {
     axios
-      .get("http://localhost:8081/services-prices")
+      .get('http://localhost:8081/services-prices')
       .then((response) => {
-        console.log("Response Data:", response.data);
+        console.log('Response Data:', response.data);
         setServicePrices(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching service prices:", error);
+        console.error('Error fetching service prices:', error);
       });
   }, []);
   const handleServiceChange = (service, selectedPackage) => {
     const isSelected = selectedServices.some(
       (selected) => selected.service === service
     );
-  
+
     const updatedServices = isSelected
       ? selectedServices.filter((selected) => selected.service !== service)
       : [...selectedServices, { service, package: selectedPackage }];
-  
+
     setSelectedServices(updatedServices);
     updateTotalPrice(updatedServices); // Update total price with updated services and the correct package
   };
-  
 
   const handlePackageChange = (packageType) => {
     setSelectedPackage(packageType);
@@ -145,9 +147,13 @@ const Checkout = () => {
     setEmail(emailValue);
   };
 
-  const handlePhoneChange = (e) => {
-    const phoneValue = e.target.value;
-    setPhone(phoneValue);
+  const handlePhoneChange = (value, country) => {
+    // Ensure that only Pakistani phone numbers are accepted
+    if (country === 'pk') {
+      setPhone(value);
+    } else {
+      setPhone('');
+    }
   };
 
   const validateEmail = (email) => {
@@ -171,21 +177,19 @@ const Checkout = () => {
   const checkout = async () => {
     console.log(selectedDate);
     console.log(selectedTime);
-
-    
   };
 
   const handleSubmit = async () => {
     let isValid = true;
-  
+
     if (!validateEmail(email)) {
-      toast.error("Invalid email format");
+      toast.error('Invalid email format');
       isValid = false;
     }
-  
+
     if (isValid) {
       try {
-        const response = await axios.post("http://localhost:8081/checkout", {
+        const response = await axios.post('http://localhost:8081/checkout', {
           date: selectedDate,
           time: selectedTime,
           hallName: hallDetails.hallName,
@@ -197,21 +201,20 @@ const Checkout = () => {
           name: name,
           email: email,
           phone: phone,
-          vendoremail: hallDetails.email,  // Pass vendor email
+          vendoremail: hallDetails.email, // Pass vendor email
         });
-  
-        const sessionId = response.data.url; 
-        window.location.href = sessionId; 
+
+        const sessionId = response.data.url;
+        window.location.href = sessionId;
       } catch (err) {
         console.error(err);
-        toast.error("An error occurred while processing the payment");
+        toast.error('An error occurred while processing the payment');
       }
     }
   };
-  
 
   // ... (your other component code)
-
+  const today = new Date().toISOString().split('T')[0];
   return (
     <>
       <Navbr />
@@ -272,18 +275,18 @@ const Checkout = () => {
                     </select>
                     <ul
                       style={{
-                        border: "1px solid #ccc",
-                        padding: "10px",
-                        marginTop: "10px",
+                        border: '1px solid #ccc',
+                        padding: '10px',
+                        marginTop: '10px',
                       }}
                     >
                       {selectedServices.map((service) => (
                         <li
                           key={service.service} // Assuming 'service' has a unique identifier like 'id'
                           className="mt-2 service-list"
-                          style={{ width: "100%" }}
+                          style={{ width: '100%' }}
                         >
-                          {service.service}{" "}
+                          {service.service}{' '}
                           <button
                             className="btn-danger"
                             onClick={() => handleRemoveService(service)}
@@ -307,7 +310,7 @@ const Checkout = () => {
                       <option value="gold">Gold</option>
                       <option value="platinum">Platinum</option>
                     </select>
-                  </div>{" "}
+                  </div>{' '}
                   <br />
                   <div>
                     <label>Date</label>
@@ -317,6 +320,7 @@ const Checkout = () => {
                       value={selectedDate}
                       onChange={handleDateChange}
                       className="service-drop-down"
+                      min={today}
                     />
                   </div>
                   <br />
@@ -350,16 +354,22 @@ const Checkout = () => {
                       type="email"
                       value={email}
                       onChange={handleEmailChange}
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      required
                     />
                   </div>
                   <div>
                     <label>Phone</label>
                     <br />
-                    <input
-                      className="inputField"
-                      type="tel"
+                    <PhoneInput
+                      country={'pk'}
+                      inputExtraProps={{
+                        required: true,
+                      }}
+                      disableDropdown // Prevents changing the country
                       value={phone}
                       onChange={handlePhoneChange}
+                      inputStyle={{ width: '100%' }} // Adjust the width as needed
                     />
                   </div>
                 </div>

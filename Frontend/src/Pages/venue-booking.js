@@ -1,42 +1,37 @@
-import React, { useState, useEffect } from "react";
-import "../Assets/css/home.css";
-import "../Assets/css/venue-booking.css";
-import Navbr from "../Components/CommonComponent/Nav";
-import Footer from "../Components/CommonComponent/Footer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import '../Assets/css/home.css';
+import '../Assets/css/venue-booking.css';
+import Navbr from '../Components/CommonComponent/Nav';
+import Footer from '../Components/CommonComponent/Footer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const VenueBooking = () => {
   const navigate = useNavigate();
   const [HallData, setHallData] = useState([]);
   const [recommendFilteredData, setRecommendFilteredData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [City, setCity] = useState("");
-  const [Area, setArea] = useState("");
-  const [Price, setPrice] = useState("");
-  const [Guests, setGuests] = useState("");
+  const [City, setCity] = useState('');
+  const [Area, setArea] = useState('');
+  const [Price, setPrice] = useState('');
+  const [Guests, setGuests] = useState('');
 
   useEffect(() => {
-    fetch("http://localhost:8081/getvendorforms")
+    fetch('http://localhost:8081/getvendorforms')
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        return response.text();
+        return response.json();
       })
       .then((data) => {
-        try {
-          const jsonData = JSON.parse(data);
-          setHallData(jsonData);
-          setFilteredData(jsonData);
-        } catch (parseError) {
-          console.error("Error parsing JSON:", parseError);
-        }
+        setHallData(data);
+        setFilteredData(data);
       })
       .catch((error) => {
-        console.error("Error fetching data from the API:", error);
+        console.error('Error fetching data from the API:', error);
       });
   }, []);
 
@@ -50,10 +45,10 @@ const VenueBooking = () => {
       })
       .then((data) => {
         setRecommendFilteredData(data);
-        localStorage.setItem("recommendedHalls", JSON.stringify(data));
+        localStorage.setItem('recommendedHalls', JSON.stringify(data));
       })
       .catch((error) => {
-        console.error("Error fetching data from the API:", error);
+        console.error('Error fetching data from the API:', error);
       });
   };
 
@@ -61,20 +56,22 @@ const VenueBooking = () => {
     if (recommendFilteredData.length === 0) {
       fetchRecommendations(hallDetails.maxPrice);
     }
-    navigate("/HallDetails", { state: { hallDetails, vendorId: hallDetails.vendorId } });
+    navigate('/HallDetails', {
+      state: { hallDetails},
+    });
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "city") setCity(value);
-    if (name === "area") setArea(value);
-    if (name === "price") setPrice(value);
-    if (name === "guests") setGuests(value);
+    if (name === 'city') setCity(value);
+    if (name === 'area') setArea(value);
+    if (name === 'price') setPrice(value);
+    if (name === 'guests') setGuests(value);
   };
 
   const searchByArea = () => {
     const newFilteredData = HallData.filter((item) => {
-      return Area === "" || item.area.toLowerCase() === Area.toLowerCase();
+      return Area === '' || item.area.toLowerCase() === Area.toLowerCase();
     });
 
     setFilteredData(newFilteredData);
@@ -82,7 +79,7 @@ const VenueBooking = () => {
 
   const searchByCity = () => {
     const newFilteredData = HallData.filter((item) => {
-      return City === "" || item.city.toLowerCase() === City.toLowerCase();
+      return City === '' || item.city.toLowerCase() === City.toLowerCase();
     });
 
     setFilteredData(newFilteredData);
@@ -90,7 +87,7 @@ const VenueBooking = () => {
 
   const searchByPrice = () => {
     const newFilteredData = HallData.filter((item) => {
-      return Price === "" || item.price <= parseInt(Price);
+      return Price === '' || item.price <= parseInt(Price);
     });
 
     setFilteredData(newFilteredData);
@@ -98,14 +95,16 @@ const VenueBooking = () => {
 
   const searchByGuests = () => {
     const newFilteredData = HallData.filter((item) => {
-      return Guests === "" || item.guests >= parseInt(Guests);
+      return Guests === '' || item.guests >= parseInt(Guests);
     });
 
     setFilteredData(newFilteredData);
   };
 
   useEffect(() => {
-    const storedRecommendations = JSON.parse(localStorage.getItem("recommendedHalls"));
+    const storedRecommendations = JSON.parse(
+      localStorage.getItem('recommendedHalls')
+    );
     if (storedRecommendations) {
       setRecommendFilteredData(storedRecommendations);
     }
@@ -171,7 +170,7 @@ const VenueBooking = () => {
                       </div>
                       <div className="col-lg-12">
                         <div className="inp-wrapper">
-                          <h4 style={{ marginTop: "10px" }}>Price</h4>
+                          <h4 style={{ marginTop: '10px' }}>Price</h4>
                           <div className="inp-wrapper mb-5">
                             <input
                               name="price"
@@ -208,6 +207,7 @@ const VenueBooking = () => {
             </div>
             <div className="col-lg-8">
               <div className="row mb-5">
+                {console.log('sata', filteredData)}
                 {filteredData.map((item, index) => (
                   <div className="col-md-12 mb-3" key={item.id}>
                     <div className="banq-cards-wrapper">
@@ -215,7 +215,10 @@ const VenueBooking = () => {
                         <div className="row">
                           <div className="col-lg-4">
                             <div className="hall-img-wrapper">
-                              <img src="https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg" alt="Hall" />
+                              <img
+                                src={`http://localhost:8081/${item.img}`}
+                                alt="Hall"
+                              />
                             </div>
                           </div>
                           <div className="col-lg-8">
@@ -239,8 +242,8 @@ const VenueBooking = () => {
                                       <FontAwesomeIcon
                                         icon={faLocationDot}
                                         style={{
-                                          color: "#5C3D9E",
-                                          fontSize: "20px",
+                                          color: '#5C3D9E',
+                                          fontSize: '20px',
                                         }}
                                       />
                                       <span>
@@ -251,8 +254,8 @@ const VenueBooking = () => {
                                       <FontAwesomeIcon
                                         icon={faPhone}
                                         style={{
-                                          color: "#5C3D9E",
-                                          fontSize: "20px",
+                                          color: '#5C3D9E',
+                                          fontSize: '20px',
                                         }}
                                       />
                                       <span>{item.phone}</span>
@@ -310,7 +313,10 @@ const VenueBooking = () => {
                                 <div className="row">
                                   <div className="col-lg-4">
                                     <div className="hall-img-wrapper">
-                                      <img src="https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg" alt="Hall" />
+                                      <img
+                                        src="https://img.freepik.com/free-photo/prepared-wedding-hall_8353-9873.jpg"
+                                        alt="Hall"
+                                      />
                                     </div>
                                   </div>
                                   <div className="col-lg-8">
@@ -334,8 +340,8 @@ const VenueBooking = () => {
                                               <FontAwesomeIcon
                                                 icon={faLocationDot}
                                                 style={{
-                                                  color: "#5C3D9E",
-                                                  fontSize: "20px",
+                                                  color: '#5C3D9E',
+                                                  fontSize: '20px',
                                                 }}
                                               />
                                               <span>
@@ -346,8 +352,8 @@ const VenueBooking = () => {
                                               <FontAwesomeIcon
                                                 icon={faPhone}
                                                 style={{
-                                                  color: "#5C3D9E",
-                                                  fontSize: "20px",
+                                                  color: '#5C3D9E',
+                                                  fontSize: '20px',
                                                 }}
                                               />
                                               <span>{item.phone}</span>
@@ -377,7 +383,9 @@ const VenueBooking = () => {
                                       <div className="banq-card-btn">
                                         <button
                                           className="det-btn"
-                                          onClick={() => handleDetailsClick(item)}
+                                          onClick={() =>
+                                            handleDetailsClick(item)
+                                          }
                                         >
                                           View Details
                                         </button>

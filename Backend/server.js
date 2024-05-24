@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const multer = require('multer');
+const path = require('path'); // Make sure to add this line
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
@@ -11,6 +12,8 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
+
 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -29,26 +32,66 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/weddingspot', (req, res) => {
-  const insertSql =
-    'INSERT INTO users (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)';
-  const values = [
-    req.body.fname,
-    req.body.lname,
-    req.body.email,
-    req.body.password,
-  ];
-
-  db.query(insertSql, values, (err, data) => {
+  // Generate a salt to hash the password
+  bcrypt.genSalt(10, (err, salt) => {
     if (err) {
-      if (err.code === 'ER_DUP_ENTRY') {
-        return res.status(400).json({ error: 'Email already exists' });
+      return res.status(500).json({ error: 'Error generating salt' });
+    }
+    // Hash the password using the generated salt
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      if (err) {
+        return res.status(500).json({ error: 'Error hashing password' });
+      }
+      const insertSql =
+        'INSERT INTO users (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)';
+      const values = [
+        req.body.fname,
+        req.body.lname,
+        req.body.email,
+        hash, // Store the hashed password
+      ];
+
+      db.query(insertSql, values, (err, data) => {
+        if (err) {
+          if (err.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ error: 'Email already exists' });
+          } else {
+            return res.status(500).json({ error: 'Internal Server Error' });
+          }
+        }
+
+        // Successful insertion
+        return res.json(data);
+      });
+    });
+  });
+});
+
+app.post('/login', (req, res) => {
+  const sql = 'SELECT id, password FROM users WHERE `email` = ?';
+
+  db.query(sql, [req.body.email], (err, data) => {
+    if (err) {
+      res.json({ error: 'Error occurred during login' });
+    } else {
+      if (data.length > 0) {
+        const hashedPassword = data[0].password;
+        // Compare the provided password with the hashed password
+        bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
+          if (err) {
+            return res.json({ error: 'Error occurred during login' });
+          }
+          if (result) {
+            const userId = data[0].id; // Extract user ID from the result
+            return res.json({ message: 'Login Successful', userId: userId });
+          } else {
+            return res.json({ error: 'Invalid Email or Password' });
+          }
+        });
       } else {
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.json({ error: 'Invalid Email or Password' });
       }
     }
-
-    // Successful insertion
-    return res.json(data);
   });
 });
 
@@ -72,22 +115,7 @@ app.post('/contact', (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
-  const sql = 'SELECT id FROM users WHERE `email` = ? AND `password` = ?';
 
-  db.query(sql, [req.body.email, req.body.password], (err, data) => {
-    if (err) {
-      res.json({ error: 'Error occurred during login' });
-    } else {
-      if (data.length > 0) {
-        const userId = data[0].id; // Extract user ID from the result
-        return res.json({ message: 'Login Successful', userId: userId });
-      } else {
-        return res.json({ error: 'Invalid Email or Password' });
-      }
-    }
-  });
-});
 
 app.post('/addFavorite', (req, res) => {
   const { userId, venueId } = req.body;
@@ -161,131 +189,211 @@ app.delete('/favorites/:userId/:venueId', (req, res) => {
 // vendor-form api
 
 app.post('/vendors', (req, res) => {
-  const insertSql =
-    'INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)';
-  const values = [
-    req.body.fname,
-    req.body.lname,
-    req.body.email,
-    req.body.password,
-  ];
-
-  db.query(insertSql, values, (err, data) => {
+  // Generate a salt to hash the password
+  bcrypt.genSalt(10, (err, salt) => {
     if (err) {
-      if (err.code === 'ER_DUP_ENTRY') {
-        return res.status(400).json({ error: 'Email already exists' });
-      } else {
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
+      return res.status(500).json({ error: 'Error generating salt' });
     }
+    // Hash the password using the generated salt
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      if (err) {
+        return res.status(500).json({ error: 'Error hashing password' });
+      }
+      const insertSql =
+        'INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)';
+      const values = [
+        req.body.fname,
+        req.body.lname,
+        req.body.email,
+        hash, // Store the hashed password
+      ];
 
-    // Successful insertion
-    return res.json(data);
+      db.query(insertSql, values, (err, data) => {
+        if (err) {
+          if (err.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ error: 'Email already exists' });
+          } else {
+            return res.status(500).json({ error: 'Internal Server Error' });
+          }
+        }
+
+        // Successful insertion
+        return res.json(data);
+      });
+    });
   });
 });
 
 app.post('/vendorlogin', (req, res) => {
-  const sql = 'SELECT * FROM vendorlogin WHERE `email` = ? AND `password` = ?';
+  const sql = 'SELECT * FROM vendorlogin WHERE `email` = ?';
 
-  db.query(sql, [req.body.email, req.body.password], (err, data) => {
+  db.query(sql, [req.body.email], (err, data) => {
     if (err) {
-      res.json('Error');
-    }
-    if (data.length > 0) {
-      return res.json('Login Successful');
+      res.json({ error: 'Error occurred during login' });
     } else {
-      return res.json('Invalid Email or Password');
+      if (data.length > 0) {
+        const hashedPassword = data[0].password;
+        // Compare the provided password with the hashed password
+        bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
+          if (err) {
+            return res.json({ error: 'Error occurred during login' });
+          }
+          if (result) {
+            return res.json({ message: 'Login Successful' });
+          } else {
+            return res.json({ error: 'Invalid Email or Password' });
+          }
+        });
+      } else {
+        return res.json({ error: 'Invalid Email or Password' });
+      }
     }
   });
 });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   }
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
-app.post('/vendorform', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'panoramaImage', maxCount: 1 }]), (req, res) => {
-  const formData = req.body;
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-  const selectedServices = JSON.parse(req.body.services) || [];
-const selectedRequirements = JSON.parse(req.body.requirements) || [];
+// app.post('/vendorform', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'panoramaImage', maxCount: 1 }]), (req, res) => {
+//   const formData = req.body;
+
+//   const selectedServices = JSON.parse(req.body.services) || [];
+// const selectedRequirements = JSON.parse(req.body.requirements) || [];
 
 
-  const vendorFormSql =
-    'INSERT INTO vendorform (name, email, hallName, city, area, maxPrice, minPrice, guests, rating, phone, advanced, additionalDetails, img, panoramaImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-  const vendorFormValues = [
-    formData.name,
-    formData.email,
-    formData.hallName,
-    formData.city,
-    formData.area,
-    formData.maxPrice,
-    formData.minPrice,
-    formData.guests,
-    formData.rating,
-    formData.phone,
-    formData.advanced,
-    formData.additionalDetails,
-    req.files['image'][0].path, // Image path
-    req.files['panoramaImage'][0].path // Panorama image path
-  ];
+//   const vendorFormSql =
+//     'INSERT INTO vendorform (name, email, hallName, city, area, maxPrice, minPrice, guests, rating, phone, advanced, additionalDetails, img, panoramaImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+//   const vendorFormValues = [
+//     formData.name,
+//     formData.email,
+//     formData.hallName,
+//     formData.city,
+//     formData.area,
+//     formData.maxPrice,
+//     formData.minPrice,
+//     formData.guests,
+//     formData.rating,
+//     formData.phone,
+//     formData.advanced,
+//     formData.additionalDetails,
+//     req.files['image'][0].path, // Image path
+//     req.files['panoramaImage'][0].path // Panorama image path
+//   ];
 
-  db.query(vendorFormSql, vendorFormValues, (err, vendorFormResult) => {
-    if (err) {
-      console.error('Error inserting data into the database:', err);
-      return res
-        .status(500)
-        .json({ error: 'Error inserting data into the database' });
-    }
+//   db.query(vendorFormSql, vendorFormValues, (err, vendorFormResult) => {
+//     if (err) {
+//       console.error('Error inserting data into the database:', err);
+//       return res
+//         .status(500)
+//         .json({ error: 'Error inserting data into the database' });
+//     }
 
-    const vendorId = vendorFormResult.insertId;
+//     const vendorId = vendorFormResult.insertId;
 
-    if (selectedServices.length > 0) {
-      const servicesSql =
-        'INSERT INTO vendor_services (vendorId, serviceName) VALUES ?';
-      const servicesValues = selectedServices.map((service) => [
-        vendorId,
-        service,
-      ]);
+//     if (selectedServices.length > 0) {
+//       const servicesSql =
+//         'INSERT INTO vendor_services (vendorId, serviceName) VALUES ?';
+//       const servicesValues = selectedServices.map((service) => [
+//         vendorId,
+//         service,
+//       ]);
 
-      db.query(servicesSql, [servicesValues], (err) => {
-        if (err) {
-          console.error('Error inserting services into the database:', err);
-          return res
-            .status(500)
-            .json({ error: 'Error inserting services into the database' });
-        }
-      });
-    }
+//       db.query(servicesSql, [servicesValues], (err) => {
+//         if (err) {
+//           console.error('Error inserting services into the database:', err);
+//           return res
+//             .status(500)
+//             .json({ error: 'Error inserting services into the database' });
+//         }
+//       });
+//     }
 
-    if (selectedRequirements.length > 0) {
-      const requirementsSql =
-        'INSERT INTO vendor_requirements (vendorId, requirementName) VALUES ?';
-      const requirementsValues = selectedRequirements.map((requirement) => [
-        vendorId,
-        requirement,
-      ]);
+//     if (selectedRequirements.length > 0) {
+//       const requirementsSql =
+//         'INSERT INTO vendor_requirements (vendorId, requirementName) VALUES ?';
+//       const requirementsValues = selectedRequirements.map((requirement) => [
+//         vendorId,
+//         requirement,
+//       ]);
 
-      db.query(requirementsSql, [requirementsValues], (err) => {
-        if (err) {
-          console.error('Error inserting requirements into the database:', err);
-          return res
-            .status(500)
-            .json({ error: 'Error inserting requirements into the database' });
-        }
-      });
-    }
+//       db.query(requirementsSql, [requirementsValues], (err) => {
+//         if (err) {
+//           console.error('Error inserting requirements into the database:', err);
+//           return res
+//             .status(500)
+//             .json({ error: 'Error inserting requirements into the database' });
+//         }
+//       });
+//     }
 
-    res.json({ success: true, vendorId });
-  });
-});
+//     res.json({ success: true, vendorId });
+//   });
+// });
+// app.get('/getvendorforms', (req, res) => {
+//   const getAllVendorFormsSql = 'SELECT * FROM vendorform';
+//   db.query(getAllVendorFormsSql, (err, vendorFormsResult) => {
+//     if (err) {
+//       console.error(
+//         'Error fetching all vendor form data from the database:',
+//         err
+//       );
+//       return res.status(500).json({
+//         error: 'Error fetching all vendor form data from the database',
+//       });
+//     }
 
+//     const getServicesSql = 'SELECT vendorId, serviceName FROM vendor_services';
+//     db.query(getServicesSql, (err, servicesResult) => {
+//       if (err) {
+//         console.error('Error fetching services from the database:', err);
+//         return res
+//           .status(500)
+//           .json({ error: 'Error fetching services from the database' });
+//       }
+
+//       const getRequirementsSql =
+//         'SELECT vendorId, requirementName FROM vendor_requirements';
+//       db.query(getRequirementsSql, (err, requirementsResult) => {
+//         if (err) {
+//           console.error('Error fetching requirements from the database:', err);
+//           return res
+//             .status(500)
+//             .json({ error: 'Error fetching requirements from the database' });
+//         }
+
+//         const vendorForms = vendorFormsResult.map((vendorForm) => {
+//           const vendorId = vendorForm.id;
+
+//           const vendorServices = servicesResult
+//             .filter((service) => service.vendorId === vendorId)
+//             .map((service) => service.serviceName);
+
+//           const vendorRequirements = requirementsResult
+//             .filter((requirement) => requirement.vendorId === vendorId)
+//             .map((requirement) => requirement.requirementName);
+
+//           return {
+//             ...vendorForm,
+//             services: vendorServices,
+//             requirements: vendorRequirements,
+//           };
+//         });
+
+//         res.json(vendorForms);
+//       });
+//     });
+//   });
+// });
 // app.post('/vendorform', (req, res) => {
 //   const formData = req.body;
 
@@ -358,6 +466,154 @@ const selectedRequirements = JSON.parse(req.body.requirements) || [];
 //     res.json({ success: true, vendorId });
 //   });
 // });
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.post('/vendorform', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'panoramaImage', maxCount: 1 }]), (req, res) => {
+  const formData = req.body;
+
+  const selectedServices = JSON.parse(req.body.services) || [];
+  const selectedRequirements = JSON.parse(req.body.requirements) || [];
+
+  const vendorFormSql =
+    'INSERT INTO vendorform (name, email, hallName, city, area, maxPrice, minPrice, guests, rating, phone, advanced, additionalDetails, img, panoramaImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  const vendorFormValues = [
+    formData.name,
+    formData.email,
+    formData.hallName,
+    formData.city,
+    formData.area,
+    formData.maxPrice,
+    formData.minPrice,
+    formData.guests,
+    formData.rating,
+    formData.phone,
+    formData.advanced,
+    formData.additionalDetails,
+    `uploads/${req.files['image'][0].filename}`, // Image path
+    `uploads/${req.files['panoramaImage'][0].filename}` // Panorama image path
+  ];
+
+  db.query(vendorFormSql, vendorFormValues, (err, vendorFormResult) => {
+    if (err) {
+      console.error('Error inserting data into the database:', err);
+      return res
+        .status(500)
+        .json({ error: 'Error inserting data into the database' });
+    }
+
+    const vendorId = vendorFormResult.insertId;
+
+    if (selectedServices.length > 0) {
+      const servicesSql =
+        'INSERT INTO vendor_services (vendorId, serviceName) VALUES ?';
+      const servicesValues = selectedServices.map((service) => [
+        vendorId,
+        service,
+      ]);
+
+      db.query(servicesSql, [servicesValues], (err) => {
+        if (err) {
+          console.error('Error inserting services into the database:', err);
+          return res
+            .status(500)
+            .json({ error: 'Error inserting services into the database' });
+        }
+      });
+    }
+
+    if (selectedRequirements.length > 0) {
+      const requirementsSql =
+        'INSERT INTO vendor_requirements (vendorId, requirementName) VALUES ?';
+      const requirementsValues = selectedRequirements.map((requirement) => [
+        vendorId,
+        requirement,
+      ]);
+
+      db.query(requirementsSql, [requirementsValues], (err) => {
+        if (err) {
+          console.error('Error inserting requirements into the database:', err);
+          return res
+            .status(500)
+            .json({ error: 'Error inserting requirements into the database' });
+        }
+      });
+    }
+
+    res.json({ success: true, vendorId });
+  });
+});
+
+app.get('/getvendorforms', (req, res) => {
+  const getAllVendorFormsSql = 'SELECT * FROM vendorform';
+  db.query(getAllVendorFormsSql, (err, vendorFormsResult) => {
+    if (err) {
+      console.error(
+        'Error fetching all vendor form data from the database:',
+        err
+      );
+      return res.status(500).json({
+        error: 'Error fetching all vendor form data from the database',
+      });
+    }
+
+    const getServicesSql = 'SELECT vendorId, serviceName FROM vendor_services';
+    db.query(getServicesSql, (err, servicesResult) => {
+      if (err) {
+        console.error('Error fetching services from the database:', err);
+        return res
+          .status(500)
+          .json({ error: 'Error fetching services from the database' });
+      }
+
+      const getRequirementsSql =
+        'SELECT vendorId, requirementName FROM vendor_requirements';
+      db.query(getRequirementsSql, (err, requirementsResult) => {
+        if (err) {
+          console.error('Error fetching requirements from the database:', err);
+          return res
+            .status(500)
+            .json({ error: 'Error fetching requirements from the database' });
+        }
+
+        const vendorForms = vendorFormsResult.map((vendorForm) => {
+          const vendorId = vendorForm.id;
+
+          const vendorServices = servicesResult
+            .filter((service) => service.vendorId === vendorId)
+            .map((service) => service.serviceName);
+
+          const vendorRequirements = requirementsResult
+            .filter((requirement) => requirement.vendorId === vendorId)
+            .map((requirement) => requirement.requirementName);
+
+          return {
+            ...vendorForm,
+            services: vendorServices,
+            requirements: vendorRequirements,
+          };
+        });
+
+        res.json(vendorForms);
+      });
+    });
+  });
+});
+
+
+
 
 app.get('/vendor-venues', (req, res) => {
   const vendorEmail = req.query.email;
@@ -624,61 +880,7 @@ app.put('/edit-venue/:id', (req, res) => {
   }
 });
 
-app.get('/getvendorforms', (req, res) => {
-  const getAllVendorFormsSql = 'SELECT * FROM vendorform';
-  db.query(getAllVendorFormsSql, (err, vendorFormsResult) => {
-    if (err) {
-      console.error(
-        'Error fetching all vendor form data from the database:',
-        err
-      );
-      return res.status(500).json({
-        error: 'Error fetching all vendor form data from the database',
-      });
-    }
 
-    const getServicesSql = 'SELECT vendorId, serviceName FROM vendor_services';
-    db.query(getServicesSql, (err, servicesResult) => {
-      if (err) {
-        console.error('Error fetching services from the database:', err);
-        return res
-          .status(500)
-          .json({ error: 'Error fetching services from the database' });
-      }
-
-      const getRequirementsSql =
-        'SELECT vendorId, requirementName FROM vendor_requirements';
-      db.query(getRequirementsSql, (err, requirementsResult) => {
-        if (err) {
-          console.error('Error fetching requirements from the database:', err);
-          return res
-            .status(500)
-            .json({ error: 'Error fetching requirements from the database' });
-        }
-
-        const vendorForms = vendorFormsResult.map((vendorForm) => {
-          const vendorId = vendorForm.id;
-
-          const vendorServices = servicesResult
-            .filter((service) => service.vendorId === vendorId)
-            .map((service) => service.serviceName);
-
-          const vendorRequirements = requirementsResult
-            .filter((requirement) => requirement.vendorId === vendorId)
-            .map((requirement) => requirement.requirementName);
-
-          return {
-            ...vendorForm,
-            services: vendorServices,
-            requirements: vendorRequirements,
-          };
-        });
-
-        res.json(vendorForms);
-      });
-    });
-  });
-});
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -824,6 +1026,8 @@ app.use((req, res, next) => {
     }
   });
 });
+
+
 // app.post('/checkout', async (req, res) => {
 //   try {
 //     const {
@@ -838,7 +1042,7 @@ app.use((req, res, next) => {
 //       name,
 //       email,
 //       phone,
-//       vendoremail
+//       vendoremail,
 //     } = req.body;
 
 //     const frontendPrices = req.app.get('servicePrices');
@@ -891,6 +1095,7 @@ app.use((req, res, next) => {
 //         hallName,
 //         hallId,
 //         hallAdvance,
+//         vendoremail,
 //       },
 //     });
 
@@ -898,9 +1103,9 @@ app.use((req, res, next) => {
 //     console.log('Session URL:', session.url);
 
 //     const insertQuery = `
-//       INSERT INTO successful_payments
-//       (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance,vendoremail)
-//       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+//       INSERT INTO successful_payments 
+//       (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance, vendoremail) 
+//       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 //     `;
 
 //     await db.query(insertQuery, [
@@ -915,20 +1120,21 @@ app.use((req, res, next) => {
 //       hallName,
 //       hallId,
 //       hallAdvance,
-//       vendoremail
+//       vendoremail,
 //     ]);
 
 //     res.status(200).json({ url: session.url, success: true });
-//     // Inside your API code after successful payment
+
+//     // Sending email notification
 //     const recipientEmail = req.body.email;
-//     const hallname= req.body.hallName;
-//     const recipent = req.body.name;
+//     const hallname = req.body.hallName;
+//     const recipient = req.body.name;
 
 //     const mailOptions = {
 //       from: 'khanfarrukh200@gmail.com',
 //       to: recipientEmail,
 //       subject: 'Hall Advance has been paid',
-//       text: 'Congratulations'+recipent+'Ammount has been recieved,'+hallname,
+//       text: `Congratulations ${recipient}, amount has been received for ${hallname}.`,
 //     };
 
 //     // Send email
@@ -944,129 +1150,6 @@ app.use((req, res, next) => {
 //     res.status(500).json({ error: 'Internal Server Error' });
 //   }
 // });
-
-app.post('/checkout', async (req, res) => {
-  try {
-    const {
-      date,
-      time,
-      hallName,
-      hallId,
-      hallAdvance,
-      selectedServices,
-      selectedPackage,
-      totalPrice,
-      name,
-      email,
-      phone,
-      vendoremail,
-    } = req.body;
-
-    const frontendPrices = req.app.get('servicePrices');
-    console.log('Frontend Prices:', frontendPrices);
-
-    const servicesDescription = selectedServices
-      .map((service) => service.service)
-      .join(', ');
-
-    const hallAdvanceLineItem = {
-      price_data: {
-        currency: 'pkr',
-        product_data: {
-          name: 'Hall Advance',
-          description: `Advance payment for the hall`,
-        },
-        unit_amount: hallAdvance * 100,
-      },
-      quantity: 1,
-    };
-
-    const serviceLineItems = selectedServices.map((service) => ({
-      price_data: {
-        currency: 'pkr',
-        product_data: {
-          name: service.service,
-          description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
-        },
-        unit_amount: frontendPrices[service.service][selectedPackage] * 100,
-      },
-      quantity: 1,
-    }));
-
-    const line_items = [hallAdvanceLineItem, ...serviceLineItems];
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      line_items,
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
-      metadata: {
-        date,
-        time,
-        selectedServices: servicesDescription,
-        totalPrice,
-        name,
-        email,
-        phone,
-        hallName,
-        hallId,
-        hallAdvance,
-        vendoremail,
-      },
-    });
-
-    console.log('Received data:', req.body);
-    console.log('Session URL:', session.url);
-
-    const insertQuery = `
-      INSERT INTO successful_payments 
-      (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance, vendoremail) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    await db.query(insertQuery, [
-      date,
-      time,
-      JSON.stringify(selectedServices),
-      selectedPackage,
-      totalPrice,
-      name,
-      email,
-      phone,
-      hallName,
-      hallId,
-      hallAdvance,
-      vendoremail,
-    ]);
-
-    res.status(200).json({ url: session.url, success: true });
-
-    // Sending email notification
-    const recipientEmail = req.body.email;
-    const hallname = req.body.hallName;
-    const recipient = req.body.name;
-
-    const mailOptions = {
-      from: 'khanfarrukh200@gmail.com',
-      to: recipientEmail,
-      subject: 'Hall Advance has been paid',
-      text: `Congratulations ${recipient}, amount has been received for ${hallname}.`,
-    };
-
-    // Send email
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log('Error occurred while sending email:', error);
-      } else {
-        console.log('Email sent successfully:', info.response);
-      }
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 // app.post("/onlyservice", async (req, res) => {
 //   try {
@@ -1145,6 +1228,136 @@ app.post('/checkout', async (req, res) => {
 //     res.status(500).json({ error: "Internal Server Error" });
 //   }
 // });
+
+
+
+app.post('/checkout', async (req, res) => {
+  try {
+    const {
+      date,
+      time,
+      hallName,
+      hallId,
+      hallAdvance,
+      selectedServices,
+      selectedPackage,
+      totalPrice,
+      name,
+      email,
+      phone,
+      vendoremail,
+    } = req.body;
+
+    const frontendPrices = req.app.get('servicePrices');
+    console.log('Frontend Prices:', frontendPrices);
+
+    const servicesDescription = selectedServices
+      ? selectedServices.map((service) => service.service).join(', ')
+      : 'No services selected';
+
+    const hallAdvanceLineItem = {
+      price_data: {
+        currency: 'pkr',
+        product_data: {
+          name: 'Hall Advance',
+          description: `Advance payment for the hall`,
+        },
+        unit_amount: hallAdvance * 100,
+      },
+      quantity: 1,
+    };
+
+    const line_items = selectedServices
+      ? [
+          hallAdvanceLineItem,
+          ...selectedServices.map((service) => ({
+            price_data: {
+              currency: 'pkr',
+              product_data: {
+                name: service.service,
+                description: `Date: ${date}, Time: ${time}, Services: ${servicesDescription}`,
+              },
+              unit_amount: frontendPrices[service.service][selectedPackage] * 100,
+            },
+            quantity: 1,
+          })),
+        ]
+      : [hallAdvanceLineItem];
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items,
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/cancel',
+      metadata: {
+        date,
+        time,
+        selectedServices: servicesDescription,
+        totalPrice,
+        name,
+        email,
+        phone,
+        hallName,
+        hallId,
+        hallAdvance,
+        vendoremail,
+      },
+    });
+
+    console.log('Received data:', req.body);
+    console.log('Session URL:', session.url);
+
+    const insertQuery = `
+      INSERT INTO successful_payments 
+      (date, time, services, package, total_price, name, email, phone, hallName, hall_id, hallAdvance, vendoremail) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    await db.query(insertQuery, [
+      date,
+      time,
+      selectedServices ? JSON.stringify(selectedServices) : null,
+      selectedServices ? selectedPackage : null,
+      totalPrice,
+      name,
+      email,
+      phone,
+      hallName,
+      hallId,
+      hallAdvance,
+      vendoremail,
+    ]);
+
+    res.status(200).json({ url: session.url, success: true });
+
+    // Sending email notification
+    const recipientEmail = req.body.email;
+    const hallname = req.body.hallName;
+    const recipient = req.body.name;
+
+    const mailOptions = {
+      from: 'khanfarrukh200@gmail.com',
+      to: recipientEmail,
+      subject: 'Hall Advance has been paid',
+      text: `Congratulations ${recipient}, amount has been received for ${hallname}.`,
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log('Error occurred while sending email:', error);
+      } else {
+        console.log('Email sent successfully:', info.response);
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 app.post('/onlyservice', async (req, res) => {
   try {

@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/LoginVendorValidation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import bcrypt from "bcrypt";
+
 import axios from "axios";
 
 const Login = () => {
@@ -27,33 +29,37 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setErrors(validate(values));
     const err = validate(values);
     setErrors(err);
-
-    if (
-      !err.email &&
-      !err.password
-      // !err.confirmPassword
-    ) {
-      axios
-        .post("http://localhost:8081/vendorlogin", values)
-        .then((res) => {
-          if (res.data === "Login Successful") {
-            localStorage.setItem("vendor", values.email);
-            // alert("Login Successful");
-            toast.success("Login Successfully!!");
-            setTimeout(() => {
-              navigate("/");
-            }, 1000);
-          } else {
-            // alert("no record existed");
-            toast.error("No Record Existed!");
-          }
-        })
-        .catch((err) => console.log(err));
+  
+    if (!err.email && !err.password) {
+      // Hash the password before sending it to the server
+      bcrypt.hash(values.password, 10, (err, hashedPassword) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        axios
+          .post("http://localhost:8081/vendorlogin", {
+            email: values.email,
+            password: hashedPassword, // Send the hashed password
+          })
+          .then((res) => {
+            if (res.data === "Login Successful") {
+              localStorage.setItem("vendor", values.email);
+              toast.success("Login Successfully!!");
+              setTimeout(() => {
+                navigate("/Add-Venue");
+              }, 1000);
+            } else {
+              toast.error("No Record Existed!");
+            }
+          })
+          .catch((err) => console.log(err));
+      });
     }
   };
+  
 
   return (
     <div className="forms">

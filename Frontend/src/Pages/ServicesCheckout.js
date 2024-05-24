@@ -1,33 +1,35 @@
-import React, { useState, useEffect } from "react";
-import "../Assets/css/checkout.css";
-import Navbr from "../Components/CommonComponent/Nav";
-import Footer from "../Components/CommonComponent/Footer";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useState, useEffect } from 'react';
+import '../Assets/css/checkout.css';
+import Navbr from '../Components/CommonComponent/Nav';
+import Footer from '../Components/CommonComponent/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { loadStripe } from '@stripe/stripe-js';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const ServicesCheckout = () => {
   const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState("silver");
+  const [selectedPackage, setSelectedPackage] = useState('silver');
   const [totalPrice, setTotalPrice] = useState(0);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [address, setAddress] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [address, setAddress] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [servicePrices, setServicePrices] = useState({});
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/services-prices")
+      .get('http://localhost:8081/services-prices')
       .then((response) => {
-        console.log("Response Data:", response.data);
+        console.log('Response Data:', response.data);
         setServicePrices(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching service prices:", error);
+        console.error('Error fetching service prices:', error);
       });
   }, []);
 
@@ -79,13 +81,13 @@ const ServicesCheckout = () => {
     setEmail(emailValue);
   };
 
-  const handlePhoneChange = (e) => {
-    // user can only input 11 numbers
-    if (e.target.value.length > 11) return;
-    setPhone(e.target.value);
-
-    // const phoneValue = e.target.value;
-    // setPhone(phoneValue);
+  const handlePhoneChange = (value, country) => {
+    // Ensure that only Pakistani phone numbers are accepted
+    if (country === 'pk') {
+      setPhone(value);
+    } else {
+      setPhone('');
+    }
   };
 
   const validateEmail = (email) => {
@@ -109,13 +111,13 @@ const ServicesCheckout = () => {
     let isValid = true;
 
     if (!validateEmail(email)) {
-      toast.error("Invalid email format");
+      toast.error('Invalid email format');
       isValid = false;
     }
 
     if (isValid) {
       try {
-        const response = await axios.post("http://localhost:8081/onlyservice", {
+        const response = await axios.post('http://localhost:8081/onlyservice', {
           date: selectedDate,
           time: selectedTime,
           selectedServices: selectedServices,
@@ -132,7 +134,7 @@ const ServicesCheckout = () => {
         window.location.href = sessionId;
       } catch (err) {
         console.error(err);
-        toast.error("An error occurred while processing the payment");
+        toast.error('An error occurred while processing the payment');
       }
     }
   };
@@ -160,18 +162,18 @@ const ServicesCheckout = () => {
           </select>
           <ul
             style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginTop: "10px",
+              border: '1px solid #ccc',
+              padding: '10px',
+              marginTop: '10px',
             }}
           >
             {selectedServices.map((service) => (
               <li
                 key={service.service} // Assuming 'service' has a unique identifier like 'id'
                 className="mt-2 service-list"
-                style={{ width: "100%" }}
+                style={{ width: '100%' }}
               >
-                {service.service}{" "}
+                {service.service}{' '}
                 <button
                   className="btn-danger"
                   onClick={() => handleRemoveService(service)}
@@ -195,7 +197,7 @@ const ServicesCheckout = () => {
             <option value="gold">Gold</option>
             <option value="platinum">Platinum</option>
           </select>
-        </div>{" "}
+        </div>{' '}
         <br />
         <div>
           <label>Date</label>
@@ -217,7 +219,7 @@ const ServicesCheckout = () => {
             onChange={handleTimeChange}
             className="service-drop-down"
           />
-        </div>{" "}
+        </div>{' '}
         <hr />
       </div>
 
@@ -257,18 +259,22 @@ const ServicesCheckout = () => {
         <div>
           <label>Phone</label>
           <br />
-          <input
-            className="inputField"
-            type="number"
+          <PhoneInput
+            country={'pk'}
+            inputExtraProps={{
+              required: true,
+            }}
+            disableDropdown // Prevents changing the country
             value={phone}
             onChange={handlePhoneChange}
+            inputStyle={{ width: '100%' }} // Adjust the width as needed
           />
         </div>
       </div>
 
       <div className="container">
         <div className="mt-3">
-          <p style={{ fontSize: "17px" }}>
+          <p style={{ fontSize: '17px' }}>
             <b>Total Price: </b>PKR {totalPrice}
           </p>
         </div>

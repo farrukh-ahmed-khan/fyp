@@ -129,74 +129,163 @@ const HallVendorForm = () => {
   // };
 
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Create FormData object to send files
+  //   const formData = new FormData();
+  //   formData.append('image', vendorData.image);
+  //   formData.append('panoramaImage', vendorData.panoramaImage);
+
+  //   // Add other form data
+  //   formData.append('name', vendorData.name);
+  //   formData.append('email', vendorData.email);
+  //   formData.append('hallName', vendorData.hallName);
+  //   formData.append('city', vendorData.city);
+  //   formData.append('area', vendorData.area);
+  //   formData.append('maxPrice', vendorData.maxPrice);
+  //   formData.append('minPrice', vendorData.minPrice);
+  //   formData.append('guests', vendorData.guests);
+  //   formData.append('rating', vendorData.rating);
+  //   formData.append('phone', vendorData.phone);
+  //   formData.append('advanced', vendorData.advanced);
+  //   formData.append('additionalDetails', vendorData.additionalDetails);
+  //   formData.append('services', JSON.stringify(selectedServices));
+  //   formData.append('requirements', JSON.stringify(selectedRequirements));
+
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:8081/vendorform",
+  //       {
+  //         method: "POST",
+  //         body: formData
+  //       }
+  //     );
+
+  //     if (response.ok) {
+  //       const result = await response.json();
+  //       console.log("Form submitted successfully! Vendor ID:", result.vendorId);
+
+  //       // Show toast and clear the form
+  //       toast.success("Form submitted successfully!");
+  //       setVendorData({
+  //         name: "",
+  //         email: initialEmail,
+  //         hallName: "",
+  //         city: "",
+  //         area: "",
+  //         maxPrice: "",
+  //         minPrice: "",
+  //         guests: "",
+  //         rating: "",
+  //         phone: "",
+  //         advanced: "",
+  //         additionalDetails: "",
+  //         image: null,
+  //         panoramaImage: null
+  //       });
+  //       setSelectedServices([]);
+  //       setSelectedRequirements([]);
+
+  //       navigate("/vendordashboard");
+  //     } else {
+  //       console.error("Error submitting form:", response.statusText);
+  //       toast.error("Error submitting form. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error.message);
+  //     toast.error("Error submitting form. Please try again.");
+  //   }
+  // };
+  
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    // Create FormData object to send files
-    const formData = new FormData();
-    formData.append('image', vendorData.image);
-    formData.append('panoramaImage', vendorData.panoramaImage);
+  // Ensure advance payment is greater than 5000
+  if (parseInt(vendorData.advanced) <= 5000) {
+    toast.error("Advance payment must be greater than 5000");
+    return;
+  }
 
-    // Add other form data
-    formData.append('name', vendorData.name);
-    formData.append('email', vendorData.email);
-    formData.append('hallName', vendorData.hallName);
-    formData.append('city', vendorData.city);
-    formData.append('area', vendorData.area);
-    formData.append('maxPrice', vendorData.maxPrice);
-    formData.append('minPrice', vendorData.minPrice);
-    formData.append('guests', vendorData.guests);
-    formData.append('rating', vendorData.rating);
-    formData.append('phone', vendorData.phone);
-    formData.append('advanced', vendorData.advanced);
-    formData.append('additionalDetails', vendorData.additionalDetails);
-    formData.append('services', JSON.stringify(selectedServices));
-    formData.append('requirements', JSON.stringify(selectedRequirements));
+  // Ensure minimum price is greater than 5000
+  if (parseInt(vendorData.minPrice) <= 5000) {
+    toast.error("Minimum price must be greater than 5000");
+    return;
+  }
 
-    try {
-      const response = await fetch(
-        "http://localhost:8081/vendorform",
-        {
-          method: "POST",
-          body: formData
-        }
-      );
+  // Ensure minimum price is less than maximum price
+  if (parseInt(vendorData.minPrice) >= parseInt(vendorData.maxPrice)) {
+    toast.error("Minimum price must be less than maximum price");
+    return;
+  }
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Form submitted successfully! Vendor ID:", result.vendorId);
+  // Create FormData object to send files
+  const formData = new FormData();
+  formData.append("image", vendorData.image);
+  formData.append("panoramaImage", vendorData.panoramaImage);
 
-        // Show toast and clear the form
-        toast.success("Form submitted successfully!");
-        setVendorData({
-          name: "",
-          email: initialEmail,
-          hallName: "",
-          city: "",
-          area: "",
-          maxPrice: "",
-          minPrice: "",
-          guests: "",
-          rating: "",
-          phone: "",
-          advanced: "",
-          additionalDetails: "",
-          image: null,
-          panoramaImage: null
-        });
-        setSelectedServices([]);
-        setSelectedRequirements([]);
+  // Add other form data
+  formData.append("name", vendorData.name);
+  formData.append("email", vendorData.email);
+  formData.append("hallName", vendorData.hallName);
+  formData.append("city", vendorData.city);
+  formData.append("area", vendorData.area);
+  formData.append("maxPrice", vendorData.maxPrice);
+  formData.append("minPrice", vendorData.minPrice);
+  formData.append("guests", vendorData.guests);
+  formData.append("rating", vendorData.rating);
+  formData.append("phone", vendorData.phone);
+  formData.append("advanced", vendorData.advanced);
+  formData.append("additionalDetails", vendorData.additionalDetails);
+  formData.append("services", JSON.stringify(selectedServices));
+  formData.append(
+    "requirements",
+    JSON.stringify(selectedRequirements)
+  );
 
-        navigate("/vendordashboard");
-      } else {
-        console.error("Error submitting form:", response.statusText);
-        toast.error("Error submitting form. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error.message);
+  try {
+    const response = await fetch("http://localhost:8081/vendorform", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Form submitted successfully! Vendor ID:", result.vendorId);
+
+      // Show toast and clear the form
+      toast.success("Form submitted successfully!");
+      setVendorData({
+        name: "",
+        email: initialEmail,
+        hallName: "",
+        city: "",
+        area: "",
+        maxPrice: "",
+        minPrice: "",
+        guests: "",
+        rating: "",
+        phone: "",
+        advanced: "",
+        additionalDetails: "",
+        image: null,
+        panoramaImage: null,
+      });
+      setSelectedServices([]);
+      setSelectedRequirements([]);
+
+      navigate("/vendordashboard");
+    } else {
+      console.error("Error submitting form:", response.statusText);
       toast.error("Error submitting form. Please try again.");
     }
-  };
+  } catch (error) {
+    console.error("Error submitting form:", error.message);
+    toast.error("Error submitting form. Please try again.");
+  }
+};
+
+  
   return (
     <>
       <Navbr />

@@ -74,11 +74,13 @@ function HallDetails() {
       <Navbr />
       <div className="image-slider">
         {/* <Carosel /> */}
-
+{
+    console.log(hallDetails)
+}
         <Pannellum
           width="100%"
           height="500px"
-          image={pn1}
+          image={`http://localhost:8081/${hallDetails.panoramaImg}`}
           pitch={10}
           yaw={180}
           hfov={110}
