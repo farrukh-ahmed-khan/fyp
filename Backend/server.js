@@ -189,64 +189,40 @@ app.delete('/favorites/:userId/:venueId', (req, res) => {
 // vendor-form api
 
 app.post('/vendors', (req, res) => {
-  // Generate a salt to hash the password
-  bcrypt.genSalt(10, (err, salt) => {
+  const insertSql =
+    'INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)';
+  const values = [
+    req.body.fname,
+    req.body.lname,
+    req.body.email,
+    req.body.password,
+  ];
+
+  db.query(insertSql, values, (err, data) => {
     if (err) {
-      return res.status(500).json({ error: 'Error generating salt' });
-    }
-    // Hash the password using the generated salt
-    bcrypt.hash(req.body.password, salt, (err, hash) => {
-      if (err) {
-        return res.status(500).json({ error: 'Error hashing password' });
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(400).json({ error: 'Email already exists' });
+      } else {
+        return res.status(500).json({ error: 'Internal Server Error' });
       }
-      const insertSql =
-        'INSERT INTO vendorlogin (`firstname`, `lastname`, `email`, `password`) VALUES (?, ?, ?, ?)';
-      const values = [
-        req.body.fname,
-        req.body.lname,
-        req.body.email,
-        hash, // Store the hashed password
-      ];
+    }
 
-      db.query(insertSql, values, (err, data) => {
-        if (err) {
-          if (err.code === 'ER_DUP_ENTRY') {
-            return res.status(400).json({ error: 'Email already exists' });
-          } else {
-            return res.status(500).json({ error: 'Internal Server Error' });
-          }
-        }
-
-        // Successful insertion
-        return res.json(data);
-      });
-    });
+    // Successful insertion
+    return res.json(data);
   });
 });
 
 app.post('/vendorlogin', (req, res) => {
-  const sql = 'SELECT * FROM vendorlogin WHERE `email` = ?';
+  const sql = 'SELECT * FROM vendorlogin WHERE `email` = ? AND `password` = ?';
 
-  db.query(sql, [req.body.email], (err, data) => {
+  db.query(sql, [req.body.email, req.body.password], (err, data) => {
     if (err) {
-      res.json({ error: 'Error occurred during login' });
+      res.json('Error');
+    }
+    if (data.length > 0) {
+      return res.json('Login Successful');
     } else {
-      if (data.length > 0) {
-        const hashedPassword = data[0].password;
-        // Compare the provided password with the hashed password
-        bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
-          if (err) {
-            return res.json({ error: 'Error occurred during login' });
-          }
-          if (result) {
-            return res.json({ message: 'Login Successful' });
-          } else {
-            return res.json({ error: 'Invalid Email or Password' });
-          }
-        });
-      } else {
-        return res.json({ error: 'Invalid Email or Password' });
-      }
+      return res.json('Invalid Email or Password');
     }
   });
 });

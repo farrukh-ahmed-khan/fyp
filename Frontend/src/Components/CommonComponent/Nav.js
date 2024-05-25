@@ -13,7 +13,7 @@ const Navbr = () => {
   const [isVendorLoggedIn, setIsVendorLoggedIn] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("userId");
+    const user = localStorage.getItem("user");
     const vendor = localStorage.getItem("vendor");
 
     setIsUserLoggedIn(!!user);
@@ -23,15 +23,18 @@ const Navbr = () => {
   const navigate = useNavigate();
 
   const handleLogout = (userType) => {
-    if (userType === "userId") {
-      localStorage.removeItem("userId");
+    if (userType === "user") {
+      localStorage.removeItem("user");
+      localStorage.removeItem("recommendedHalls");
       setIsUserLoggedIn(false);
     } else if (userType === "vendor") {
       localStorage.removeItem("vendor");
+      localStorage.removeItem("recommendedHalls");
+
       setIsVendorLoggedIn(false);
     }
 
-    const logoutRoute = userType === "vendor" ? "/vendorlogin" : "/login";
+    const logoutRoute = userType === "vendor" ? "/home" : "/addvenue";
     navigate(logoutRoute);
   };
 

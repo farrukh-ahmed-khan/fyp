@@ -52,7 +52,7 @@ const Footer = () => {
                 <ul class="footerLinks">
                   <li>
                     <Link class="active" to="/">
-                      home
+                      Home
                     </Link>
                   </li>
                   <li>
@@ -64,9 +64,9 @@ const Footer = () => {
                   <li>
                     <Link to="/venue-booking">Venue Booking</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/Contact">Contact</Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>

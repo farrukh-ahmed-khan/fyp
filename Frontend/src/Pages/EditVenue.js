@@ -407,7 +407,7 @@ const EditVenue = () => {
                             className="form-check-label"
                             htmlFor="Apermitisrequiredforanyopenflame"
                           >
-                            A permit is required for any open flame
+                            Permit for open flame
                           </label>
                         </div>
                       </div>
@@ -424,7 +424,7 @@ const EditVenue = () => {
                             className="form-check-label"
                             htmlFor="apermitisrequiredforeventswith200people"
                           >
-                            A permit is required for events with 200+ people
+                            Permit for events with 200+ people
                           </label>
                         </div>
                       </div>
@@ -441,7 +441,7 @@ const EditVenue = () => {
                             className="form-check-label"
                             htmlFor="Mealmustbeservedbylicensedcaterer"
                           >
-                            Meal must be served by licensed caterer
+                            only licensed caterer
                           </label>
                         </div>
                       </div>
@@ -458,7 +458,7 @@ const EditVenue = () => {
                             className="form-check-label"
                             htmlFor="AmplifiedmusicOKindoorsonly"
                           >
-                            Amplified music OK indoors only
+                           Permit for Amplified music 
                           </label>
                         </div>
                       </div>

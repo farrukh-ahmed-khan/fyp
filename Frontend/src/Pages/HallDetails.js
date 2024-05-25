@@ -129,9 +129,9 @@ function HallDetails() {
             Book Now
           </button>
 
-          <button className="btn2" onClick={handleAddFavorite} disabled={isFavorite}>
+          {/* <button className="btn2" onClick={handleAddFavorite} disabled={isFavorite}>
             {isFavorite ? "Added to Favorites" : "Add to Favorites"}
-          </button>
+          </button> */}
         </div>
 
         <div className="location-section mb-3">

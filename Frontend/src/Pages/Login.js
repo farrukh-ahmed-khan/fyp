@@ -35,12 +35,11 @@ const Login = () => {
         .post("http://localhost:8081/login", values)
         .then((res) => {
           if (res.data.message === "Login Successful") {
-            const userId = res.data.userId; // Extract user ID from the response
-            // localStorage.setItem("user", JSON.stringify(values));
+            localStorage.setItem("user", JSON.stringify(values.email));
             toast.success("Login successfully!!");
 
             // Now you can use userId as needed, for example, store it in localStorage
-            localStorage.setItem("userId", userId);
+            // localStorage.setItem("userId", userId);
 
             setTimeout(() => {
               navigate("/");

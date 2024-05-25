@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../Assets/css/admin.css";
 import DashboardImg from "../Assets/images/AdminPanel/dashboard.png";
 import ServiceImg from "../Assets/images/AdminPanel/service.png";
@@ -8,6 +8,8 @@ import ViewListImg from "../Assets/images/AdminPanel/view-list.png";
 import user from "../Assets/images/AdminPanel/user.png";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminService = () => {
   const [service, setService] = useState("");
@@ -15,21 +17,38 @@ const AdminService = () => {
   const [price, setPrice] = useState("");
 
   const handleEditPrice = async () => {
+    const allowedServices = ["photography", "decoration", "makeup"];
+    const allowedPackages = ["silver", "gold", "platinum"];
+    const lowerCaseService = service.toLowerCase();
+    const lowerCasePackageType = packageType.toLowerCase();
+
+    if (!allowedServices.includes(lowerCaseService)) {
+      toast.error("Please fill the service field with one of the following: photography, decoration, makeup");
+      return;
+    }
+
+    if (!allowedPackages.includes(lowerCasePackageType)) {
+      toast.error("Please fill the package field with one of the following: silver, gold, platinum");
+      return;
+    }
+
     try {
-      // Send a POST request to the backend API
+      // Send a PUT request to the backend API
       const response = await axios.put("http://localhost:8081/update-prices", {
-        service,
-        packageType,
+        service: lowerCaseService,
+        packageType: lowerCasePackageType,
         price,
       });
 
       if (response.data.success) {
         // Handle success (you can show a success message or update the UI)
+        toast.success("Price edited successfully!");
         console.log("Price edited successfully!");
       }
     } catch (error) {
       // Handle error (show an error message or log the error)
       console.error("Error editing price:", error);
+      toast.error("Error editing price:", error.message);
     }
   };
 
@@ -51,37 +70,37 @@ const AdminService = () => {
               <ul>
                 <li>
                   <Link to="/AdminPanel">
-                    <img src={DashboardImg} /> Dashboard
+                    <img src={DashboardImg} alt="Dashboard" /> Dashboard
                   </Link>
                 </li>
                 <li>
                   <Link to="/adminservice">
-                    <img src={ServiceImg} />
+                    <img src={ServiceImg} alt="Services" />
                     Services
                   </Link>
                 </li>
                 {/* <li>
                   <Link to="/adminnotify">
-                    <img src={NotiImg} />
+                    <img src={NotiImg} alt="Notifications" />
                     Notifications
                   </Link>
                   
                 </li> */}
                 <li>
                   <Link to="/adminmessage">
-                    <img src={MsgImg} />
+                    <img src={MsgImg} alt="Messages" />
                     Messages
                   </Link>
                 </li>
                 <li>
                   <Link to="/adminpayments">
-                    <img src={PaymentImg} />
+                    <img src={PaymentImg} alt="Payments" />
                     Payments
                   </Link>
                 </li>
                 <li>
                   <Link to="/adminvenuelist">
-                    <img src={ViewListImg} />
+                    <img src={ViewListImg} alt="Venue List" />
                     Venue List
                   </Link>
                 </li>
@@ -131,6 +150,7 @@ const AdminService = () => {
           </center>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

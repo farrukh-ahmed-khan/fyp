@@ -231,7 +231,7 @@ const AdminPanel = () => {
                           <td>{booking.time}</td>
                           <td>{booking.name}</td>
                           <td>{booking.hallName}</td>
-                          <td>{booking.halladvance}</td>
+                          <td>{booking.hallAdvance}</td>
                           <td>{booking.services}</td>
                           
                           <td>{booking.total_price}</td>

@@ -6,11 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import validate from "../Validation/LoginVendorValidation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import bcrypt from "bcrypt";
-
 import axios from "axios";
 
-const Login = () => {
+const VendorLogin = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -33,30 +31,25 @@ const Login = () => {
     setErrors(err);
   
     if (!err.email && !err.password) {
-      // Hash the password before sending it to the server
-      bcrypt.hash(values.password, 10, (err, hashedPassword) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        axios
-          .post("http://localhost:8081/vendorlogin", {
-            email: values.email,
-            password: hashedPassword, // Send the hashed password
-          })
-          .then((res) => {
-            if (res.data === "Login Successful") {
-              localStorage.setItem("vendor", values.email);
-              toast.success("Login Successfully!!");
-              setTimeout(() => {
-                navigate("/Add-Venue");
-              }, 1000);
-            } else {
-              toast.error("No Record Existed!");
-            }
-          })
-          .catch((err) => console.log(err));
-      });
+      console.log("Sending login request with data:", values); // Add this line for logging
+      axios
+        .post("http://localhost:8081/vendorlogin", values)
+        .then((res) => {
+          console.log("Login response:", res.data); // Add this line for logging
+          if (res.data === "Login Successful") {
+            localStorage.setItem("vendor", values.email);
+            toast.success("Login Successfully!!");
+            setTimeout(() => {
+              navigate("/Add-Venue");
+            }, 1000);
+          } else {
+            toast.error("No Record Existed!");
+          }
+        })
+        .catch((err) => {
+          console.log("Login error:", err); // Add this line for logging
+          toast.error("Error logging in!");
+        });
     }
   };
   
@@ -147,4 +140,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default VendorLogin;

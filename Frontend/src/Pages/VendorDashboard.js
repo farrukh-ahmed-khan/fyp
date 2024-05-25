@@ -90,7 +90,7 @@ const VendorDashboard = () => {
           )}
         </div>
       )}
-      <Link to="/">
+      <Link to="/Add-Venue">
         <p
           style={{
             textTransform: "uppercase",
