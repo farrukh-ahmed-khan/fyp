@@ -11,8 +11,8 @@ import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 const AdminPanel = () => {
   const [bookingData, setBookingData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [bookinghalldata, setBookingHallData]= useState([])
-  const [venues, setVenues]= useState([])
+  const [bookinghalldata, setBookingHallData] = useState([]);
+  const [venues, setVenues] = useState([]);
 
   useEffect(() => {
     fetchBookingData();
@@ -25,9 +25,8 @@ const AdminPanel = () => {
       const response = await fetch("http://localhost:8081/serviceorders");
       const data = await response.json();
       setBookingData(data);
-      
+
       setLoading(false);
-     
     } catch (error) {
       console.error("Error fetching booking data:", error);
       setLoading(false);
@@ -46,24 +45,21 @@ const AdminPanel = () => {
     }
   };
 
- 
-
   const fetchBookingDatavenues = async () => {
     try {
       const response = await fetch("http://localhost:8081/checkoutdata");
       const data = await response.json();
       setBookingHallData(data);
       setLoading(false);
-     
     } catch (error) {
       console.error("Error fetching booking hall data:", error);
       setLoading(false);
     }
   };
-  console.log("hall data",bookinghalldata)
+  console.log("hall data", bookinghalldata);
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
   return (
@@ -85,7 +81,6 @@ const AdminPanel = () => {
                 <li>
                   <Link to="/AdminPanel">
                     <img src={DashboardImg} /> Dashboard
-            
                   </Link>
                 </li>
                 <li>
@@ -106,7 +101,6 @@ const AdminPanel = () => {
                     <img src={MsgImg} />
                     Messages
                   </Link>
-                  
                 </li>
                 <li>
                   <Link to="/adminpayments">
@@ -156,7 +150,7 @@ const AdminPanel = () => {
 
               <div className="venue-card">
                 <h3>PAYMENTS</h3>
-                <h1>{bookinghalldata.length+bookingData.length}</h1>
+                <h1>{bookinghalldata.length + bookingData.length}</h1>
                 <div>
                   <p>View Details</p>
                 </div>
@@ -174,7 +168,7 @@ const AdminPanel = () => {
                     <thead>
                       <tr>
                         <td colSpan="5" className="B-details">
-                         Service Booking Details
+                          Service Booking Details
                         </td>
                       </tr>
                       <tr>
@@ -199,18 +193,16 @@ const AdminPanel = () => {
                           <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
                             {booking.paymentStatus}
                           </td> */}
-
                         </tr>
                       ))}
                     </tbody>
                   </table>
 
-
                   <table className="table table-striped booking-table">
                     <thead>
                       <tr>
                         <td colSpan="7" className="B-details">
-                         Service Hall Booking Details
+                          Service Hall Booking Details
                         </td>
                       </tr>
                       <tr>
@@ -218,12 +210,12 @@ const AdminPanel = () => {
                         <th scope="col">Booking time</th>
                         <th scope="col">Customer Email</th>
                         <th scope="col">Hall Name</th>
-                        <th scope="col">Hall Advance</th>
+                        {/* <th scope="col">Hall Advance</th> */}
                         <th scope="col">Selected services</th>
                         <th scope="col">Payment</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    {/* <tbody>
                       {bookinghalldata.map((booking) => (
                          console.log("booking data",booking),
                         <tr key={booking.id}>
@@ -233,16 +225,50 @@ const AdminPanel = () => {
                           <td>{booking.hallName}</td>
                           <td>{booking.halladvance}</td>
                           <td>{booking.services}</td>
-                          
                           <td>{booking.total_price}</td>
 
-                          {/* <td>{booking.guest}</td>
-                          <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
-                            {booking.paymentStatus}
-                          </td> */}
+                         
 
                         </tr>
                       ))}
+                    </tbody> */}
+                    <tbody>
+                      {bookinghalldata.map((booking) => {
+                        let servicesFormatted;
+
+                        try {
+                          const services =
+                            typeof booking.services === "string"
+                              ? JSON.parse(booking.services)
+                              : booking.services;
+
+                          servicesFormatted = Array.isArray(services)
+                            ? services
+                                .map(
+                                  (service) =>
+                                    `${service.service} (${service.package})`
+                                )
+                                .join(", ")
+                            : "No services";
+                        } catch (error) {
+                          console.error("Error parsing services:", error);
+                          servicesFormatted = "Invalid services data";
+                        }
+
+                        console.log("Formatted services:", servicesFormatted);
+
+                        return (
+                          <tr key={booking.id}>
+                            <td>{formatDate(booking.date)}</td>
+                            <td>{booking.time}</td>
+                            <td>{booking.name}</td>
+                            <td>{booking.hallName}</td>
+                            {/* <td>{booking.halladvance}</td> */}
+                            <td>{servicesFormatted}</td>
+                            <td>{booking.total_price}</td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

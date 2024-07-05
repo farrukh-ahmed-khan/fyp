@@ -10,7 +10,7 @@ import user from "../Assets/images/AdminPanel/user.png";
 import { Link } from "react-router-dom/dist/umd/react-router-dom.development";
 
 const AdminMessages = () => {
-    const [messageData, setMessageData] = useState([]);
+  const [messageData, setMessageData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,14 +23,13 @@ const AdminMessages = () => {
       const data = await response.json();
       setMessageData(data);
       setLoading(false);
-     
     } catch (error) {
       console.error("Error fetching booking data:", error);
       setLoading(false);
     }
   };
 
- console.log(messageData)
+  console.log(messageData);
   return (
     <>
       <div>
@@ -50,7 +49,6 @@ const AdminMessages = () => {
                 <li>
                   <Link to="/AdminPanel">
                     <img src={DashboardImg} /> Dashboard
-            
                   </Link>
                 </li>
                 <li>
@@ -71,7 +69,6 @@ const AdminMessages = () => {
                     <img src={MsgImg} />
                     Messages
                   </Link>
-                  
                 </li>
                 <li>
                   <Link to="/adminpayments">
@@ -91,20 +88,18 @@ const AdminMessages = () => {
 
           {/* Details section */}
           <div className="details">
-            
-
             {/* Booking details table */}
             <div
               className="container mt-5"
               style={{ width: "98%", margin: "auto" }}
             >
               <div className="row">
-                <div className="col-lg-8">
+                <div className="col-lg-12">
                   <table className="table table-striped booking-table">
                     <thead>
                       <tr>
                         <td colSpan="5" className="B-details">
-                         Messages
+                          Messages
                         </td>
                       </tr>
                       <tr>
@@ -126,49 +121,20 @@ const AdminMessages = () => {
                           <td style={{ color: booking.paymentStatus === "Recieved" ? "green" : "red" }}>
                             {booking.paymentStatus}
                           </td> */}
-
                         </tr>
                       ))}
                     </tbody>
                   </table>
-
-
-                  
                 </div>
 
                 {/* Upcoming events section */}
-                <div className="col-lg-4">
-                  <div className="upcoming-events">
-                    <div className="upcoming-event-card">
-                      <h4>UPCOMING EVENTS</h4>
-                      <ul>
-                        <li>
-                          <img src={user} /> <span>Sarim</span> <br />
-                          <p>Al-Mehfil Banquet</p>
-                        </li>
-                        <li>
-                          <img src={user} /> <span>Farrukh</span>
-                          <p>Al-Mehfil Banquet</p>
-                        </li>
-                        <li>
-                          <img src={user} /> <span>Danish</span>
-                          <p>Al-Mehfil Banquet</p>
-                        </li>
-                        <li>
-                          <img src={user} /> <span>Taimoor</span>
-                          <p>Al-Mehfil Banquet</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AdminMessages
+export default AdminMessages;
