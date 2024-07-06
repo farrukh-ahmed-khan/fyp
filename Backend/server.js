@@ -609,7 +609,7 @@ app.get("/vendor-venues", (req, res) => {
         city,
         area,
         maxPrice,
-        price,
+        minPrice,
         guests,
         rating,
         phone,
@@ -625,7 +625,7 @@ app.get("/vendor-venues", (req, res) => {
         city,
         area,
         maxPrice,
-        price,
+        minPrice,
         guests,
         rating,
         phone,
@@ -750,7 +750,7 @@ app.put("/edit-venue/:id", (req, res) => {
     city,
     area,
     maxPrice,
-    price,
+    minPrice,
     guests,
     rating,
     phone,
@@ -774,7 +774,7 @@ app.put("/edit-venue/:id", (req, res) => {
   addToSetClause("city", city);
   addToSetClause("area", area);
   addToSetClause("maxPrice", maxPrice);
-  addToSetClause("price", price);
+  addToSetClause("minPrice", minPrice);
   addToSetClause("guests", guests);
   addToSetClause("rating", rating);
   addToSetClause("phone", phone);

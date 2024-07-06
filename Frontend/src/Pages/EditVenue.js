@@ -557,7 +557,7 @@ const EditVenue = () => {
     city: initialVenueData?.city || "",
     area: initialVenueData?.area || "",
     maxPrice: initialVenueData?.maxPrice || "",
-    price: initialVenueData?.price || "",
+    minprice: initialVenueData?.minPrice || "",
     guests: initialVenueData?.guests || "",
     rating: initialVenueData?.rating || "",
     phone: initialVenueData?.phone || "",
@@ -636,6 +636,8 @@ const EditVenue = () => {
     } catch (error) {
       console.error("Error updating venue:", error.message);
       toast.error("Error submitting form. Please try again.");
+    }finally{
+      navigate("/vendor-dashboard");
     }
   };
 
@@ -702,11 +704,11 @@ const EditVenue = () => {
                   <label htmlFor="price">Minimum Price</label>
                   <input
                     type="number"
-                    name="price"
+                    name="minPrice"
                     id="price"
                     className="form-control"
                     placeholder="Enter your minimum price"
-                    value={venueData.price}
+                    value={venueData.minprice}
                     onChange={handleChange}
                   />
                 </div>

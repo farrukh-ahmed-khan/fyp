@@ -58,6 +58,7 @@ const VendorDashboard = () => {
         <p>Loading...</p>
       ) : (
         <div className="vendorInfoSection">
+          {console.log(venues)}
           {venues.length > 0 ? (
             <ul className="venue-list-section">
               {venues.map((venue) => (
