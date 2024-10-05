@@ -5,7 +5,6 @@ import Footer from '../Components/CommonComponent/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { loadStripe } from '@stripe/stripe-js';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
